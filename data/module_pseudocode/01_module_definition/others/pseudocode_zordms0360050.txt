@@ -1,0 +1,65 @@
+================================================================================
+파일명: zordms0360050.txt
+모듈명: 상품 target_prod_list 정보 set
+================================================================================
+
+FUNCTION zordms0360050(입력)
+    
+    입력.상품명 trim 처리
+    입력.서비스상품코드 trim 처리
+    
+    CALL b000_main_proc(입력)
+    RETURN 성공
+
+END FUNCTION
+
+
+FUNCTION b000_main_proc(입력)
+    
+    상품정보 ← DB조회("pdb_zord_pdr_obj_bas_info_s0005", 입력.상품ID, 입력.처리일시)
+    
+    IF 상품정보 = NOT_FOUND THEN
+        오류("상품정보 없음")
+        CALL m000_msg_append("ZORDEA099", "E")
+        RETURN 실패
+    END IF
+    
+    IF DB오류 THEN
+        오류("DB 조회 오류")
+        CALL m000_msg_append("ZORDEA098", "E")
+        RETURN 실패
+    END IF
+    
+    CALL z900_target_prod_list_set(입력, 상품정보)
+    RETURN 성공
+
+END FUNCTION
+
+
+FUNCTION z900_target_prod_list_set(입력, 상품정보)
+    
+    인덱스 ← 출력.target_prod_list.카운트
+    
+    출력.target_prod_list[인덱스].상품ID ← 입력.상품ID
+    출력.target_prod_list[인덱스].상품명 ← 입력.상품명
+    출력.target_prod_list[인덱스].서비스상품코드 ← 입력.서비스상품코드
+    출력.target_prod_list[인덱스].가입해지구분코드 ← 입력.가입해지구분코드
+    출력.target_prod_list[인덱스].처리가능여부 ← 입력.처리가능여부
+    출력.target_prod_list[인덱스].상품구분코드 ← 상품정보.상품구분코드
+    출력.target_prod_list[인덱스].상품타입코드 ← 상품정보.상품타입코드
+    
+    출력.target_prod_list.카운트 ← 출력.target_prod_list.카운트 + 1
+    
+    RETURN 성공
+
+END FUNCTION
+
+
+FUNCTION m000_msg_append(메시지ID, 메시지타입)
+    
+    CALL zordms0400340(메시지ID, 메시지타입)
+    RETURN 성공
+
+END FUNCTION
+
+================================================================================

@@ -1,0 +1,91 @@
+================================================================================
+파일명: zordms0360121.txt
+모듈명: 무선 기본요금제 기준정보 체크
+================================================================================
+
+FUNCTION zordms0360121(입력)
+    
+    CALL a000_input_validation(입력)
+    CALL b000_main_proc(입력)
+    CALL z000_norm_exit_proc(입력)
+    RETURN 성공
+    
+오류처리:
+    CALL z999_err_exit_proc(입력)
+    RETURN 실패
+
+END FUNCTION
+
+
+FUNCTION a000_input_validation(입력)
+    
+    CALL p010_set_initial_val(입력)
+    CALL p100_chk_mndt_item(입력)
+    CALL p200_chk_mtcg_item(입력)
+    RETURN 성공
+
+END FUNCTION
+
+
+FUNCTION b000_main_proc(입력)
+    
+    CALL c101_chk1_no_lmt_cnt_prcpln_chg(입력)
+    CALL c102_chk2_no_lmt_cnt_prcpln_chg(입력)
+    RETURN 성공
+
+END FUNCTION
+
+
+FUNCTION c101_chk1_no_lmt_cnt_prcpln_chg(입력)
+    
+    IF 변경전요금제ID = "NA00006549" OR "NA00006550" THEN
+        출력.요금제변경횟수제한SKIP ← "Y"
+        출력.가입해지제한일기준SKIP ← "Y"
+    END IF
+    RETURN 성공
+
+END FUNCTION
+
+
+FUNCTION c102_chk2_no_lmt_cnt_prcpln_chg(입력)
+    
+    IF (변경코드 = "C1" OR "C2") AND 세대간변경여부 = "Y" THEN
+        출력.요금제변경횟수제한SKIP ← "Y"
+        출력.가입해지제한일기준SKIP ← "Y"
+    END IF
+    RETURN 성공
+
+END FUNCTION
+
+
+FUNCTION p010_set_initial_val(입력)
+    
+    출력.요금제변경횟수제한SKIP ← "N"
+    출력.가입해지제한일기준SKIP ← "N"
+    RETURN 성공
+
+END FUNCTION
+
+
+FUNCTION p100_chk_mndt_item(입력)
+    
+    IF 서비스관리번호 = NULL THEN
+        오류("서비스관리번호 필수")
+        RETURN 실패
+    END IF
+    RETURN 성공
+
+END FUNCTION
+
+
+FUNCTION p200_chk_mtcg_item(입력)
+    
+    IF 변경코드 NOT IN ("C1", "C2", "G1", "N1", "M1") THEN
+        오류("유효하지 않은 변경코드")
+        RETURN 실패
+    END IF
+    RETURN 성공
+
+END FUNCTION
+
+================================================================================

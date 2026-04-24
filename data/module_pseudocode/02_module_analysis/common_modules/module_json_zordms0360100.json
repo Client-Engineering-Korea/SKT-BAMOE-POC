@@ -1,0 +1,492 @@
+{
+  "moduleInfo": {
+    "moduleId": "zordms0360100",
+    "moduleName": "상품공통기능체크 공통모듈",
+    "totalLines": 2650,
+    "pseudocodeLines": 404,
+    "description": "모든 상품(요금제, 부가서비스, 할인)의 공통 가입 조건 체크"
+  },
+  "functions": [
+    {
+      "functionName": "zordms0360100",
+      "lineNumber": "7-18",
+      "description": "메인 함수 - 전체 처리 흐름 제어",
+      "inputParameters": ["입력"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 0,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 0,
+        "complexityLevel": "매우 낮음"
+      },
+      "businessRules": []
+    },
+    {
+      "functionName": "a000_input_validation",
+      "lineNumber": "21-28",
+      "description": "입력 검증 - 입력 데이터 유효성 검증 및 초기값 설정",
+      "inputParameters": ["입력"],
+      "returnValue": "성공",
+      "complexity": {
+        "ifThenCount": 0,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 0,
+        "complexityLevel": "매우 낮음"
+      },
+      "businessRules": []
+    },
+    {
+      "functionName": "b000_main_proc",
+      "lineNumber": "31-55",
+      "description": "메인 처리 - 상품 목록 순회 및 체크 수행",
+      "inputParameters": ["입력"],
+      "returnValue": "성공",
+      "complexity": {
+        "ifThenCount": 4,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 4,
+        "complexityLevel": "낮음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_001",
+          "ruleName": "처리가능 여부 확인",
+          "ruleType": "검증",
+          "condition": "상품.처리가능 = FALSE",
+          "action": "다음 상품으로 이동 (CONTINUE)",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_002",
+          "ruleName": "요금제 상품 분기",
+          "ruleType": "검증",
+          "condition": "상품구분코드 = 'G1'",
+          "action": "요금제_공통체크 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_003",
+          "ruleName": "부가서비스 상품 분기",
+          "ruleType": "검증",
+          "condition": "상품구분코드 = 'I2'",
+          "action": "부가서비스_공통체크 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_004",
+          "ruleName": "할인 상품 분기",
+          "ruleType": "검증",
+          "condition": "상품구분코드 = 'D1'",
+          "action": "할인_공통체크 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "c000_상품공통기능체크",
+      "lineNumber": "59-156",
+      "description": "상품 공통 체크 - 모든 상품에 공통으로 적용되는 기본 체크 로직",
+      "inputParameters": ["상품"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 12,
+        "nestedIfCount": 4,
+        "dbQueryCount": 6,
+        "complexityScore": 28,
+        "complexityLevel": "매우 높음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_005",
+          "ruleName": "상품정보 존재 확인",
+          "ruleType": "검증",
+          "condition": "상품정보 = NOT_FOUND",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "상품정보 없음",
+          "dbQueries": ["상품마스터"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_006",
+          "ruleName": "판매가능 여부 체크",
+          "ruleType": "검증",
+          "condition": "상품정보.판매가능여부 = 'N'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "판매 중지된 상품",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_007",
+          "ruleName": "판매기간 체크",
+          "ruleType": "검증",
+          "condition": "입력.처리일자 < 상품정보.판매시작일 OR 입력.처리일자 > 상품정보.판매종료일",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "판매 기간 아님",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_008",
+          "ruleName": "최소나이 체크",
+          "ruleType": "자격",
+          "condition": "상품정보.최소나이 > 0 AND 고객.나이 < 상품정보.최소나이",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "최소 가입 나이 미달",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_009",
+          "ruleName": "최대나이 체크",
+          "ruleType": "자격",
+          "condition": "상품정보.최대나이 > 0 AND 고객.나이 > 상품정보.최대나이",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "최대 가입 나이 초과",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_010",
+          "ruleName": "판매채널 제한 체크",
+          "ruleType": "제약",
+          "condition": "상품정보.판매채널제한 = 'Y' AND 입력.채널 NOT IN 허용채널목록",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "해당 채널에서 판매 불가",
+          "dbQueries": ["상품판매채널"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_011",
+          "ruleName": "중복가입 체크",
+          "ruleType": "제약",
+          "condition": "상품정보.중복가입불가 = 'Y' AND 기존가입 EXISTS AND 기존가입.상태 = '가입중'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "이미 가입한 상품",
+          "dbQueries": ["고객가입상품"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_012",
+          "ruleName": "재고 체크",
+          "ruleType": "제약",
+          "condition": "상품정보.재고관리 = 'Y' AND 재고정보.재고수량 <= 0",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "재고 부족",
+          "dbQueries": ["상품재고"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_013",
+          "ruleName": "블랙리스트 체크",
+          "ruleType": "자격",
+          "condition": "고객.블랙리스트여부 = 'Y'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "가입 제한 고객",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "요금제_공통체크",
+      "lineNumber": "160-220",
+      "description": "요금제(G1) 전용 체크 - 요금제 상품에 특화된 체크 로직",
+      "inputParameters": ["상품"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 9,
+        "nestedIfCount": 4,
+        "dbQueryCount": 3,
+        "complexityScore": 18,
+        "complexityLevel": "높음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_014",
+          "ruleName": "최소사용기간 체크",
+          "ruleType": "제약",
+          "condition": "기존요금제 EXISTS AND 기존요금제.최소사용기간 > 0 AND 사용기간 < 기존요금제.최소사용기간",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "최소 사용 기간 미달",
+          "dbQueries": ["고객현재요금제"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_015",
+          "ruleName": "요금제 변경제한 체크",
+          "ruleType": "제약",
+          "condition": "변경제한 EXISTS AND 변경제한.변경불가 = 'Y'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "변경제한.불가사유",
+          "dbQueries": ["요금제변경제한"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_016",
+          "ruleName": "세대제한 체크",
+          "ruleType": "제약",
+          "condition": "기존요금제.세대 = '3G' AND 상품.세대 = '5G' AND 직접변경불가 = 'Y'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "4G 거쳐서 변경 필요",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_017",
+          "ruleName": "약정 위약금 체크",
+          "ruleType": "계산",
+          "condition": "약정정보 EXISTS AND 약정정보.약정상태 = '유효' AND 위약금 > 0",
+          "action": "위약금 설정, 경고메시지 출력 (처리는 가능)",
+          "failureMessage": "약정 위약금 발생",
+          "dbQueries": ["고객약정정보"],
+          "is_DB_IO": true
+        }
+      ]
+    },
+    {
+      "functionName": "부가서비스_공통체크",
+      "lineNumber": "224-287",
+      "description": "부가서비스(I2) 전용 체크 - 부가서비스 상품에 특화된 체크 로직",
+      "inputParameters": ["상품"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 8,
+        "nestedIfCount": 4,
+        "dbQueryCount": 7,
+        "complexityScore": 23,
+        "complexityLevel": "높음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_018",
+          "ruleName": "기준요금제 체크",
+          "ruleType": "자격",
+          "condition": "상품.기준요금제필수 = 'Y' AND 현재요금제.요금제ID NOT IN 기준요금제목록",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "기준 요금제 미가입",
+          "dbQueries": ["상품기준요금제", "고객현재요금제"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_019",
+          "ruleName": "선행서비스 체크",
+          "ruleType": "자격",
+          "condition": "상품.선행서비스필수 = 'Y' AND 가입여부 = '미가입'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "선행 서비스 미가입: {선행서비스.상품명}",
+          "dbQueries": ["선행부가서비스", "고객가입여부"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_020",
+          "ruleName": "배타관계 체크",
+          "ruleType": "제약",
+          "condition": "가입여부 = '가입중'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "배타 서비스 가입중: {배타서비스.상품명}",
+          "dbQueries": ["배타부가서비스", "고객가입여부"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_021",
+          "ruleName": "단말제한 체크",
+          "ruleType": "제약",
+          "condition": "상품.단말제한 = 'Y' AND 단말정보.단말모델코드 NOT IN 허용단말목록",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "지원하지 않는 단말",
+          "dbQueries": ["고객현재단말", "상품허용단말"],
+          "is_DB_IO": true
+        }
+      ]
+    },
+    {
+      "functionName": "할인_공통체크",
+      "lineNumber": "291-333",
+      "description": "할인(D1) 전용 체크 - 할인 상품에 특화된 체크 로직",
+      "inputParameters": ["상품"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 5,
+        "nestedIfCount": 2,
+        "dbQueryCount": 3,
+        "complexityScore": 12,
+        "complexityLevel": "중간"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_022",
+          "ruleName": "할인대상 요금제 체크",
+          "ruleType": "자격",
+          "condition": "현재요금제.요금제ID NOT IN 대상요금제목록",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "할인 대상 요금제 아님",
+          "dbQueries": ["할인대상요금제", "고객현재요금제"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_023",
+          "ruleName": "중복할인 체크",
+          "ruleType": "제약",
+          "condition": "상품.중복할인불가 = 'Y' AND 기존할인.할인유형 = 상품.할인유형",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "동일 유형 할인 가입중",
+          "dbQueries": ["고객현재할인"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_024",
+          "ruleName": "VIP등급 체크",
+          "ruleType": "자격",
+          "condition": "상품.VIP전용 = 'Y' AND 고객.VIP등급 NOT IN ('VIP', 'VVIP')",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "VIP 전용 할인",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "p010_set_initial_val",
+      "lineNumber": "336-343",
+      "description": "초기값 설정 - 출력 변수의 초기값 설정",
+      "inputParameters": ["입력"],
+      "returnValue": "성공",
+      "complexity": {
+        "ifThenCount": 0,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 0,
+        "complexityLevel": "매우 낮음"
+      },
+      "businessRules": []
+    },
+    {
+      "functionName": "p100_chk_mndt_item",
+      "lineNumber": "346-360",
+      "description": "필수항목 체크 - 필수 입력 항목의 존재 여부 확인",
+      "inputParameters": ["입력"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 2,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 2,
+        "complexityLevel": "낮음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_025",
+          "ruleName": "서비스관리번호 필수 체크",
+          "ruleType": "검증",
+          "condition": "입력.서비스관리번호 = NULL",
+          "action": "오류 발생, 실패 반환",
+          "failureMessage": "서비스관리번호 필수",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_026",
+          "ruleName": "상품ID 필수 체크",
+          "ruleType": "검증",
+          "condition": "입력.상품ID = NULL",
+          "action": "오류 발생, 실패 반환",
+          "failureMessage": "상품ID 필수",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "p200_chk_mtcg_item",
+      "lineNumber": "363-371",
+      "description": "선택항목 체크 - 선택 항목의 기본값 설정",
+      "inputParameters": ["입력"],
+      "returnValue": "성공",
+      "complexity": {
+        "ifThenCount": 1,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 1,
+        "complexityLevel": "낮음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_027",
+          "ruleName": "처리일자 기본값 설정",
+          "ruleType": "검증",
+          "condition": "입력.처리일자 = NULL",
+          "action": "입력.처리일자 = 현재일자",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    }
+  ],
+  "statistics": {
+    "totalFunctions": 10,
+    "totalIfThen": 41,
+    "totalDbQueries": 19,
+    "totalComplexRules": 14,
+    "dbTables": [
+      "상품마스터",
+      "상품판매채널",
+      "고객가입상품",
+      "상품재고",
+      "고객현재요금제",
+      "요금제변경제한",
+      "고객약정정보",
+      "상품기준요금제",
+      "선행부가서비스",
+      "고객가입여부",
+      "배타부가서비스",
+      "고객현재단말",
+      "상품허용단말",
+      "할인대상요금제",
+      "고객현재할인"
+    ]
+  },
+  "productTypes": {
+    "G1": {
+      "name": "요금제",
+      "checkFunction": "요금제_공통체크",
+      "rules": [
+        "최소사용기간",
+        "요금제변경제한",
+        "세대제한",
+        "약정위약금"
+      ]
+    },
+    "I2": {
+      "name": "부가서비스",
+      "checkFunction": "부가서비스_공통체크",
+      "rules": [
+        "기준요금제",
+        "선행서비스",
+        "배타관계",
+        "단말제한"
+      ]
+    },
+    "D1": {
+      "name": "할인",
+      "checkFunction": "할인_공통체크",
+      "rules": [
+        "대상요금제",
+        "중복할인",
+        "VIP등급"
+      ]
+    }
+  }
+}

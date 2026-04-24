@@ -1,0 +1,963 @@
+
+{
+  "moduleInfo": {
+    "moduleId": "zordms0360110",
+    "moduleName": "상품별가입해지체크(부가) 공통모듈",
+    "totalLines": 27000,
+    "pseudocodeLines": 366,
+    "description": "부가서비스 상품의 가입/해지 조건 체크 및 상품별 특화 Rule 처리"
+  },
+  "functions": [
+    {
+      "functionName": "zordms0360110",
+      "lineNumber": "7-18",
+      "description": "메인 함수 - 전체 처리 흐름 제어",
+      "inputParameters": ["입력"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 0,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 0,
+        "complexityLevel": "매우 낮음"
+      },
+      "businessRules": []
+    },
+    {
+      "functionName": "b000_main_proc",
+      "lineNumber": "21-38",
+      "description": "메인 처리 - 상품 목록 순회 및 가입/해지 분기",
+      "inputParameters": ["입력"],
+      "returnValue": "성공",
+      "complexity": {
+        "ifThenCount": 2,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 2,
+        "complexityLevel": "낮음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_001",
+          "ruleName": "가입 처리 분기",
+          "ruleType": "검증",
+          "condition": "가입해지구분 = '01'",
+          "action": "부가서비스_가입체크 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_002",
+          "ruleName": "해지 처리 분기",
+          "ruleType": "검증",
+          "condition": "가입해지구분 = '03'",
+          "action": "부가서비스_해지체크 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "부가서비스_가입체크",
+      "lineNumber": "42-140",
+      "description": "부가서비스 가입 체크 - 공통 가입 조건 및 상품별 특화 Rule 처리",
+      "inputParameters": ["상품"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 13,
+        "nestedIfCount": 6,
+        "dbQueryCount": 10,
+        "complexityScore": 36,
+        "complexityLevel": "매우 높음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_003",
+          "ruleName": "상품별 특화 Rule 호출",
+          "ruleType": "검증",
+          "condition": "상품ID LIKE 'NA%'",
+          "action": "상품별_가입Rule_처리 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_004",
+          "ruleName": "중복 가입 체크",
+          "ruleType": "제약",
+          "condition": "기존가입 EXISTS AND 기존가입.상태 = '가입중'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "이미 가입한 상품입니다",
+          "dbQueries": ["고객가입상품"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_005",
+          "ruleName": "기준 요금제 존재 확인",
+          "ruleType": "자격",
+          "condition": "기준요금제목록.건수 > 0",
+          "action": "현재요금제 조회 및 검증",
+          "failureMessage": "",
+          "dbQueries": ["부가서비스기준요금제"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_006",
+          "ruleName": "기준 요금제 가입 확인",
+          "ruleType": "자격",
+          "condition": "현재요금제.요금제ID NOT IN 기준요금제목록",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "기준 요금제를 먼저 가입해주세요",
+          "dbQueries": ["고객현재요금제"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_007",
+          "ruleName": "선행 부가서비스 미가입",
+          "ruleType": "자격",
+          "condition": "가입여부 = '미가입'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "{선행서비스.상품명} 먼저 가입 필요",
+          "dbQueries": ["선행부가서비스", "고객가입여부"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_008",
+          "ruleName": "배타 서비스 가입중",
+          "ruleType": "제약",
+          "condition": "가입여부 = '가입중'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "{배타서비스.상품명}과 동시 가입 불가",
+          "dbQueries": ["배타부가서비스", "고객가입여부"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_009",
+          "ruleName": "최소나이 제한",
+          "ruleType": "자격",
+          "condition": "상품정보.최소나이 > 0 AND 고객.나이 < 상품정보.최소나이",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "최소 {상품정보.최소나이}세 이상 가입 가능",
+          "dbQueries": ["상품정보"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_010",
+          "ruleName": "최대나이 제한",
+          "ruleType": "자격",
+          "condition": "상품정보.최대나이 > 0 AND 고객.나이 > 상품정보.최대나이",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "최대 {상품정보.최대나이}세 이하 가입 가능",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_011",
+          "ruleName": "단말 제한 확인",
+          "ruleType": "제약",
+          "condition": "상품정보.단말제한 = 'Y'",
+          "action": "단말정보 및 단말속성 조회",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_012",
+          "ruleName": "단말 지원 여부",
+          "ruleType": "제약",
+          "condition": "단말속성.지원여부 = 'N'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "지원하지 않는 단말입니다",
+          "dbQueries": ["고객현재단말", "단말속성"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_013",
+          "ruleName": "가입 체크 통과",
+          "ruleType": "검증",
+          "condition": "모든 체크 통과",
+          "action": "처리가능여부 = 'Y', 성공 반환",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "부가서비스_해지체크",
+      "lineNumber": "144-213",
+      "description": "부가서비스 해지 체크 - 해지 가능 여부 및 위약금/혜택반환 계산",
+      "inputParameters": ["상품"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 10,
+        "nestedIfCount": 5,
+        "dbQueryCount": 6,
+        "complexityScore": 22.5,
+        "complexityLevel": "높음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_014",
+          "ruleName": "가입 여부 확인",
+          "ruleType": "검증",
+          "condition": "기존가입 = NOT_FOUND OR 기존가입.상태 = '해지'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "가입하지 않은 상품입니다",
+          "dbQueries": ["고객가입상품"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_015",
+          "ruleName": "최소 사용 기간 존재",
+          "ruleType": "제약",
+          "condition": "기존가입.최소사용기간 > 0",
+          "action": "사용기간 계산",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_016",
+          "ruleName": "최소 사용 기간 미달",
+          "ruleType": "제약",
+          "condition": "사용기간 < 기존가입.최소사용기간",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "최소 {기존가입.최소사용기간}일 이상 사용 필요",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_017",
+          "ruleName": "종속 서비스 가입중",
+          "ruleType": "제약",
+          "condition": "종속서비스.상태 = '가입중'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "{종속서비스.상품명} 먼저 해지 필요",
+          "dbQueries": ["종속부가서비스"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_018",
+          "ruleName": "약정 여부 확인",
+          "ruleType": "검증",
+          "condition": "기존가입.약정여부 = 'Y'",
+          "action": "약정정보 조회",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_019",
+          "ruleName": "약정 유효 및 위약금 발생",
+          "ruleType": "계산",
+          "condition": "약정정보 EXISTS AND 약정정보.약정상태 = '유효' AND 위약금 > 0",
+          "action": "위약금 설정, 경고메시지 출력",
+          "failureMessage": "위약금 {위약금}원 발생",
+          "dbQueries": ["상품약정정보"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_020",
+          "ruleName": "프로모션 유효 확인",
+          "ruleType": "검증",
+          "condition": "프로모션정보 EXISTS AND 프로모션정보.상태 = '유효'",
+          "action": "혜택반환금액 계산",
+          "failureMessage": "",
+          "dbQueries": ["상품프로모션"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_021",
+          "ruleName": "프로모션 혜택 반환",
+          "ruleType": "계산",
+          "condition": "혜택반환금액 > 0",
+          "action": "혜택반환금액 설정, 경고메시지 출력",
+          "failureMessage": "프로모션 혜택 반환 {혜택반환금액}원",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_022",
+          "ruleName": "해지 체크 통과",
+          "ruleType": "검증",
+          "condition": "모든 체크 통과",
+          "action": "처리가능여부 = 'Y', 성공 반환",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "상품별_가입Rule_처리",
+      "lineNumber": "217-245",
+      "description": "개별 상품 특화 Rule 처리 - 상품ID별 특화된 가입 조건 처리",
+      "inputParameters": ["상품"],
+      "returnValue": "성공",
+      "complexity": {
+        "ifThenCount": 5,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 5,
+        "complexityLevel": "낮음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_023",
+          "ruleName": "통화중대기 상품",
+          "ruleType": "검증",
+          "condition": "상품ID = 'NA00000292'",
+          "action": "통화중대기_가입Rule 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_024",
+          "ruleName": "데이터쉐어링 상품",
+          "ruleType": "검증",
+          "condition": "상품ID = 'NA00001234'",
+          "action": "데이터쉐어링_가입Rule 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_025",
+          "ruleName": "선택약정할인 상품",
+          "ruleType": "검증",
+          "condition": "상품ID = 'NA00004430'",
+          "action": "선택약정할인_가입Rule 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_026",
+          "ruleName": "T지원금약정 상품",
+          "ruleType": "검증",
+          "condition": "상품ID = 'NA00004487'",
+          "action": "T지원금약정_가입Rule 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_027",
+          "ruleName": "기본 Rule",
+          "ruleType": "검증",
+          "condition": "기타 상품",
+          "action": "처리가능여부 = 'Y'",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "통화중대기_가입Rule",
+      "lineNumber": "249-274",
+      "description": "통화중대기 상품 특화 Rule - 요금제 세대 및 단말 지원 체크",
+      "inputParameters": ["상품"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 3,
+        "nestedIfCount": 1,
+        "dbQueryCount": 3,
+        "complexityScore": 9.5,
+        "complexityLevel": "중간"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_028",
+          "ruleName": "요금제 세대 체크",
+          "ruleType": "자격",
+          "condition": "현재요금제.세대 < '4G'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "4G 이상 요금제 필요",
+          "dbQueries": ["고객현재요금제"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_029",
+          "ruleName": "단말 지원 여부",
+          "ruleType": "제약",
+          "condition": "단말속성.지원여부 = 'N'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "통화중대기 지원 단말 아님",
+          "dbQueries": ["고객현재단말", "단말속성"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_030",
+          "ruleName": "통화중대기 가입 가능",
+          "ruleType": "검증",
+          "condition": "모든 체크 통과",
+          "action": "처리가능여부 = 'Y', 성공 반환",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "선택약정할인_가입Rule",
+      "lineNumber": "278-301",
+      "description": "선택약정할인 상품 특화 Rule - 약정 존재 및 기준상품 가입 체크",
+      "inputParameters": ["상품"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 3,
+        "nestedIfCount": 1,
+        "dbQueryCount": 1,
+        "complexityScore": 8.5,
+        "complexityLevel": "중간"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_031",
+          "ruleName": "약정 존재 여부",
+          "ruleType": "자격",
+          "condition": "약정정보 = NOT_FOUND OR 약정정보.약정존재여부 = 'N'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "약정 가입 후 신청 가능",
+          "dbQueries": ["고객약정정보"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_032",
+          "ruleName": "기준 상품 가입 여부",
+          "ruleType": "자격",
+          "condition": "약정정보.기준상품가입여부 = 'N'",
+          "action": "처리가능여부 = 'N', 실패 반환",
+          "failureMessage": "기준 요금제로 변경 후 가입 가능",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_033",
+          "ruleName": "선택약정할인 가입 가능",
+          "ruleType": "검증",
+          "condition": "모든 체크 통과",
+          "action": "처리가능여부 = 'Y', 할인율 = 20, 성공 반환",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "계산위약금",
+      "lineNumber": "304-321",
+      "description": "위약금 계산 - 약정 경과 개월수에 따른 위약금 산출",
+      "inputParameters": ["약정정보"],
+      "returnValue": "위약금",
+      "complexity": {
+        "ifThenCount": 3,
+        "nestedIfCount": 1,
+        "dbQueryCount": 0,
+        "complexityScore": 8.5,
+        "complexityLevel": "중간"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_034",
+          "ruleName": "약정 만료",
+          "ruleType": "계산",
+          "condition": "남은개월수 <= 0",
+          "action": "위약금 = 0 반환",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_035",
+          "ruleName": "12개월 미만 위약금",
+          "ruleType": "계산",
+          "condition": "경과개월수 < 12",
+          "action": "위약금 = 기본위약금",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_036",
+          "ruleName": "12개월 이상 위약금",
+          "ruleType": "계산",
+          "condition": "경과개월수 >= 12",
+          "action": "위약금 = 기본위약금 × 0.5",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "계산혜택반환금액",
+      "lineNumber": "324-338",
+      "description": "혜택 반환금액 계산 - 프로모션 최소사용기간 미달시 반환금액 산출",
+      "inputParameters": ["프로모션정보"],
+      "returnValue": "반환금액",
+      "complexity": {
+        "ifThenCount": 1,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 1,
+        "complexityLevel": "낮음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_037",
+          "ruleName": "최소사용기간 충족",
+          "ruleType": "계산",
+          "condition": "경과개월수 >= 최소사용개월수",
+          "action": "반환금액 = 0 반환",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_038",
+          "ruleName": "혜택 반환금액 계산",
+          "ruleType": "계산",
+          "condition": "경과개월수 < 최소사용개월수",
+          "action": "반환비율 계산 후 반환금액 = 혜택금액 × 반환비율",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    }
+  ],
+  "businessRules": [
+    {
+      "ruleId": "RULE_001",
+      "ruleName": "가입 처리 분기",
+      "ruleType": "검증",
+      "condition": "가입해지구분 = '01'",
+      "action": "부가서비스_가입체크 호출",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_002",
+      "ruleName": "해지 처리 분기",
+      "ruleType": "검증",
+      "condition": "가입해지구분 = '03'",
+      "action": "부가서비스_해지체크 호출",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_003",
+      "ruleName": "상품별 특화 Rule 호출",
+      "ruleType": "검증",
+      "condition": "상품ID LIKE 'NA%'",
+      "action": "상품별_가입Rule_처리 호출",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_004",
+      "ruleName": "중복 가입 체크",
+      "ruleType": "제약",
+      "condition": "기존가입 EXISTS AND 기존가입.상태 = '가입중'",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "이미 가입한 상품입니다",
+      "dbQueries": ["고객가입상품"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_005",
+      "ruleName": "기준 요금제 존재 확인",
+      "ruleType": "자격",
+      "condition": "기준요금제목록.건수 > 0",
+      "action": "현재요금제 조회 및 검증",
+      "failureMessage": "",
+      "dbQueries": ["부가서비스기준요금제"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_006",
+      "ruleName": "기준 요금제 가입 확인",
+      "ruleType": "자격",
+      "condition": "현재요금제.요금제ID NOT IN 기준요금제목록",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "기준 요금제를 먼저 가입해주세요",
+      "dbQueries": ["고객현재요금제"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_007",
+      "ruleName": "선행 부가서비스 미가입",
+      "ruleType": "자격",
+      "condition": "가입여부 = '미가입'",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "{선행서비스.상품명} 먼저 가입 필요",
+      "dbQueries": ["선행부가서비스", "고객가입여부"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_008",
+      "ruleName": "배타 서비스 가입중",
+      "ruleType": "제약",
+      "condition": "가입여부 = '가입중'",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "{배타서비스.상품명}과 동시 가입 불가",
+      "dbQueries": ["배타부가서비스", "고객가입여부"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_009",
+      "ruleName": "최소나이 제한",
+      "ruleType": "자격",
+      "condition": "상품정보.최소나이 > 0 AND 고객.나이 < 상품정보.최소나이",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "최소 {상품정보.최소나이}세 이상 가입 가능",
+      "dbQueries": ["상품정보"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_010",
+      "ruleName": "최대나이 제한",
+      "ruleType": "자격",
+      "condition": "상품정보.최대나이 > 0 AND 고객.나이 > 상품정보.최대나이",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "최대 {상품정보.최대나이}세 이하 가입 가능",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_011",
+      "ruleName": "단말 제한 확인",
+      "ruleType": "제약",
+      "condition": "상품정보.단말제한 = 'Y'",
+      "action": "단말정보 및 단말속성 조회",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_012",
+      "ruleName": "단말 지원 여부",
+      "ruleType": "제약",
+      "condition": "단말속성.지원여부 = 'N'",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "지원하지 않는 단말입니다",
+      "dbQueries": ["고객현재단말", "단말속성"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_013",
+      "ruleName": "가입 체크 통과",
+      "ruleType": "검증",
+      "condition": "모든 체크 통과",
+      "action": "처리가능여부 = 'Y', 성공 반환",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_014",
+      "ruleName": "가입 여부 확인",
+      "ruleType": "검증",
+      "condition": "기존가입 = NOT_FOUND OR 기존가입.상태 = '해지'",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "가입하지 않은 상품입니다",
+      "dbQueries": ["고객가입상품"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_015",
+      "ruleName": "최소 사용 기간 존재",
+      "ruleType": "제약",
+      "condition": "기존가입.최소사용기간 > 0",
+      "action": "사용기간 계산",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_016",
+      "ruleName": "최소 사용 기간 미달",
+      "ruleType": "제약",
+      "condition": "사용기간 < 기존가입.최소사용기간",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "최소 {기존가입.최소사용기간}일 이상 사용 필요",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_017",
+      "ruleName": "종속 서비스 가입중",
+      "ruleType": "제약",
+      "condition": "종속서비스.상태 = '가입중'",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "{종속서비스.상품명} 먼저 해지 필요",
+      "dbQueries": ["종속부가서비스"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_018",
+      "ruleName": "약정 여부 확인",
+      "ruleType": "검증",
+      "condition": "기존가입.약정여부 = 'Y'",
+      "action": "약정정보 조회",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_019",
+      "ruleName": "약정 유효 및 위약금 발생",
+      "ruleType": "계산",
+      "condition": "약정정보 EXISTS AND 약정정보.약정상태 = '유효' AND 위약금 > 0",
+      "action": "위약금 설정, 경고메시지 출력",
+      "failureMessage": "위약금 {위약금}원 발생",
+      "dbQueries": ["상품약정정보"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_020",
+      "ruleName": "프로모션 유효 확인",
+      "ruleType": "검증",
+      "condition": "프로모션정보 EXISTS AND 프로모션정보.상태 = '유효'",
+      "action": "혜택반환금액 계산",
+      "failureMessage": "",
+      "dbQueries": ["상품프로모션"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_021",
+      "ruleName": "프로모션 혜택 반환",
+      "ruleType": "계산",
+      "condition": "혜택반환금액 > 0",
+      "action": "혜택반환금액 설정, 경고메시지 출력",
+      "failureMessage": "프로모션 혜택 반환 {혜택반환금액}원",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_022",
+      "ruleName": "해지 체크 통과",
+      "ruleType": "검증",
+      "condition": "모든 체크 통과",
+      "action": "처리가능여부 = 'Y', 성공 반환",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_023",
+      "ruleName": "통화중대기 상품",
+      "ruleType": "검증",
+      "condition": "상품ID = 'NA00000292'",
+      "action": "통화중대기_가입Rule 호출",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_024",
+      "ruleName": "데이터쉐어링 상품",
+      "ruleType": "검증",
+      "condition": "상품ID = 'NA00001234'",
+      "action": "데이터쉐어링_가입Rule 호출",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_025",
+      "ruleName": "선택약정할인 상품",
+      "ruleType": "검증",
+      "condition": "상품ID = 'NA00004430'",
+      "action": "선택약정할인_가입Rule 호출",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_026",
+      "ruleName": "T지원금약정 상품",
+      "ruleType": "검증",
+      "condition": "상품ID = 'NA00004487'",
+      "action": "T지원금약정_가입Rule 호출",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_027",
+      "ruleName": "기본 Rule",
+      "ruleType": "검증",
+      "condition": "기타 상품",
+      "action": "처리가능여부 = 'Y'",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_028",
+      "ruleName": "요금제 세대 체크",
+      "ruleType": "자격",
+      "condition": "현재요금제.세대 < '4G'",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "4G 이상 요금제 필요",
+      "dbQueries": ["고객현재요금제"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_029",
+      "ruleName": "단말 지원 여부",
+      "ruleType": "제약",
+      "condition": "단말속성.지원여부 = 'N'",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "통화중대기 지원 단말 아님",
+      "dbQueries": ["고객현재단말", "단말속성"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_030",
+      "ruleName": "통화중대기 가입 가능",
+      "ruleType": "검증",
+      "condition": "모든 체크 통과",
+      "action": "처리가능여부 = 'Y', 성공 반환",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_031",
+      "ruleName": "약정 존재 여부",
+      "ruleType": "자격",
+      "condition": "약정정보 = NOT_FOUND OR 약정정보.약정존재여부 = 'N'",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "약정 가입 후 신청 가능",
+      "dbQueries": ["고객약정정보"],
+      "is_DB_IO": true
+    },
+    {
+      "ruleId": "RULE_032",
+      "ruleName": "기준 상품 가입 여부",
+      "ruleType": "자격",
+      "condition": "약정정보.기준상품가입여부 = 'N'",
+      "action": "처리가능여부 = 'N', 실패 반환",
+      "failureMessage": "기준 요금제로 변경 후 가입 가능",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_033",
+      "ruleName": "선택약정할인 가입 가능",
+      "ruleType": "검증",
+      "condition": "모든 체크 통과",
+      "action": "처리가능여부 = 'Y', 할인율 = 20, 성공 반환",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_034",
+      "ruleName": "약정 만료",
+      "ruleType": "계산",
+      "condition": "남은개월수 <= 0",
+      "action": "위약금 = 0 반환",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_035",
+      "ruleName": "12개월 미만 위약금",
+      "ruleType": "계산",
+      "condition": "경과개월수 < 12",
+      "action": "위약금 = 기본위약금",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_036",
+      "ruleName": "12개월 이상 위약금",
+      "ruleType": "계산",
+      "condition": "경과개월수 >= 12",
+      "action": "위약금 = 기본위약금 × 0.5",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_037",
+      "ruleName": "최소사용기간 충족",
+      "ruleType": "계산",
+      "condition": "경과개월수 >= 최소사용개월수",
+      "action": "반환금액 = 0 반환",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    },
+    {
+      "ruleId": "RULE_038",
+      "ruleName": "혜택 반환금액 계산",
+      "ruleType": "계산",
+      "condition": "경과개월수 < 최소사용개월수",
+      "action": "반환비율 계산 후 반환금액 = 혜택금액 × 반환비율",
+      "failureMessage": "",
+      "dbQueries": [],
+      "is_DB_IO": false
+    }
+  ],
+  "statistics": {
+    "totalFunctions": 9,
+    "totalIfThen": 40,
+    "totalDbQueries": 20,
+    "totalComplexRules": 13,
+    "dbTables": [
+      "고객가입상품",
+      "부가서비스기준요금제",
+      "고객현재요금제",
+      "선행부가서비스",
+      "고객가입여부",
+      "배타부가서비스",
+      "상품정보",
+      "고객현재단말",
+      "단말속성",
+      "종속부가서비스",
+      "상품약정정보",
+      "상품프로모션",
+      "고객약정정보"
+    ]
+  },
+  "serviceTypes": {
+    "01": {
+      "name": "가입",
+      "checkFunction": "부가서비스_가입체크",
+      "rules": [
+        "중복가입",
+        "기준요금제",
+        "선행서비스",
+        "배타서비스",
+        "나이제한",
+        "단말제한"
+      ]
+    },
+    "03": {
+      "name": "해지",
+      "checkFunction": "부가서비스_해지체크",
+      "rules": [
+        "가입여부",
+        "최소사용기간",
+        "종속서비스",
+        "약정위약금",
+        "프로모션혜택반환"
+      ]
+    }
+  }
+}

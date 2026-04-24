@@ -1,0 +1,613 @@
+{
+  "moduleInfo": {
+    "moduleId": "zordms0360120",
+    "moduleName": "요금제사용가능여부체크(요금제) 공통모듈",
+    "totalLines": 5240,
+    "pseudocodeLines": 442,
+    "description": "요금제 가입/변경/해지 시 사용 가능 여부 체크"
+  },
+  "functions": [
+    {
+      "functionName": "zordms0360120",
+      "lineNumber": "7-18",
+      "description": "메인 함수 - 전체 처리 흐름 제어",
+      "inputParameters": ["입력"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 0,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 0,
+        "complexityLevel": "매우 낮음"
+      },
+      "businessRules": []
+    },
+    {
+      "functionName": "a000_input_validation",
+      "lineNumber": "21-28",
+      "description": "입력 검증 - 입력 데이터 유효성 검증 및 초기값 설정",
+      "inputParameters": ["입력"],
+      "returnValue": "성공",
+      "complexity": {
+        "ifThenCount": 0,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 0,
+        "complexityLevel": "매우 낮음"
+      },
+      "businessRules": []
+    },
+    {
+      "functionName": "b000_main_proc",
+      "lineNumber": "31-47",
+      "description": "메인 처리 - 요금제 목록 순회 및 가입/변경/해지 구분에 따라 체크 수행",
+      "inputParameters": ["입력"],
+      "returnValue": "성공",
+      "complexity": {
+        "ifThenCount": 3,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 3,
+        "complexityLevel": "낮음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_001",
+          "ruleName": "가입 처리 분기",
+          "ruleType": "검증",
+          "condition": "요금제.가입해지구분 = '01'",
+          "action": "요금제_가입체크 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_002",
+          "ruleName": "변경 처리 분기",
+          "ruleType": "검증",
+          "condition": "요금제.가입해지구분 = '02'",
+          "action": "요금제_변경체크 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_003",
+          "ruleName": "해지 처리 분기",
+          "ruleType": "검증",
+          "condition": "요금제.가입해지구분 = '03'",
+          "action": "요금제_해지체크 호출",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "요금제_가입체크",
+      "lineNumber": "51-156",
+      "description": "신규 가입 시 요금제 사용 가능 여부 체크",
+      "inputParameters": ["요금제"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 14,
+        "nestedIfCount": 6,
+        "dbQueryCount": 5,
+        "complexityScore": 24,
+        "complexityLevel": "높음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_004",
+          "ruleName": "요금제 정보 존재 확인",
+          "ruleType": "검증",
+          "condition": "요금제정보 = NOT_FOUND",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "요금제 정보 없음",
+          "dbQueries": ["요금제마스터"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_005",
+          "ruleName": "판매가능 여부 체크",
+          "ruleType": "검증",
+          "condition": "요금제정보.판매가능여부 = 'N'",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "판매 중지된 요금제",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_006",
+          "ruleName": "판매기간 체크",
+          "ruleType": "검증",
+          "condition": "입력.처리일자 < 요금제정보.판매시작일 OR 입력.처리일자 > 요금제정보.판매종료일",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "판매 기간 아님",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_007",
+          "ruleName": "최소나이 체크",
+          "ruleType": "자격",
+          "condition": "요금제정보.최소나이 > 0 AND 고객.나이 < 요금제정보.최소나이",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "최소 [N]세 이상 가입 가능",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_008",
+          "ruleName": "최대나이 체크",
+          "ruleType": "자격",
+          "condition": "요금제정보.최대나이 > 0 AND 고객.나이 > 요금제정보.최대나이",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "최대 [N]세 이하 가입 가능",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_009",
+          "ruleName": "채널 제한 체크",
+          "ruleType": "제약",
+          "condition": "요금제정보.채널제한 = 'Y' AND 입력.채널 NOT IN 허용채널목록",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "해당 채널에서 판매 불가",
+          "dbQueries": ["요금제판매채널"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_010",
+          "ruleName": "단말 세대 체크",
+          "ruleType": "제약",
+          "condition": "요금제정보.단말세대제한 = 'Y' AND 단말정보.세대 < 요금제정보.요구세대",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "[요구세대] 이상 단말 필요",
+          "dbQueries": ["단말정보"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_011",
+          "ruleName": "USIM 타입 체크",
+          "ruleType": "제약",
+          "condition": "요금제정보.USIM타입제한 = 'Y' AND USIM정보.타입 ≠ 요금제정보.요구USIM타입",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "[요구USIM타입] USIM 필요",
+          "dbQueries": ["USIM정보"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_012",
+          "ruleName": "지역 제한 체크",
+          "ruleType": "제약",
+          "condition": "요금제정보.지역제한 = 'Y' AND 지역코드 NOT IN 허용지역목록",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "해당 지역에서 가입 불가",
+          "dbQueries": ["요금제판매지역"],
+          "is_DB_IO": true
+        }
+      ]
+    },
+    {
+      "functionName": "요금제_변경체크",
+      "lineNumber": "160-267",
+      "description": "요금제 변경 시 사용 가능 여부 체크",
+      "inputParameters": ["요금제"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 14,
+        "nestedIfCount": 4,
+        "dbQueryCount": 5,
+        "complexityScore": 24,
+        "complexityLevel": "높음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_013",
+          "ruleName": "기존 요금제 존재 확인",
+          "ruleType": "검증",
+          "condition": "기존요금제 = NOT_FOUND",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "현재 가입된 요금제 없음",
+          "dbQueries": ["고객현재요금제"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_014",
+          "ruleName": "동일 요금제 체크",
+          "ruleType": "검증",
+          "condition": "기존요금제.요금제ID = 신규요금제ID",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "이미 가입한 요금제",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_015",
+          "ruleName": "신규 요금제 가입 조건 체크",
+          "ruleType": "검증",
+          "condition": "출력.사용가능여부 = 'N'",
+          "action": "실패 반환 (요금제_가입체크 결과)",
+          "failureMessage": "신규 요금제 가입 조건 미충족",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_016",
+          "ruleName": "최소 사용 기간 체크",
+          "ruleType": "제약",
+          "condition": "기존요금제.최소사용기간 > 0 AND 사용기간 < 기존요금제.최소사용기간",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "최소 [N]일 사용 필요",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_017",
+          "ruleName": "변경 횟수 제한 체크",
+          "ruleType": "제약",
+          "condition": "변경이력.변경횟수 >= 3",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "월 3회 변경 제한 초과",
+          "dbQueries": ["요금제변경이력"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_018",
+          "ruleName": "세대간 변경 제한 체크",
+          "ruleType": "제약",
+          "condition": "기존요금제.세대 = '3G' AND 신규요금제정보.세대 = '5G' AND 직접변경불가규칙 = 'Y'",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "4G 거쳐서 변경 필요",
+          "dbQueries": ["요금제마스터"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_019",
+          "ruleName": "변경 제한 관계 체크",
+          "ruleType": "제약",
+          "condition": "변경제한 EXISTS AND 변경제한.변경불가 = 'Y'",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "변경제한.불가사유",
+          "dbQueries": ["요금제변경제한"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_020",
+          "ruleName": "약정 위약금 체크",
+          "ruleType": "계산",
+          "condition": "약정정보 EXISTS AND 약정정보.약정상태 = '유효' AND 남은개월수 > 0",
+          "action": "위약금 계산 및 설정",
+          "failureMessage": "약정 위약금 [위약금]원 발생",
+          "dbQueries": ["요금제약정정보"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_021",
+          "ruleName": "요금 상승 고지",
+          "ruleType": "검증",
+          "condition": "신규요금제정보.기본료 > 기존요금제.기본료 × 1.3",
+          "action": "경고메시지 출력 (처리는 가능)",
+          "failureMessage": "요금이 30% 이상 상승합니다",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_022",
+          "ruleName": "요금 하락 안내",
+          "ruleType": "검증",
+          "condition": "신규요금제정보.기본료 < 기존요금제.기본료 × 0.7",
+          "action": "안내메시지 출력",
+          "failureMessage": "요금이 30% 이상 절감됩니다",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "요금제_해지체크",
+      "lineNumber": "271-319",
+      "description": "요금제 해지 시 체크 (일반적으로 서비스 해지와 동일)",
+      "inputParameters": ["요금제"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 5,
+        "nestedIfCount": 2,
+        "dbQueryCount": 3,
+        "complexityScore": 11,
+        "complexityLevel": "중간"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_023",
+          "ruleName": "기존 요금제 존재 확인",
+          "ruleType": "검증",
+          "condition": "기존요금제 = NOT_FOUND",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "현재 가입된 요금제 없음",
+          "dbQueries": ["고객현재요금제"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_024",
+          "ruleName": "최소 사용 기간 체크",
+          "ruleType": "제약",
+          "condition": "기존요금제.최소사용기간 > 0 AND 사용기간 < 기존요금제.최소사용기간",
+          "action": "사용가능여부 = 'N', 실패 반환",
+          "failureMessage": "최소 사용 기간 미달",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_025",
+          "ruleName": "약정 위약금 체크",
+          "ruleType": "계산",
+          "condition": "약정정보 EXISTS AND 약정정보.약정상태 = '유효'",
+          "action": "위약금 계산 및 경고메시지 출력",
+          "failureMessage": "약정 위약금 발생",
+          "dbQueries": ["요금제약정정보"],
+          "is_DB_IO": true
+        },
+        {
+          "ruleId": "RULE_026",
+          "ruleName": "부가서비스 자동 해지 안내",
+          "ruleType": "검증",
+          "condition": "부가서비스목록.건수 > 0",
+          "action": "경고메시지 출력",
+          "failureMessage": "가입 중인 부가서비스 [N]건 자동 해지됨",
+          "dbQueries": ["고객가입부가서비스"],
+          "is_DB_IO": true
+        }
+      ]
+    },
+    {
+      "functionName": "계산위약금",
+      "lineNumber": "323-357",
+      "description": "약정 위약금을 경과개월수에 따라 차등 계산",
+      "inputParameters": ["약정정보", "경과개월수"],
+      "returnValue": "위약금",
+      "complexity": {
+        "ifThenCount": 7,
+        "nestedIfCount": 4,
+        "dbQueryCount": 0,
+        "complexityScore": 7,
+        "complexityLevel": "낮음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_027",
+          "ruleName": "경과개월수 자동 계산",
+          "ruleType": "계산",
+          "condition": "경과개월수 = NULL",
+          "action": "경과개월수 = 계산(약정정보.약정시작일, 현재일자)",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_028",
+          "ruleName": "약정 만료 체크",
+          "ruleType": "계산",
+          "condition": "남은개월수 <= 0",
+          "action": "위약금 = 0 반환",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_029",
+          "ruleName": "24개월 약정 위약금 (0-5개월)",
+          "ruleType": "계산",
+          "condition": "약정정보.약정타입 = '24개월' AND 경과개월수 < 6",
+          "action": "위약금 = 기본위약금 × 1.0",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_030",
+          "ruleName": "24개월 약정 위약금 (6-11개월)",
+          "ruleType": "계산",
+          "condition": "약정정보.약정타입 = '24개월' AND 경과개월수 < 12",
+          "action": "위약금 = 기본위약금 × 0.75",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_031",
+          "ruleName": "24개월 약정 위약금 (12-17개월)",
+          "ruleType": "계산",
+          "condition": "약정정보.약정타입 = '24개월' AND 경과개월수 < 18",
+          "action": "위약금 = 기본위약금 × 0.5",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_032",
+          "ruleName": "24개월 약정 위약금 (18-23개월)",
+          "ruleType": "계산",
+          "condition": "약정정보.약정타입 = '24개월' AND 경과개월수 >= 18",
+          "action": "위약금 = 기본위약금 × 0.25",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_033",
+          "ruleName": "12개월 약정 위약금 (0-5개월)",
+          "ruleType": "계산",
+          "condition": "약정정보.약정타입 = '12개월' AND 경과개월수 < 6",
+          "action": "위약금 = 기본위약금 × 1.0",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_034",
+          "ruleName": "12개월 약정 위약금 (6-11개월)",
+          "ruleType": "계산",
+          "condition": "약정정보.약정타입 = '12개월' AND 경과개월수 >= 6",
+          "action": "위약금 = 기본위약금 × 0.5",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "p010_set_initial_val",
+      "lineNumber": "360-370",
+      "description": "초기값 설정 - 출력 변수의 초기값 설정",
+      "inputParameters": ["입력"],
+      "returnValue": "성공",
+      "complexity": {
+        "ifThenCount": 0,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 0,
+        "complexityLevel": "매우 낮음"
+      },
+      "businessRules": []
+    },
+    {
+      "functionName": "p100_chk_mndt_item",
+      "lineNumber": "373-392",
+      "description": "필수항목 체크 - 필수 입력 항목의 존재 여부 확인",
+      "inputParameters": ["입력"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 3,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 3,
+        "complexityLevel": "낮음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_035",
+          "ruleName": "서비스관리번호 필수 체크",
+          "ruleType": "검증",
+          "condition": "입력.서비스관리번호 = NULL",
+          "action": "오류 발생, 실패 반환",
+          "failureMessage": "서비스관리번호 필수",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_036",
+          "ruleName": "요금제ID 필수 체크",
+          "ruleType": "검증",
+          "condition": "입력.요금제ID = NULL",
+          "action": "오류 발생, 실패 반환",
+          "failureMessage": "요금제ID 필수",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_037",
+          "ruleName": "가입해지구분 필수 체크",
+          "ruleType": "검증",
+          "condition": "입력.가입해지구분 = NULL",
+          "action": "오류 발생, 실패 반환",
+          "failureMessage": "가입해지구분 필수",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    },
+    {
+      "functionName": "p200_chk_mtcg_item",
+      "lineNumber": "395-408",
+      "description": "선택항목 체크 - 선택 항목의 기본값 설정 및 유효성 검증",
+      "inputParameters": ["입력"],
+      "returnValue": "성공/실패",
+      "complexity": {
+        "ifThenCount": 2,
+        "nestedIfCount": 0,
+        "dbQueryCount": 0,
+        "complexityScore": 2,
+        "complexityLevel": "낮음"
+      },
+      "businessRules": [
+        {
+          "ruleId": "RULE_038",
+          "ruleName": "처리일자 기본값 설정",
+          "ruleType": "검증",
+          "condition": "입력.처리일자 = NULL",
+          "action": "입력.처리일자 = 현재일자",
+          "failureMessage": "",
+          "dbQueries": [],
+          "is_DB_IO": false
+        },
+        {
+          "ruleId": "RULE_039",
+          "ruleName": "가입해지구분 유효성 검증",
+          "ruleType": "검증",
+          "condition": "입력.가입해지구분 NOT IN ('01', '02', '03')",
+          "action": "오류 발생, 실패 반환",
+          "failureMessage": "유효하지 않은 가입해지구분",
+          "dbQueries": [],
+          "is_DB_IO": false
+        }
+      ]
+    }
+  ],
+  "statistics": {
+    "totalFunctions": 10,
+    "totalIfThen": 48,
+    "totalDbQueries": 13,
+    "totalComplexRules": 13,
+    "dbTables": [
+      "요금제마스터",
+      "요금제판매채널",
+      "단말정보",
+      "USIM정보",
+      "요금제판매지역",
+      "고객현재요금제",
+      "요금제변경이력",
+      "요금제변경제한",
+      "요금제약정정보",
+      "고객가입부가서비스"
+    ]
+  },
+  "planTypes": {
+    "01": {
+      "name": "가입",
+      "checkFunction": "요금제_가입체크",
+      "rules": [
+        "판매가능",
+        "판매기간",
+        "나이제한",
+        "채널제한",
+        "단말세대",
+        "USIM타입",
+        "지역제한"
+      ]
+    },
+    "02": {
+      "name": "변경",
+      "checkFunction": "요금제_변경체크",
+      "rules": [
+        "신규가입조건",
+        "최소사용기간",
+        "변경횟수제한",
+        "세대간변경제한",
+        "변경제한관계",
+        "약정위약금",
+        "요금변동고지"
+      ]
+    },
+    "03": {
+      "name": "해지",
+      "checkFunction": "요금제_해지체크",
+      "rules": [
+        "최소사용기간",
+        "약정위약금",
+        "부가서비스자동해지"
+      ]
+    }
+  }
+}
