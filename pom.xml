@@ -102,6 +102,32 @@
     </dependency>
   </dependencies>
 
+  <repositories>
+    <repository>
+      <id>bamoe-maven-repo</id>
+      <url>https://bamoe-maven-repo-bamoe.apps.itz-bg86ev.infra01-lb.syd05.techzone.ibm.com/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>bamoe-maven-repo</id>
+      <url>https://bamoe-maven-repo-bamoe.apps.itz-bg86ev.infra01-lb.syd05.techzone.ibm.com/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
   <build>
     <finalName>${project.artifactId}</finalName>
     <plugins>
