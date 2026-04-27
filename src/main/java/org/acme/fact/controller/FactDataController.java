@@ -25,31 +25,31 @@ public class FactDataController {
     }
 
     /**
-     * 전체 고객 가입 정보 목록 조회
+     * 전체 고객 서비스 정보 목록 조회
      * @return
      */
-    @Operation(summary = "고객 가입 목록 조회", description = "고객 가입 전체 건수와 목록 조회")
+    @Operation(summary = "고객 서비스 목록 조회", description = "고객 서비스 전체 건수와 목록 조회")
     @ApiResponse(responseCode = "200", description = "성공",
-            content = @Content(array = @ArraySchema(schema = @Schema(implementation = CustSubscribeSummary.class))))
-    @GetMapping("/cust/listCustSubscribe")
-    public ListResDto<CustSubscribeSummary> listCustSubscribe() {
+            content = @Content(array = @ArraySchema(schema = @Schema(implementation = CustServiceSummary.class))))
+    @GetMapping("/cust/listCustService")
+    public ListResDto<CustServiceSummary> listCustService() {
         return factDataService.getCustSummaryList();
     }
 
     /**
-     * 고객 가입 정보 조회
+     * 고객 서비스 정보 조회
      * @param svcMgmtNum
      * @return
      */
-    @Operation(summary = "고객 가입 정보 조회", description = "서비스관리번호로 고객 가입 정보 조회")
+    @Operation(summary = "고객 서비스 정보 조회", description = "서비스관리번호로 고객 서비스 정보 조회")
     @ApiResponse(responseCode = "200", description = "조회 성공",
-            content = @Content(schema = @Schema(implementation = CustSubscribe.class)))
-    @GetMapping("/cust/getCustSubscribe/{svcMgmtNum}")
-    public ResponseEntity<CustSubscribe> CustSubscribe(
+            content = @Content(schema = @Schema(implementation = CustService.class)))
+    @GetMapping("/cust/getCustService/{svcMgmtNum}")
+    public ResponseEntity<CustService> getCustService(
             @Parameter(description = "서비스관리번호", example = "7000000001") @PathVariable String svcMgmtNum) {
 
         // 서비스에서 Map.get(svcMgmtNum) 호출
-        CustSubscribe info = factDataService.getCustSubscribe(svcMgmtNum);
+        CustService info = factDataService.getCustService(svcMgmtNum);
         return info != null ? ResponseEntity.ok(info) : ResponseEntity.notFound().build();
     }
 

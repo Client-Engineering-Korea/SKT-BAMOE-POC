@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.acme.fact.domain.*;
-import org.acme.fact.domain.CustSubscribe.CustProd;
+import org.acme.fact.domain.CustService.CustProd;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -21,7 +21,7 @@ public class FactDataService {
     @Value("${fact.excelFilename}")
     private String factDataExcelFilename;
 
-    private Map<String, CustSubscribe> custSubscribeMap = new HashMap<>();
+    private Map<String, CustService> custServiceMap = new HashMap<>();
     private Map<String, EquipmentModel> equipmentModelMap = new HashMap<>();
 
     /**
@@ -54,8 +54,8 @@ public class FactDataService {
             Map<String, List<CustProd>> custProdData = loadCustProd(workbook.getSheet("cust_prod"));
 
             // 고객가입 시트
-            Sheet custSubscribeSheet = workbook.getSheet("cust_scrb");
-            this.custSubscribeMap = loadCustSubscribe(custSubscribeSheet, custProdData);
+            Sheet custServiceSheet = workbook.getSheet("cust_svc");
+            this.custServiceMap = loadCustService(custServiceSheet, custProdData);
 
             // 단말모델 시트
             Sheet equipmentModelSheet = workbook.getSheet("eqp_mdl");
@@ -100,13 +100,13 @@ public class FactDataService {
     }
 
     /**
-     * 고객 가입 정보 load
+     * 고객 서비스 정보 load
      * @param sheet
      * @param custProdMap
      * @return
      */
-    private Map<String, CustSubscribe> loadCustSubscribe(Sheet sheet, Map<String, List<CustProd>> custProdMap) {
-        Map<String, CustSubscribe> tempMap = new HashMap<>();
+    private Map<String, CustService> loadCustService(Sheet sheet, Map<String, List<CustProd>> custProdMap) {
+        Map<String, CustService> tempMap = new HashMap<>();
         DataFormatter df = new DataFormatter();
 
         Map<String, Integer> colMap = getColIndex(sheet);
@@ -118,26 +118,68 @@ public class FactDataService {
             // 해당 고객의 상품 리스트를 가져옴 (없으면 빈 리스트)
             List<CustProd> prodList = custProdMap.getOrDefault(svcMgmtNum, Collections.emptyList());
 
-            CustSubscribe info = new CustSubscribe(
+            CustService info = new CustService(
+                    df.formatCellValue(row.getCell(colMap.get("CNTRCT_MGMT_NUM"))),      // 계약관리번호
+                    df.formatCellValue(row.getCell(colMap.get("USE_CNTRCT_CL_CD"))),     // 이용계약구분코드
+                    df.formatCellValue(row.getCell(colMap.get("USE_CNTRCT_ST_CD"))),     // 이용계약상태코드
+                    df.formatCellValue(row.getCell(colMap.get("CNTRCT_DT"))),            // 계약일자
+                    df.formatCellValue(row.getCell(colMap.get("CO_CL_CD"))),             // 회사구분코드
+                    df.formatCellValue(row.getCell(colMap.get("TAX_BILL_ISUE_YN"))),     // 세금계산서발행여부
+                    df.formatCellValue(row.getCell(colMap.get("NM_CUST_NUM"))),          // 명의고객번호
+                    df.formatCellValue(row.getCell(colMap.get("ACNT_NUM"))),             // 계정번호
                     svcMgmtNum,
-                    df.formatCellValue(row.getCell(colMap.get("SVC_NUM"))),
-                    df.formatCellValue(row.getCell(colMap.get("FEE_PROD_ID"))),
-                    df.formatCellValue(row.getCell(colMap.get("SVC_TYP_CD"))),
-                    df.formatCellValue(row.getCell(colMap.get("SVC_DTL_CL_CD"))),
-                    df.formatCellValue(row.getCell(colMap.get("BIRTH_DT"))),
-                    df.formatCellValue(row.getCell(colMap.get("CUST_TYP_CD"))),
-                    df.formatCellValue(row.getCell(colMap.get("CUST_DTL_TYP_CD"))),
-                    df.formatCellValue(row.getCell(colMap.get("ADD_PROD_CNT"))),
-                    df.formatCellValue(row.getCell(colMap.get("EQP_MDL_CD"))),
-                    df.formatCellValue(row.getCell(colMap.get("SVC_SCBR_DT"))),
-                    df.formatCellValue(row.getCell(colMap.get("SVC_TERM_DT"))),
+                    df.formatCellValue(row.getCell(colMap.get("SVC_CD"))),               // 서비스구분코드
+                    df.formatCellValue(row.getCell(colMap.get("SVC_NUM"))),              // 서비스번호
+                    df.formatCellValue(row.getCell(colMap.get("SVC_ST_CD"))),            // 서비스상태코드
+                    df.formatCellValue(row.getCell(colMap.get("SVC_ST_CHG_CD"))),        // 서비스상태변경코드
+                    df.formatCellValue(row.getCell(colMap.get("SVC_CHG_RSN_CD"))),       // 서비스변경사유코드
+                    df.formatCellValue(row.getCell(colMap.get("SVC_TYP_CD"))),           // 서비스이용종류코드
+                    df.formatCellValue(row.getCell(colMap.get("SVC_TYP_NM"))),           // 서비스이용종류명
+                    df.formatCellValue(row.getCell(colMap.get("SVC_SCRB_DT"))),          // 서비스가입일자
+                    df.formatCellValue(row.getCell(colMap.get("SCRB_REQ_RSN_CD"))),      // 가입신청사유코드
+                    df.formatCellValue(row.getCell(colMap.get("SVC_TERM_DT"))),          // 서비스해지일자
+                    df.formatCellValue(row.getCell(colMap.get("FEE_PROD_ID"))),          // 요금상품id
+                    df.formatCellValue(row.getCell(colMap.get("IDNT_NUM_CD"))),          // 식별번호구분코드
+                    df.formatCellValue(row.getCell(colMap.get("GRTM_CL_CD"))),           // 보증금구분코드
+                    df.formatCellValue(row.getCell(colMap.get("WLF_DC_CD"))),            // 복지할인유형코드
+                    df.formatCellValue(row.getCell(colMap.get("WLF_DC_NM"))),            // 복지할인유형명
+                    df.formatCellValue(row.getCell(colMap.get("WEB_MBR_SCRB_CL_CD"))),   // 웹회원가입구분코드(TWORLD가입여부)
+                    df.formatCellValue(row.getCell(colMap.get("WEB_MBR_REQ_AGREE_YN"))), // 웹회원신청동의여부(TWORLD동의여부)
+                    df.formatCellValue(row.getCell(colMap.get("EQP_MDL_CD"))),           // 단말기모델코드
+                    df.formatCellValue(row.getCell(colMap.get("EQP_SER_NUM"))),          // 단말기일련번호
+                    df.formatCellValue(row.getCell(colMap.get("SIM_SER_NUM"))),          // sim일련번호
+                    df.formatCellValue(row.getCell(colMap.get("EQP_USG_CD"))),           // 단말기용도코드
+                    df.formatCellValue(row.getCell(colMap.get("EQP_MTHD_CD"))),          // 단말기방식코드
+                    df.formatCellValue(row.getCell(colMap.get("REL_SVC_MGMT_NUM"))),     // 관계서비스관리번호
+                    df.formatCellValue(row.getCell(colMap.get("REL_FEE_PROD_ID"))),      // 관계서비스요금제
+                    df.formatCellValue(row.getCell(colMap.get("CTZ_CORP_BIZ_SER_NUM"))), // 주민법인사업자등록일련번호
+                    df.formatCellValue(row.getCell(colMap.get("CTZ_CORP_BIZ_NUM_PINF"))),// 주민법인사업자등록번호부분정보
+                    Integer.parseInt(df.formatCellValue(row.getCell(colMap.get("AGE")))),// 나이
+                    df.formatCellValue(row.getCell(colMap.get("CUST_TYP_CD"))),          // 고객유형코드
+                    df.formatCellValue(row.getCell(colMap.get("CUST_DTL_TYP_CD"))),      // 고객세부유형코드
+                    df.formatCellValue(row.getCell(colMap.get("ACNT_TYP_CD"))),          // 계정유형코드
+                    df.formatCellValue(row.getCell(colMap.get("PAY_MTHD_CD"))),          // 납부방법코드
+                    df.formatCellValue(row.getCell(colMap.get("SCRB_DT"))),              // 상품가입일자
+                    df.formatCellValue(row.getCell(colMap.get("PROD_TERM_RSN_CD"))),     // 상품해지사유코드
+                    df.formatCellValue(row.getCell(colMap.get("SVC_DTL_CL_CD"))),        // 서비스세부구분코드
+                    df.formatCellValue(row.getCell(colMap.get("EQP_VER_NUM"))),          // eqp_ver_num
+                    df.formatCellValue(row.getCell(colMap.get("EQP_MGMT_ST_CD"))),       // 단말기관리상태코드
+                    df.formatCellValue(row.getCell(colMap.get("MKTG_DT"))),              // 단말기출시일자
+                    df.formatCellValue(row.getCell(colMap.get("NW_MTHD_CD"))),           // network방식코드
+                    df.formatCellValue(row.getCell(colMap.get("NATE_CL_CD"))),           // NATE구분코드
+                    df.formatCellValue(row.getCell(colMap.get("AUTH_KEY_NUM"))),         // 인증키번호
+                    df.formatCellValue(row.getCell(colMap.get("TRK_IDX_NUM"))),          // trkindex번호
+                    df.formatCellValue(row.getCell(colMap.get("INT_PHON_STA_CL_CD"))),   // 국제전화발신금지여부
+                    df.formatCellValue(row.getCell(colMap.get("PROD_ID"))),              // 서비스별상품id
+                    df.formatCellValue(row.getCell(colMap.get("KIT_MDL_CD"))),           // 킷모델코드
+                    df.formatCellValue(row.getCell(colMap.get("KIT_SER_NUM"))),          // 킷일련번호
                     prodList
             );
             tempMap.put(svcMgmtNum, info);
         }
 
         // 메모리 내용 출력
-        log.info("===== custSubscribeMap({}) =====", tempMap.size());
+        log.info("===== custServiceMap({}) =====", tempMap.size());
         tempMap.forEach((key, value) -> {
             log.info("KEY[{}] : VALUE[{}]", key, value);
         });
@@ -224,23 +266,23 @@ public class FactDataService {
     }
 
     /**
-     * 고객 가입 요약 정보 목록 및 건수 조회
+     * 고객 서비스 요약 정보 목록 및 건수 조회
      * @return
      */
-    public ListResDto<CustSubscribeSummary> getCustSummaryList() {
-        List<CustSubscribeSummary> list = custSubscribeMap.values().stream()
-                .map(c -> new CustSubscribeSummary(c.svcMgmtNum(), c.svcNum()))
+    public ListResDto<CustServiceSummary> getCustSummaryList() {
+        List<CustServiceSummary> list = custServiceMap.values().stream()
+                .map(c -> new CustServiceSummary(c.svcMgmtNum(), c.svcNum()))
                 .toList();
         return new ListResDto<>(list.size(), list);
     }
 
     /**
-     * 고객 가입 정보 조회
+     * 고객 서비스 정보 조회
      * @param svcMgmtNum
      * @return
      */
-    public CustSubscribe getCustSubscribe(String svcMgmtNum) {
-        return custSubscribeMap.get(svcMgmtNum);
+    public CustService getCustService(String svcMgmtNum) {
+        return custServiceMap.get(svcMgmtNum);
     }
 
     /**
