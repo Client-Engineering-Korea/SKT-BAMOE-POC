@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20240513/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20230324/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:kie="https://kie.org/dmn/extensions/1.0" expressionLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/" namespace="https://kie.org/dmn/_A1B2C3D4-E5F6-7890-ABCD-EF1234560298" id="_B2C3D4E5-F6A7-8901-BCDE-F12345670298" name="_D000000298">
+  <description>_D000000298
+OMD채널제한_요금제_가입권한체크</description>
+  <itemDefinition id="_A4C2E3F8-3445-4CB8-A43B-197A90011502" name="TransactionContext" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_DCFA1910-634F-46B5-B375-49397E782B26" name="authorities" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>Any</typeRef>
+    </itemComponent>
+    <itemComponent id="_E6403DB1-6DB6-4ED6-A31A-5D34F38E479C" name="businessProcessServiceTransactionId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_4F3D97F7-570E-4E00-9EFD-98CE883C7072" name="changeType" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_7596A686-9C9D-49C7-8194-3327EC08E666" name="channelCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_DB0601E6-F869-49F6-B59E-DACF8A49427E" name="hasOmdChannelPlanJoinAuthorityYn_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_7D89222A-8C4F-4B64-911E-A1938B08D3AF" name="hasProductGroupExistYn_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_B0D9F6E1-EBBB-4604-A13E-8657E32BC9AF" name="hasTerminalFunctionYn_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_CD2E1628-F9A5-4139-8B5C-72051B9941D9" name="isPOSProcessingTarget_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_31178236-56B2-4B5C-8273-0D779E6AA7AA" name="isRateChangeRestricted_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_C2C8359F-5585-4D69-BA41-9D308B6C3309" name="isWiBroRateApplicable_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_3D6B941F-2691-4035-B711-B6290E63E0EF" name="onlineBatchCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_0F478D15-6D64-49E4-BA80-4B22B125DE15" name="requestTimestamp" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date and time</typeRef>
+    </itemComponent>
+    <itemComponent id="_6B5E222D-3FEE-4DB4-BC54-2D86AD8F0FAA" name="serviceChangeCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_BBEF2B11-E7EC-40C1-ABBD-82467C36C80D" name="targetProductId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_C57546C5-2A71-4E82-9B29-1ED8ABC9376B" name="transactionId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_7EB6FD4C-1178-4A90-8F52-8052F012BDA6" name="userRole" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_13639C77-1783-4356-98C5-DEB0E18657DA" name="ValidationError" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_655E5CF1-1A4B-495D-8043-CEDD59AF65BE" name="condDtlTypId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_6B281423-5157-4AC1-8D9D-A7E555EE2E28" name="econdGrpId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_9C97ADDE-7D7B-4837-AFA3-AD58C41E9A7D" name="errorCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_C1D45DDF-7684-4572-A4BC-C08FA54B5D4C" name="errorMessage" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_5B9E5EBD-280C-48F9-9700-BF1474EF5A6D" name="occurredAt" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date and time</typeRef>
+    </itemComponent>
+    <itemComponent id="_CC24B915-6854-45A5-AC98-5F6E0E6A7F22" name="ruleName" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_FE517AC3-729E-4D01-B77C-85364637B894" name="severity" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+      <typeConstraint id="_C7BB0A57-54C3-424A-AA78-446465F5356B" kie:constraintType="enumeration">
+        <text>&quot;\&quot;INFO\&quot;&quot;, &quot;\&quot;STOP\&quot;&quot;, &quot;\&quot;WARN\&quot;&quot;</text>
+      </typeConstraint>
+    </itemComponent>
+  </itemDefinition>
+  <decision name="_D000000298" id="_D298_DECISION_01">
+    <description>D000000298
+OMD채널제한_요금제_가입권한체크</description>
+    <variable name="_D000000298" id="_D298_VAR_01" typeRef="ValidationError" />
+    <informationRequirement id="_D298_REQ_01">
+      <requiredInput href="#_D298_INPUT_DATA" />
+    </informationRequirement>
+    <decisionTable id="_D298_TABLE_01" typeRef="ValidationError" hitPolicy="FIRST" label="_D000000298">
+      <input id="_451B49F2-9EE3-4074-8739-CD7DB49DC42D">
+        <inputExpression id="_A4F0BAF0-7A38-45EB-85ED-886E4D50B7F0" typeRef="string">
+          <text>input.hasTerminalFunctionYn_EXT</text>
+        </inputExpression>
+      </input>
+      <input id="_55550BC0-9918-437F-A799-0436070727D7">
+        <inputExpression id="_00D6B1EB-3704-4329-B31F-24C6538CFE6D" typeRef="string">
+          <text>input.hasProductGroupExistYn_EXT</text>
+        </inputExpression>
+      </input>
+      <input id="_73F6DEAE-8ED3-4337-964D-AEB4A9EF8B39">
+        <inputExpression id="_54C35006-1F98-4F34-9B00-3B52D33D7929" typeRef="string">
+          <text>input.hasOmdChannelPlanJoinAuthorityYn_EXT</text>
+        </inputExpression>
+      </input>
+      <input id="_D298_IN_COL_04">
+        <inputExpression id="_D298_IN_EXPR_04" typeRef="string">
+          <text>input.businessProcessServiceTransactionId</text>
+        </inputExpression>
+      </input>
+      <output id="_D298_OUT_COL_01" name="condDtlTypId" typeRef="string" />
+      <output id="_D298_OUT_COL_02" name="errorMessage" typeRef="string" />
+      <output id="_D298_OUT_COL_03" name="ruleName" typeRef="string" />
+      <output id="_D298_OUT_COL_04" name="severity" typeRef="string" />
+      <annotation name="Annotations" />
+      <rule id="_D298_RULE_01">
+        <inputEntry id="_2D1DC049-CE41-4981-85B0-3DA601C04486">
+          <text>&quot;Y&quot;</text>
+        </inputEntry>
+        <inputEntry id="_BCA126CE-EB30-41FC-A265-4532329E6126">
+          <text>&quot;Y&quot;</text>
+        </inputEntry>
+        <inputEntry id="_DFCEC7C8-63BD-40D5-B27F-C085C180F148">
+          <text>not(&quot;Y&quot;)</text>
+        </inputEntry>
+        <inputEntry id="_D298_RULE_01_IN_04">
+          <text>not(&quot;ZORDSS0400380_TR01&quot;)</text>
+        </inputEntry>
+        <outputEntry id="_D298_RULE_01_OUT_01">
+          <text>&quot;D000000298&quot;</text>
+        </outputEntry>
+        <outputEntry id="_D298_RULE_01_OUT_02">
+          <text>&quot;체크조건 충족&quot;</text>
+        </outputEntry>
+        <outputEntry id="_D298_RULE_01_OUT_03">
+          <text>&quot;OMD채널제한_요금제_가입권한체크&quot;</text>
+        </outputEntry>
+        <outputEntry id="_D298_RULE_01_OUT_04">
+          <text>&quot;INFO&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text>OMD 단말기능 존재 + 가입 불가 요금제 상품그룹 존재 + 권한자 아님 + 예외 트랜잭션 아님</text>
+        </annotationEntry>
+      </rule>
+      <rule id="_3B22521C-FB7F-4749-87F0-9C552D8B2E2A">
+        <inputEntry id="_CA2436D1-B3F8-470C-AA3E-C95C1E035ED8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_0536EE9A-59B2-42F4-A1C9-69EF693580D9">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_1D2264D6-6133-4D99-8DFD-20A752FE2EE6">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_8ACE01E4-64DC-4DC8-AFB3-F72F9C506B0B">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_BEDAD5EC-7186-4023-B5B4-246A0BD68D24">
+          <text>&quot;D000000298&quot;</text>
+        </outputEntry>
+        <outputEntry id="_1FBFEA80-20BE-4D98-9BEC-1408EF3E1BEE">
+          <text>&quot;오류 | 체크조건 미충족&quot;</text>
+        </outputEntry>
+        <outputEntry id="_5AC7B6C2-214E-4C1C-81FC-391DECFBCCFB">
+          <text>&quot;OMD채널제한_요금제_가입권한체크&quot;</text>
+        </outputEntry>
+        <outputEntry id="_C4AA8F14-3FB9-4169-83F6-1E6DC9277ADF">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData name="input" id="_D298_INPUT_DATA">
+    <variable name="input" id="_D298_INPUT_VAR" typeRef="TransactionContext" />
+  </inputData>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="_D298_DIAGRAM" name="Default DRD" useAlternativeInputDataShape="false">
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="_D298_TABLE_01">
+            <kie:width>60</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>240</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape id="_D298_SHAPE_INPUT" dmnElementRef="_D298_INPUT_DATA" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="60" y="200" width="280" height="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="_D298_SHAPE_DECISION" dmnElementRef="_D298_DECISION_01" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="60" y="40" width="280" height="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="_D298_EDGE_01" dmnElementRef="_D298_REQ_01" sourceElement="_D298_SHAPE_INPUT" targetElement="_D298_SHAPE_DECISION">
+        <di:waypoint x="200" y="200" />
+        <di:waypoint x="200" y="140" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

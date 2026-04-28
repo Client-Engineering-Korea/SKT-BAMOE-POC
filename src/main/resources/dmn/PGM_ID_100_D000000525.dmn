@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20240513/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20230324/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:kie="https://kie.org/dmn/extensions/1.0" expressionLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/" namespace="https://kie.apache.org/dmn/_B31E8A0F-88E3-4F98-B19B-AF475354D932" id="_EC4B690D-A8E7-4B10-8ECA-1F5570D5CD21" name="_D000000525">
+  <description>_D000000525
+모회선서비스에 자회선 개통 진행중인지를 체크하여 개통진행중인경우 오류처리,(애플워치개통 진행중인경우 모회선 변경업무제한을 위하여 요금제변경, 부가상품가입/해지시 오류처리를 하기위한 조건)
+</description>
+  <itemDefinition id="_1843E5BE-A6C1-466E-B383-8ED38396A28D" name="ValidationError" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_24399967-AB3E-434C-8C25-C15E3CBCD7D1" name="condDtlTypId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_80B2DE22-2602-43EF-ADD7-C9A52E2A82CA" name="econdGrpId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_9387BE5C-6964-462D-80D9-D0FCE16CA612" name="errorCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_1D15CA66-7A2D-4258-A5A3-EC6F56293211" name="errorMessage" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_308E27DC-012A-4C8F-BE5B-511E48778BC1" name="occurredAt" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date and time</typeRef>
+    </itemComponent>
+    <itemComponent id="_60DF534F-6CAD-4978-BD03-85FA5049F739" name="ruleName" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_95222CA6-1D95-4FF2-8831-101620017715" name="severity" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_A5089CF7-3167-4BC5-8D56-20C7098C117D" name="TransactionContext" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_EC372D0A-A1FB-4152-892B-D954B8FF4C6A" name="isAppleWatchActivationInProgress_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <decision name="_D000000525" id="_A07C05B9-4F49-4F72-B074-27AE7D6525BA">
+    <variable name="_D000000525" id="_C7864C65-8784-47F8-8148-499D8460BC40" typeRef="ValidationError" />
+    <informationRequirement id="_4F1CF0AD-16FF-4A95-AA28-4F4856AA0FB1">
+      <requiredInput href="#_DC10C1DB-2209-4433-8FBE-83129025FFC6" />
+    </informationRequirement>
+    <decisionTable id="_F89064F2-7BD7-4278-B077-B9C4AE0534BD" typeRef="ValidationError" hitPolicy="UNIQUE" label="_D000000525">
+      <input id="_AFD7CED4-2D98-4F1F-8F21-3DB61BEA19BA">
+        <inputExpression id="_466F522B-EF20-4E93-9473-ECD37ED5631B" typeRef="string">
+          <text>input.isAppleWatchActivationInProgress_EXT</text>
+        </inputExpression>
+      </input>
+      <output id="_CCF65BF7-21EF-4205-9687-EF456C2ACC94" name="condDtlTypId" typeRef="string" />
+      <output id="_1024EFA6-F4BE-4A3C-8E1F-8700F763BB48" name="errorMessage" typeRef="string" />
+      <output id="_E3F68846-6518-41CD-988B-1C9633A91CC2" name="ruleName" typeRef="string" />
+      <output id="_98F8FA6F-7715-4D3A-B1C7-EB3393E690D0" name="severity" typeRef="string" />
+      <annotation name="Annotations" />
+      <rule id="_DBF6AA44-0BCB-4085-8E21-77CC9A9C44C1">
+        <inputEntry id="_B213B5EF-AB50-412F-B34F-C20E28C6890E">
+          <text>&quot;Y&quot;</text>
+        </inputEntry>
+        <outputEntry id="_37457DE3-05F9-44A9-B033-536FD33438B1">
+          <text>&quot;D000000525&quot;</text>
+        </outputEntry>
+        <outputEntry id="_4EC4977D-AA89-43A3-8A60-EEB79BD95009">
+          <text>&quot;애플워치 개통 진행&quot;</text>
+        </outputEntry>
+        <outputEntry id="_3D398799-153B-4A82-AFCA-C2966F420629">
+          <text>&quot;애플워치 자회선 개통 진행중 체크,모회선서비스에 자회선 개통 진행중인지를 체크하여 개통진행중인경우 오류처리&quot;</text>
+        </outputEntry>
+        <outputEntry id="_774457AE-FB3F-47E0-8543-8E1015187979">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text>// Your annotations here</text>
+        </annotationEntry>
+      </rule>
+      <rule id="_E34E68F0-0BBE-47A8-8001-1A0EBE94C82C">
+        <inputEntry id="_19F368BF-61C1-41B8-9B8B-DEED2E06C70C">
+          <text>&quot;N&quot;</text>
+        </inputEntry>
+        <outputEntry id="_21B6199C-CC21-4733-996B-1E7DFB643F05">
+          <text>&quot;D000000525&quot;</text>
+        </outputEntry>
+        <outputEntry id="_92F635D8-64AF-4B29-8EC5-B3477332F801">
+          <text>&quot;애플워치 개통 미진행&quot;</text>
+        </outputEntry>
+        <outputEntry id="_927C5C5A-43E3-49CC-AACC-407D0BF0287B">
+          <text>&quot;애플워치 자회선 개통 진행중 체크,모회선서비스에 자회선 개통 진행중인지를 체크하여 개통진행중인경우 오류처리&quot;</text>
+        </outputEntry>
+        <outputEntry id="_4B264A83-78E6-476D-8470-C9E18CC2D8F7">
+          <text>&quot;INFO&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData name="input" id="_DC10C1DB-2209-4433-8FBE-83129025FFC6">
+    <variable name="input" id="_8977BCCC-1429-42ED-AA7F-D27B9494E6CF" typeRef="TransactionContext" />
+  </inputData>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="_AE994DE6-BECA-4BBA-81ED-D99BB41C3AB4" name="Default DRD" useAlternativeInputDataShape="false">
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="_F89064F2-7BD7-4278-B077-B9C4AE0534BD">
+            <kie:width>60</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>240</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape id="_CE1B4E4A-9B16-47D2-B178-088B21A74878" dmnElementRef="_DC10C1DB-2209-4433-8FBE-83129025FFC6" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="400" y="360" width="160" height="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="_73FC1402-AB38-49CB-B707-1EFD94B36EF6" dmnElementRef="_A07C05B9-4F49-4F72-B074-27AE7D6525BA" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="360" y="200" width="160" height="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="_E5A996F5-E90F-4BCA-BD6F-944FDFB1C43D" dmnElementRef="_4F1CF0AD-16FF-4A95-AA28-4F4856AA0FB1" sourceElement="_CE1B4E4A-9B16-47D2-B178-088B21A74878" targetElement="_73FC1402-AB38-49CB-B707-1EFD94B36EF6">
+        <di:waypoint x="480" y="400" />
+        <di:waypoint x="440" y="280" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

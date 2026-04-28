@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20240513/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20230324/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:kie="https://kie.org/dmn/extensions/1.0" expressionLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/" namespace="https://kie.apache.org/dmn/_0A361AEA-26E9-4D38-9D7E-8555A8852D86" id="_C7E2BFC6-53E7-4D61-B53E-06D47F3103AB" name="_D000000299">
+  <description>_D000000299
+특정단말기_M2M전용요금제가입_처리여부</description>
+  <itemDefinition id="_A4C2E3F8-3445-4CB8-A43B-197A90011502" name="TransactionContext" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_DCFA1910-634F-46B5-B375-49397E782B26" name="authorities" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>Any</typeRef>
+    </itemComponent>
+    <itemComponent id="_E6403DB1-6DB6-4ED6-A31A-5D34F38E479C" name="businessProcessServiceTransactionId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_4F3D97F7-570E-4E00-9EFD-98CE883C7072" name="changeType" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_7596A686-9C9D-49C7-8194-3327EC08E666" name="channelCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_DB0601E6-F869-49F6-B59E-DACF8A49427E" name="hasOmdChannelPlanJoinAuthorityYn_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_7D89222A-8C4F-4B64-911E-A1938B08D3AF" name="hasProductGroupExistYn_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_B0D9F6E1-EBBB-4604-A13E-8657E32BC9AF" name="hasTerminalFunctionYn_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_CD2E1628-F9A5-4139-8B5C-72051B9941D9" name="isPOSProcessingTarget_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_31178236-56B2-4B5C-8273-0D779E6AA7AA" name="isRateChangeRestricted_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_C2C8359F-5585-4D69-BA41-9D308B6C3309" name="isWiBroRateApplicable_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_3D6B941F-2691-4035-B711-B6290E63E0EF" name="onlineBatchCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_0F478D15-6D64-49E4-BA80-4B22B125DE15" name="requestTimestamp" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date and time</typeRef>
+    </itemComponent>
+    <itemComponent id="_6B5E222D-3FEE-4DB4-BC54-2D86AD8F0FAA" name="serviceChangeCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_BBEF2B11-E7EC-40C1-ABBD-82467C36C80D" name="targetProductId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_C57546C5-2A71-4E82-9B29-1ED8ABC9376B" name="transactionId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_7EB6FD4C-1178-4A90-8F52-8052F012BDA6" name="userRole" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_E70606DC-2AD0-45E0-8760-8FE50DB7F7C1" name="hasExclusivePriceModelDefinitionYn_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_D0DAD431-AF9A-4D16-A5A3-5DBB5E1D9489" name="hasM2mPlanChangeAuthorityYn_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_82253AD8-CC52-47D4-924C-BE910FE9A1A7" name="hasM2mExclusiveProductGroupYn_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_13639C77-1783-4356-98C5-DEB0E18657DA" name="ValidationError" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_655E5CF1-1A4B-495D-8043-CEDD59AF65BE" name="condDtlTypId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_6B281423-5157-4AC1-8D9D-A7E555EE2E28" name="econdGrpId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_9C97ADDE-7D7B-4837-AFA3-AD58C41E9A7D" name="errorCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_C1D45DDF-7684-4572-A4BC-C08FA54B5D4C" name="errorMessage" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_5B9E5EBD-280C-48F9-9700-BF1474EF5A6D" name="occurredAt" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date and time</typeRef>
+    </itemComponent>
+    <itemComponent id="_CC24B915-6854-45A5-AC98-5F6E0E6A7F22" name="ruleName" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_FE517AC3-729E-4D01-B77C-85364637B894" name="severity" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+      <typeConstraint id="_C7BB0A57-54C3-424A-AA78-446465F5356B" kie:constraintType="enumeration">
+        <text>&quot;\&quot;INFO\&quot;&quot;, &quot;\&quot;STOP\&quot;&quot;, &quot;\&quot;WARN\&quot;&quot;</text>
+      </typeConstraint>
+    </itemComponent>
+  </itemDefinition>
+  <decision name="_D000000299_진입조건" id="_D299_DECISION_01">
+    <description>D000000299
+특정단말기_M2M전용요금제가입_처리여부</description>
+    <variable name="_D000000299_진입조건" id="_D299_VAR_01" typeRef="boolean" />
+    <informationRequirement id="_A730E7C6-24B2-49FC-9981-43FE9C2332CF">
+      <requiredInput href="#_D299_INPUT_DATA" />
+    </informationRequirement>
+    <decisionTable id="_D299_TABLE_01" typeRef="boolean" hitPolicy="FIRST" label="_D000000299_진입조건">
+      <input id="_451B49F2-9EE3-4074-8739-CD7DB49DC42D">
+        <inputExpression id="_A4F0BAF0-7A38-45EB-85ED-886E4D50B7F0" typeRef="string">
+          <text>input.hasTerminalFunctionYn_EXT</text>
+        </inputExpression>
+      </input>
+      <input id="_55550BC0-9918-437F-A799-0436070727D7">
+        <inputExpression id="_00D6B1EB-3704-4329-B31F-24C6538CFE6D" typeRef="string">
+          <text>input.hasExclusivePriceModelDefinitionYn_EXT</text>
+        </inputExpression>
+      </input>
+      <output id="_D298_OUT_COL_01" />
+      <annotation name="Annotations" />
+      <rule id="_D298_RULE_01">
+        <inputEntry id="_2D1DC049-CE41-4981-85B0-3DA601C04486">
+          <text>&quot;Y&quot;</text>
+        </inputEntry>
+        <inputEntry id="_BCA126CE-EB30-41FC-A265-4532329E6126">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_D298_RULE_01_OUT_01">
+          <text>true</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+      <rule id="_3B22521C-FB7F-4749-87F0-9C552D8B2E2A">
+        <inputEntry id="_CA2436D1-B3F8-470C-AA3E-C95C1E035ED8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_0536EE9A-59B2-42F4-A1C9-69EF693580D9">
+          <text>&quot;Y&quot;</text>
+        </inputEntry>
+        <outputEntry id="_BEDAD5EC-7186-4023-B5B4-246A0BD68D24">
+          <text>true</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+      <rule id="_8143627F-8D0C-49B5-B5AA-BF54FB50F19D">
+        <inputEntry id="_3DADF9AC-A041-456C-924C-8C2F5C7C875B">
+          <text>&quot;N&quot;</text>
+        </inputEntry>
+        <inputEntry id="_AD541A16-A12F-4F18-BAA4-20EC364B2301">
+          <text>&quot;N&quot;</text>
+        </inputEntry>
+        <outputEntry id="_A07B5A40-F79A-49BF-B3B7-22AB7EA2C1E6">
+          <text>false</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision name="_D000000299" id="_2137F321-60D6-4916-8396-66F3E0E92FC7">
+    <variable name="_D000000299" id="_3EA1A3FB-E787-47E4-AE41-DC33C46C6816" typeRef="ValidationError" />
+    <informationRequirement id="_BA6A8329-F341-4583-9CC7-702C11F9C66B">
+      <requiredDecision href="#_D299_DECISION_01" />
+    </informationRequirement>
+    <informationRequirement id="_D299_REQ_INPUT">
+      <requiredInput href="#_D299_INPUT_DATA" />
+    </informationRequirement>
+    <decisionTable id="_F425790C-BE05-46CD-BD1F-420E92C99293" typeRef="ValidationError" hitPolicy="FIRST" label="_D000000299">
+      <input id="_88B25497-7B67-45C7-830C-652AA4401265">
+        <inputExpression id="_30EDFBBC-B797-4464-8290-DDE9214AAAAA" typeRef="boolean">
+          <text>_D000000299_진입조건</text>
+        </inputExpression>
+      </input>
+      <input id="_B0462901-8549-4E86-982F-06859CACAE69">
+        <inputExpression id="_B0AD9F3F-567E-4B96-8EF7-EA8010ABD980" typeRef="string">
+          <text>input.hasM2mExclusiveProductGroupYn_EXT</text>
+        </inputExpression>
+      </input>
+      <input id="_6373E3BC-881A-48F0-99B1-8F50D8502E08">
+        <inputExpression id="_24EB82E3-E803-4977-A9A2-FD9BA4F41E99" typeRef="string">
+          <text>input.hasM2mPlanChangeAuthorityYn_EXT</text>
+        </inputExpression>
+      </input>
+      <output id="_8136CED2-C464-46E2-B3AF-188298B1B246" name="condDtlTypId" typeRef="string" />
+      <output id="_D6CFC95D-BBC1-4E05-8C38-AD75E1179967" name="errorMessage" typeRef="string" />
+      <output id="_F7C4F3C7-7666-4F41-AA1C-AE23F007C1E2" name="ruleName" typeRef="string" />
+      <output id="_0D01B066-F131-4000-969B-1A08AB841373" name="severity" typeRef="string" />
+      <annotation name="Annotations" />
+      <rule id="_E0DFB1ED-FFAF-4CA8-AF5E-BCC0C6C82BBC">
+        <inputEntry id="_7DA554C2-FEFE-4CD3-9FD6-DAAC84234674">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="_3B8B4E68-86BE-4F26-A8CA-D4BD19186FF5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_E1282F4B-E7B7-4233-9BA3-77C6E3962640">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_C32AA014-B592-4923-811C-96543D50AE01">
+          <text>&quot;D000000299&quot;</text>
+        </outputEntry>
+        <outputEntry id="_8A7CA03E-7286-4F1F-A76B-4D17353746CE">
+          <text>&quot;진입조건 미충족&quot;</text>
+        </outputEntry>
+        <outputEntry id="_37A7983B-E4D7-47CA-9BC9-EB6A6190E927">
+          <text>&quot;특정단말기_M2M전용요금제가입_처리여부&quot;</text>
+        </outputEntry>
+        <outputEntry id="_B348FCE7-CB28-4CA5-8313-B5BDF4B6600A">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text>// Your annotations here</text>
+        </annotationEntry>
+      </rule>
+      <rule id="_983B9813-74D0-47CE-B24A-50093401E2D2">
+        <inputEntry id="_52F0CF53-88A2-454D-83DF-8CBBD0301C7D">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="_981B8C1B-5563-4767-B812-5422409661DB">
+          <text>&quot;Y&quot;</text>
+        </inputEntry>
+        <inputEntry id="_693ECA88-4C5E-440E-9138-080E008FF9A0">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_85139F82-736E-4229-AEE2-D8260B7D5D05">
+          <text>&quot;D000000299&quot;</text>
+        </outputEntry>
+        <outputEntry id="_AB491DD3-9F26-4F97-9C70-472784CC2462">
+          <text>&quot;진입| 체크 조건 충족&quot;
+</text>
+        </outputEntry>
+        <outputEntry id="_85FD6457-6134-46CB-A8E7-06D3FE79C659">
+          <text>&quot;특정단말기_M2M전용요금제가입_처리여부&quot;</text>
+        </outputEntry>
+        <outputEntry id="_15A97DB2-7BB1-4C78-9C87-3DEBD66116A8">
+          <text>&quot;INFO&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+      <rule id="_D1048E30-6366-4A5D-A1D2-17F4549D5071">
+        <inputEntry id="_31637732-97F2-48E8-AA5A-787749AFC962">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="_EC973C47-7739-4734-A769-2C6C9DE70FEC">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_6DF2C04E-5F92-421A-9290-FDE3BFBA2F3C">
+          <text>&quot;Y&quot;</text>
+        </inputEntry>
+        <outputEntry id="_25F07395-0AE4-40E4-8832-969014BB0731">
+          <text>&quot;D000000299&quot;</text>
+        </outputEntry>
+        <outputEntry id="_1FAFB0B6-306C-477C-B05F-5451C1294759">
+          <text>&quot;진입| 체크 조건 충족&quot;</text>
+        </outputEntry>
+        <outputEntry id="_335B365F-4D7D-47F3-A18A-DC5D1E78B4ED">
+          <text>&quot;특정단말기_M2M전용요금제가입_처리여부&quot;</text>
+        </outputEntry>
+        <outputEntry id="_102B1307-50A7-4745-8BF0-948F2F974DA1">
+          <text>&quot;INFO&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+      <rule id="_AD7CB79B-C834-4787-AB24-E535BFC339DC">
+        <inputEntry id="_771DF8D9-9F1B-4B9E-A970-1B88B5D5FEE5">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="_30C695AC-3041-4E89-88E9-1069E7327F02">
+          <text>&quot;N&quot;</text>
+        </inputEntry>
+        <inputEntry id="_CB00113F-A84E-435B-AC46-81DCBD845B8D">
+          <text>&quot;N&quot;</text>
+        </inputEntry>
+        <outputEntry id="_CE0C4C05-4919-4F1B-8A44-BB71E5B50615">
+          <text>&quot;D000000299&quot;</text>
+        </outputEntry>
+        <outputEntry id="_26B6F7DE-5FF5-4298-A618-EDD78F6B9CFF">
+          <text>&quot;체크 조건 미충족&quot;</text>
+        </outputEntry>
+        <outputEntry id="_55493369-121E-4D96-8FFB-AFB4C3AC439C">
+          <text>&quot;특정단말기_M2M전용요금제가입_처리여부&quot;</text>
+        </outputEntry>
+        <outputEntry id="_C0E82B92-3412-4AFE-B888-A9363676152A">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData name="input" id="_D299_INPUT_DATA">
+    <variable name="input" id="_D299_INPUT_VAR" typeRef="TransactionContext" />
+  </inputData>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="_D299_DIAGRAM" name="Default DRD" useAlternativeInputDataShape="false">
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="_D299_TABLE_01">
+            <kie:width>60</kie:width>
+            <kie:width>133</kie:width>
+            <kie:width>196</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_F425790C-BE05-46CD-BD1F-420E92C99293">
+            <kie:width>60</kie:width>
+            <kie:width>138</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>395</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape id="_D299_SHAPE_INPUT" dmnElementRef="_D299_INPUT_DATA" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="540" y="180" width="280" height="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="_D299_SHAPE_DECISION" dmnElementRef="_D299_DECISION_01" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="260" y="20" width="280" height="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="_ACEECB4A-2BC3-4EF8-A4B1-ADE6BE6F07D9" dmnElementRef="_2137F321-60D6-4916-8396-66F3E0E92FC7" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="540" y="-220" width="280" height="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="_9C85709F-3524-4173-ADEC-95A9FA3B5D7D" dmnElementRef="_A730E7C6-24B2-49FC-9981-43FE9C2332CF" sourceElement="_D299_SHAPE_INPUT" targetElement="_D299_SHAPE_DECISION">
+        <di:waypoint x="680" y="180" />
+        <di:waypoint x="400" y="120" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="_CE634F65-7BF9-4FC8-AF54-9FE28C084CBC" dmnElementRef="_BA6A8329-F341-4583-9CC7-702C11F9C66B" sourceElement="_D299_SHAPE_DECISION" targetElement="_ACEECB4A-2BC3-4EF8-A4B1-ADE6BE6F07D9">
+        <di:waypoint x="400" y="20" />
+        <di:waypoint x="680" y="-120" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="_D299_EDGE_INPUT_TO_CHECK" dmnElementRef="_D299_REQ_INPUT" sourceElement="_D299_SHAPE_INPUT" targetElement="_ACEECB4A-2BC3-4EF8-A4B1-ADE6BE6F07D9">
+        <di:waypoint x="680" y="180" />
+        <di:waypoint x="680" y="-120" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20240513/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20230324/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:kie="https://kie.org/dmn/extensions/1.0" expressionLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/" namespace="https://kie.org/dmn/_3F22BCAF-A686-4583-9B69-95A0819BA00D" id="_CD193F48-1064-4C23-AB15-1BF94AA64B3A" name="_D000000296">
+  <description>_D000000296</description>
+  <itemDefinition id="_B51F912A-CBF8-4021-B304-88DC5CBAE6A7" name="CustomerServiceContext" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_6ABF33B4-A468-419B-8D61-E2E9E8C63861" name="contract" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>ContractInfo</typeRef>
+    </itemComponent>
+    <itemComponent id="_6F0E7842-8122-4F8C-8BE4-68C0E6672CCA" name="customer" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>CustomerInfo</typeRef>
+    </itemComponent>
+    <itemComponent id="_090C70BD-5BA9-4052-AC8D-FA6DB3FAFF7F" name="equipment" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>EquipmentInfo</typeRef>
+    </itemComponent>
+    <itemComponent id="_DAA2F1F5-5C75-4B58-9AA5-4BD49333CB88" name="product" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>ProductInfo</typeRef>
+    </itemComponent>
+    <itemComponent id="_8F73F8BD-1538-410A-865B-A6FED79716E4" name="service" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>ServiceInfo</typeRef>
+    </itemComponent>
+    <itemComponent id="_3BA8D3C6-4561-4852-B01D-3EE0B105F9F3" name="transaction" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>TransactionContext</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_26E1B013-DB45-453D-BBA7-3EDBBC7CF1BF" name="TransactionContext" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_6FE93557-333B-4164-8573-39D10529FEC4" name="authorities" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>Any</typeRef>
+    </itemComponent>
+    <itemComponent id="_F4991308-E83B-494D-ABF5-03761D407A8C" name="changeType" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_26F638ED-77D7-433A-BE2B-D72D5F0AD02A" name="channelCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_9AE2E535-FF5E-4015-BA60-B6BC2C9CD7CB" name="isPOSProcessingTarget_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_A5CC790B-57BA-4D65-9416-A37C2F097C3B" name="isRateChangeRestricted_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_DEFEDB5E-CA1C-4DBC-9E1C-2637482C80F6" name="isWiBroRateApplicable_EXT" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_5DCA8D6C-0F50-48EA-99E2-5903B7988277" name="onlineBatchCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_E492AA87-B343-4969-AB1C-20907CBEC649" name="requestTimestamp" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date and time</typeRef>
+    </itemComponent>
+    <itemComponent id="_B4F61F85-4BA5-485D-8E13-94B9E4869CFC" name="serviceChangeCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_DEDD782B-A8AA-433B-B1B6-2A6D2978C919" name="targetProductId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_FDC220CB-B1B2-4A2A-BD1E-4249B0072A73" name="transactionId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_C53FAE2C-F3A0-418D-8723-98D71026E866" name="userRole" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_E67665D4-3BAE-403D-98E3-B92A84A57E9E" name="ContractInfo" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_A950930D-EDB1-4F73-9F0B-B4C98A9DCECE" name="companyClassCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_D4A5FCB8-6712-46B0-B0E2-68D88C774949" name="contractClassCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_2F766C55-374C-405C-82C3-47D3A872CAD3" name="contractDate" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date</typeRef>
+    </itemComponent>
+    <itemComponent id="_E3EEA19F-CE5C-4D6C-8725-D9CDC8477875" name="contractManagementNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_8C76C5F5-6E65-4DC6-BF21-CE7BDBE39D90" name="contractStatusCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_4F6C2483-DF7A-4E30-8C49-58C9155D0DC3" name="subscriptionCancelCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_ED2BC11C-DC4C-417C-A386-0BA2FC2F1B2C" name="taxBillIssueYn" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_8704AF28-E85A-43E2-A632-2A2D7D02A979" name="CustomerInfo" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_644BC089-5C68-48E4-87A3-1B3B87219E70" name="accountNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_8D9523D7-FDC3-41DC-8680-D59DCE97827E" name="accountTypeCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_C533F063-3D4C-47AF-B2C2-BA48D264D31D" name="age" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>number</typeRef>
+    </itemComponent>
+    <itemComponent id="_50588256-9FB2-45E4-8F6B-AE494E01D085" name="citizenCorpBizNumberPartialInfo" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_9CFFB063-1487-48F2-87EB-B93C05F77A29" name="citizenCorpBizSerialNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_97382E06-840D-43D9-99A5-F683FB58CEB0" name="customerDetailTypeCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_9745072D-6A1F-4EE5-B258-C806B31C364A" name="customerNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_358A3EF6-F988-42A7-9DE1-F858E5EBCB10" name="customerTypeCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_3DB6FB56-C26D-418E-8C54-364732C8A5F3" name="EquipmentInfo" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_33EE5214-2FC5-43C9-BEA1-50D3AC3C25AB" name="equipmentManagementStatusCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_9E605324-52FE-43EA-9EC8-6DB0518667E1" name="equipmentMethodCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_67AF98AB-2C37-4CEE-9F76-17FF340D4A53" name="equipmentModelCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_7013D024-0493-4CB8-B1CB-B299879D3D9B" name="equipmentSerialNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_3B7B4314-C0DA-4721-A3AD-B75609AB292D" name="equipmentUsageCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_F2996FE7-FF17-45FB-8257-19E90F5797B9" name="equipmentVersionNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_EE6E73F4-07EC-4083-A4D1-A80A3DEFEE62" name="kitModelCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_C13D9BA2-9C82-4BDE-A20A-E23ABD48B362" name="kitSerialNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_BFB10F67-B1EA-4D84-94BC-A82438EF1BFF" name="marketingDate" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date</typeRef>
+    </itemComponent>
+    <itemComponent id="_54D359CB-A67F-456E-AA5A-6B1BE9022CB2" name="nateClassCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_2A5E6BDC-A9FB-4FEB-A141-544B3D689587" name="networkMethodCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_3FF273C7-CE85-4638-822B-D93E2F68FD4D" name="simSerialNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_30A493DE-AD34-4D5E-9829-D92D79493CEE" name="ProductInfo" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_4B612B1A-8A3B-4C62-B7D4-EADCDBBC3789" name="feeProductId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_030912D5-25A1-4DE4-B106-383EF74E175C" name="paymentMethodCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_5C774140-62A7-4058-B781-C5D82A653DFD" name="productId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_EAE29AF9-CC1A-4704-9271-6D8F136959E4" name="productTerminationReasonCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_5E5CB515-4CD7-4936-9756-F49F190003DF" name="productUsageFlag" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_7D35BBFF-56B9-4606-B600-FB774C8DE577" name="subscribeDate" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_438563B2-E561-4246-8794-FB3395134E2B" name="ServiceInfo" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_7CF2A361-CD59-4F8A-9095-EAE434683D2E" name="hasRoamingForceProcessAuthority" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_E39F52B2-E1EA-431F-ACAC-635712154A62" name="ibRentRoamingProductUsedYn" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_A54244F4-66EA-4663-BCCC-E6601D678A41" name="ibRoamingProductUsedYn" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_F3E7359D-1367-4D91-8CC7-4CEAD1A91159" name="serviceTypeCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_04CF9D7D-57BC-445A-86EA-3AB72836B6A5" name="subscriptionCancelCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_91D23C96-F46B-4F80-98FA-07546545EC2A" name="ValidationError" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_3495F6D5-644A-465D-984B-23A74C03A848" name="condDtlTypId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_15C2B1DD-2DC6-4102-A163-63ECDFE497EC" name="econdGrpId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_DA8217BC-07B1-4870-8A33-40E8397ED505" name="errorCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_58C4F525-76FE-4CC0-8BB6-2D707BAC7242" name="errorMessage" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_72DFC56D-47AB-4BF4-AC6C-60A1F7AEA2AE" name="occurredAt" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date and time</typeRef>
+    </itemComponent>
+    <itemComponent id="_DE332054-436C-435C-A449-DA648AB183C3" name="ruleName" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_4D397A0A-C9B7-4AC6-84AE-0F711173FDA3" name="severity" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+      <typeConstraint id="_1B3BDFC4-ECA0-4A39-8F8E-819F6CCB81AE" kie:constraintType="enumeration">
+        <text>&quot;\&quot;STOP\&quot;&quot;, &quot;\&quot;WARN\&quot;&quot;, &quot;\&quot;INFO\&quot;&quot;</text>
+      </typeConstraint>
+    </itemComponent>
+  </itemDefinition>
+  <decision name="_D000000296_EntryCOND" id="_F43A2D43-F7AC-4916-BAE6-6010D1DE90DD">
+    <description>D000000296
+POS미처리_대상여부체크
+진입조건
+</description>
+    <variable id="_F5B79EC1-CEA7-41A2-878B-B5D380241930" typeRef="ValidationError" name="_D000000296_EntryCOND" />
+    <informationRequirement id="_BE4D79BB-18A3-4128-A2C9-756C4450A246">
+      <requiredInput href="#_2C60FD28-41EC-4355-A7D1-3C53D8E95513" />
+    </informationRequirement>
+    <decisionTable id="_857F83E6-384F-4B42-99BE-9E87541F32D7" typeRef="ValidationError" hitPolicy="FIRST" label="_D000000296_EntryCOND">
+      <input id="_89C0AB23-472E-4CF1-9AA7-37CD9E96818A">
+        <inputExpression id="_8E25BABE-2915-49CC-855B-E2DA2EB83F99" typeRef="string">
+          <text>input_CustomerServiceContext.transaction.onlineBatchCode</text>
+        </inputExpression>
+      </input>
+      <input id="_5E7278BA-B475-4106-82E8-46004D768F20">
+        <inputExpression id="_F33BE205-24EB-4254-801E-5F1574FCC36E" typeRef="string">
+          <text>input_CustomerServiceContext.transaction.serviceChangeCode</text>
+        </inputExpression>
+      </input>
+      <output id="_0FDC8C6C-ACBF-4944-AE8A-15E421A643F9" name="condDtlTypId" typeRef="string" />
+      <output id="_1E9F228D-80E3-4F2A-8BD7-3BD87BF41B7E" name="errorMessage" typeRef="string" />
+      <output id="_DBFF5B14-6288-4443-9729-683142572A4D" name="ruleName" typeRef="string" />
+      <output id="_8DDD9F9D-E7C0-4193-864E-5411DB6376E6" name="severity" typeRef="string" />
+      <annotation name="Annotations" />
+      <rule id="_DB8CABFD-F158-4E23-88AC-2A2D8BEA644D">
+        <inputEntry id="_3A75FE39-0B40-4C12-BDE6-B2253FC2B12E">
+          <text>&quot;0&quot;</text>
+        </inputEntry>
+        <inputEntry id="_35B80979-C464-42C0-B82E-A63B04128989">
+          <text>not(&quot;A1&quot;)</text>
+        </inputEntry>
+        <outputEntry id="_56ABE031-DA3A-4BF5-AC28-FEF0F9E345AD">
+          <text>&quot;D000000296&quot;</text>
+        </outputEntry>
+        <outputEntry id="_2DC62E76-F469-44D3-ADC0-D8EE1D63BD0C">
+          <text>&quot;진입조건 충족&quot;</text>
+        </outputEntry>
+        <outputEntry id="_13E7494F-2E0F-4BE2-8D71-51A93E308492">
+          <text>&quot;POS미처리_대상여부체크&quot;</text>
+        </outputEntry>
+        <outputEntry id="_34FFF9E2-0AE2-489A-AE40-6952EF68726D">
+          <text>&quot;INFO&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+      <rule id="_9A0CC4E4-21D2-4A2A-A13E-D982D04320E2">
+        <inputEntry id="_81A278C5-94E2-476F-8632-A29433ADA0B5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_D71CF1DD-59BE-4F3F-A282-0E0B4AFF47DA">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_BE5089B0-682F-4BE9-9FAC-C3E9AA10AD5E">
+          <text>&quot;D000000296&quot;</text>
+        </outputEntry>
+        <outputEntry id="_C1B31B01-8B62-4D9C-AB9D-4981E8A3120A">
+          <text>&quot;오류 | 진입조건 미충족&quot;</text>
+        </outputEntry>
+        <outputEntry id="_BA125895-0044-4123-98AE-58ADBD3E25C5">
+          <text>&quot;POS미처리_대상여부체크&quot;</text>
+        </outputEntry>
+        <outputEntry id="_C97055C5-82C3-46C0-B465-88A54BA48F56">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision name="_D000000296" id="_D61BE3F0-DD62-411D-B973-8CBE37BD7EFB">
+    <description>D000000296
+POS미처리_대상여부체크</description>
+    <variable name="_D000000296" id="_42CE7C42-A891-4251-88C3-3FD7AD5BB118" typeRef="ValidationError" />
+    <informationRequirement id="_DAA37ED8-2B89-4FC3-A113-AB76F3B2F1EF">
+      <requiredInput href="#_BD106C8B-A031-4FB9-A029-702E97EF719D" />
+    </informationRequirement>
+    <informationRequirement id="_86CED90B-7FFF-41FE-B157-FF7C16088F7A">
+      <requiredDecision href="#_F43A2D43-F7AC-4916-BAE6-6010D1DE90DD" />
+    </informationRequirement>
+    <decisionTable id="_BE46C69A-F905-426E-ABF4-55CD8736E92B" typeRef="ValidationError" hitPolicy="FIRST" label="_D000000296">
+      <input id="_9FFC7E10-19F0-438A-ABBB-B1155F4CB8BE">
+        <inputExpression id="_80EFAD29-CF0D-4D65-8C51-B055D01D25BF" typeRef="string">
+          <text>_D000000296_EntryCOND.severity</text>
+        </inputExpression>
+      </input>
+      <input id="_F85E1080-FCC2-4575-A14D-01C2360FD57F">
+        <inputExpression id="_DDE05EEF-A416-4EBE-928E-2F21EC4C0EEE" typeRef="string">
+          <text>input_TransactionContext.onlineBatchCode</text>
+        </inputExpression>
+      </input>
+      <input id="_15045C7B-A24F-452D-B8B5-CB4FD8C82CEB">
+        <inputExpression id="_2EC1B1BE-06E6-439D-A199-80380F484CD1" typeRef="string">
+          <text>input_TransactionContext.serviceChangeCode</text>
+        </inputExpression>
+      </input>
+      <input id="_E1218620-FF38-4A38-9D1B-45F435A5FAA6">
+        <inputExpression id="_71420163-DEB3-4E44-85C8-AEE5257EA2D8" typeRef="boolean">
+          <text>input_TransactionContext.isPOSProcessingTarget_EXT</text>
+        </inputExpression>
+      </input>
+      <output id="_E508A901-A43F-49F2-A76C-2181A7CC443B" name="condDtlTypId" typeRef="string" />
+      <output id="_54470E65-83FB-4B36-85DE-B73E1DB892D7" name="errorMessage" typeRef="string" />
+      <output id="_50CD9366-E20F-4976-BBA9-D703620A49ED" name="ruleName" typeRef="string" />
+      <output id="_5170C3DD-8320-405C-B518-5452D3202058" name="severity" typeRef="string" />
+      <annotation name="Annotations" />
+      <rule id="_E66179D7-3304-47CE-B6D0-F8153A8FAC9A">
+        <inputEntry id="_4FF58B3C-E53E-4318-80FF-C7F7F6A50C00">
+          <text>&quot;STOP&quot;</text>
+        </inputEntry>
+        <inputEntry id="_073CAFDC-1976-43F1-A2BB-CCE3DE10C7C9">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_834DB101-EEFB-4374-9E21-B54E6004C0A5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_80068849-EF1A-4391-955D-F92BCE8D6DC0">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_E1F1F76F-AA70-41F7-BC12-A2523083BD2D">
+          <text>&quot;D000000296&quot;</text>
+        </outputEntry>
+        <outputEntry id="_86595FE6-111F-4E01-9DFE-F0D647BDFA51">
+          <text>&quot;오류 | 진입조건 미충족&quot;</text>
+        </outputEntry>
+        <outputEntry id="_C372F7BC-0643-463B-9542-8860A11FFD66">
+          <text>&quot;POS미처리_대상여부체크&quot;</text>
+        </outputEntry>
+        <outputEntry id="_8DCC4BF2-9063-4168-A380-50698CF2CCCF">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text>진입조건 미충족으로 오류 발생</text>
+        </annotationEntry>
+      </rule>
+      <rule id="_99178EE5-9C49-4903-9D02-E15C5E267AC6">
+        <inputEntry id="_E27185FD-A1C4-4E04-A67A-131F391B4144">
+          <text>&quot;INFO&quot;</text>
+        </inputEntry>
+        <inputEntry id="_AF575F1B-13BD-4CEC-BB50-65C8779BE5CA">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_70FDB56D-4D81-487F-A498-CD00B2A14E42">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_B924BD14-B158-4C58-A08B-41FEE1FEC08C">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="_F447AA3C-85A4-4B99-8986-CDE47DE77C42">
+          <text>&quot;D000000296&quot;</text>
+        </outputEntry>
+        <outputEntry id="_1717406C-3157-4E59-8D22-449631FEE02E">
+          <text>&quot;오류 | 체크조건 미충족&quot;</text>
+        </outputEntry>
+        <outputEntry id="_8784306E-9B71-46A7-AC5D-67461B586B10">
+          <text>&quot;POS미처리_대상여부체크&quot;</text>
+        </outputEntry>
+        <outputEntry id="_6FB8052C-5985-48C2-AAC0-C2EAB41EE892">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text>체크조건 미충족으로 오류 발생</text>
+        </annotationEntry>
+      </rule>
+      <rule id="_6533B20E-419F-4906-BA78-E6C99304FC63">
+        <inputEntry id="_0242445B-A15A-4245-BFE3-83541FEAD076">
+          <text>&quot;INFO&quot;</text>
+        </inputEntry>
+        <inputEntry id="_410A6FB1-5198-480E-8515-A51C56BFAD67">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_3C339D1D-8F83-4348-911F-1B730E4DB0F2">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_20636E79-D55B-4625-B4B3-7B40E76BFDA6">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="_5201ECDC-095F-436E-81F2-6B2B871A483B">
+          <text>&quot;D000000296&quot;</text>
+        </outputEntry>
+        <outputEntry id="_8062B704-19B9-4CF8-9020-6AD09C202D30">
+          <text>&quot;체크조건 충족&quot;</text>
+        </outputEntry>
+        <outputEntry id="_F59E31EE-5783-46AA-8D93-D2C8283D167A">
+          <text>&quot;POS미처리_대상여부체크&quot;</text>
+        </outputEntry>
+        <outputEntry id="_4B0847A5-CC76-40C0-8EC4-B95B2B3532DC">
+          <text>&quot;INFO&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text>외부호출</text>
+        </annotationEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData name="input_CustomerServiceContext" id="_2C60FD28-41EC-4355-A7D1-3C53D8E95513">
+    <variable name="input_CustomerServiceContext" id="_DCBC7D0A-96B9-4492-B8A5-3FA0FDFC8DDE" typeRef="CustomerServiceContext" />
+  </inputData>
+  <inputData name="input_TransactionContext" id="_BD106C8B-A031-4FB9-A029-702E97EF719D">
+    <variable name="input_TransactionContext" id="_57D9104A-0717-49F8-95C0-3E879D86454C" typeRef="TransactionContext" />
+  </inputData>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="_9543CE28-D36B-41F1-A5BC-A6728D88B3F0" name="Default DRD" useAlternativeInputDataShape="false">
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="_857F83E6-384F-4B42-99BE-9E87541F32D7">
+            <kie:width>60</kie:width>
+            <kie:width>145</kie:width>
+            <kie:width>199</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>240</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_BE46C69A-F905-426E-ABF4-55CD8736E92B">
+            <kie:width>60</kie:width>
+            <kie:width>221</kie:width>
+            <kie:width>325</kie:width>
+            <kie:width>285</kie:width>
+            <kie:width>395</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>240</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape id="_4444D7E8-3C45-4DC1-9A9A-98A73A569DA3" dmnElementRef="_2C60FD28-41EC-4355-A7D1-3C53D8E95513" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="60" y="240" width="280" height="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="_DA6234F5-A841-4A28-BE76-A3A3F7766702" dmnElementRef="_F43A2D43-F7AC-4916-BAE6-6010D1DE90DD" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="60" y="40" width="280" height="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="_193DEC9D-4663-40AC-8DA5-39D6DFD5AB8E" dmnElementRef="_BD106C8B-A031-4FB9-A029-702E97EF719D" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="440" y="240" width="280" height="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="_633F7ABC-9CEB-4559-9FFD-740DFAA34BCB" dmnElementRef="_D61BE3F0-DD62-411D-B973-8CBE37BD7EFB" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="440" y="40" width="280" height="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="_40C47DE4-C8DB-4F89-B918-B861A7B2E2EC-AUTO-TARGET" dmnElementRef="_BE4D79BB-18A3-4128-A2C9-756C4450A246" sourceElement="_4444D7E8-3C45-4DC1-9A9A-98A73A569DA3" targetElement="_DA6234F5-A841-4A28-BE76-A3A3F7766702">
+        <di:waypoint x="200" y="280" />
+        <di:waypoint x="200" y="90" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="_D81FF027-CBAB-49E8-8651-9C5CF7A97E5F" dmnElementRef="_DAA37ED8-2B89-4FC3-A113-AB76F3B2F1EF" sourceElement="_193DEC9D-4663-40AC-8DA5-39D6DFD5AB8E" targetElement="_633F7ABC-9CEB-4559-9FFD-740DFAA34BCB">
+        <di:waypoint x="580" y="280" />
+        <di:waypoint x="580" y="140" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="_8DEF8858-CA2C-4FFF-A5CF-60E61CF71A14" dmnElementRef="_86CED90B-7FFF-41FE-B157-FF7C16088F7A" sourceElement="_DA6234F5-A841-4A28-BE76-A3A3F7766702" targetElement="_633F7ABC-9CEB-4559-9FFD-740DFAA34BCB">
+        <di:waypoint x="200" y="90" />
+        <di:waypoint x="440" y="90" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

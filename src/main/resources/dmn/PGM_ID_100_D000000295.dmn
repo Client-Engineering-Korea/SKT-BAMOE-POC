@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20240513/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20230324/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:kie="https://kie.org/dmn/extensions/1.0" expressionLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/" namespace="https://kie.apache.org/dmn/_FAA3B9D5-1FB8-47AE-BCC0-1242DDEE82A4" id="_700581BE-994C-4BBA-B678-DE5182C2C1BC" name="_D000000295">
+  <description>PGM_ID_100
+D000000295</description>
+  <itemDefinition id="_3A46924B-0743-42A8-A268-F803768007E8" name="ValidationError" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_8C9890D2-7C2B-4C26-B46D-13B376A2BE94" name="condDtlTypId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_AD37B1DE-7FB4-4D1E-A360-74E657529504" name="econdGrpId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_B5D1DA87-F52B-4C41-8CF3-88808985EB7B" name="errorCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_D53D71A1-D6C8-40C8-91FA-6456D4A375D4" name="errorMessage" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_1D3E6D9A-D174-4F21-9923-5850BD684891" name="occurredAt" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date and time</typeRef>
+    </itemComponent>
+    <itemComponent id="_CAE9A610-86A5-4E3A-A739-56D235511AB8" name="ruleName" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_430512FF-9087-43D2-AACA-E1E02E5732D5" name="severity" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+      <typeConstraint id="_852FA853-AD93-4174-BBD4-FAA474B5981D" kie:constraintType="enumeration">
+        <text>&quot;STOP&quot;, &quot;WARN&quot;, &quot;INFO&quot;</text>
+      </typeConstraint>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_0994A9B5-EDBB-4EBE-959B-DDE901E64FDF" name="CustomerServiceContext" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_83F04D93-B170-40F5-8352-23B974EFB6E6" name="contract" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>ContractInfo</typeRef>
+    </itemComponent>
+    <itemComponent id="_FDA67896-236D-497B-8A52-E9C90CE9645F" name="customer" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>CustomerInfo</typeRef>
+    </itemComponent>
+    <itemComponent id="_82884501-9AB1-4AB8-BFF1-9289437966D0" name="equipment" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>EquipmentInfo</typeRef>
+    </itemComponent>
+    <itemComponent id="_5148273F-E1F8-4E62-8BC8-D9E6A24798B3" name="product" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>ProductInfo</typeRef>
+    </itemComponent>
+    <itemComponent id="_A443D12C-996A-44AB-A94D-2CD3085E423F" name="service" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>ServiceInfo</typeRef>
+    </itemComponent>
+    <itemComponent id="_A6AE07B0-FA79-4EC5-A2EC-209B5C2DE0D5" name="transaction" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>TransactionContext</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_73EC19C5-0E08-40EF-8BDF-A1DDEA141B35" name="TransactionContext" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_881351F3-918C-4F93-84F7-D725836EC1C8" name="authorities" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>Any</typeRef>
+    </itemComponent>
+    <itemComponent id="_AEF344D4-86AA-472D-B16D-CC495AD936FC" name="changeType" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_4B0386EC-DA04-4356-A6F3-FCDCF42EC54E" name="channelCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_C06FD2A0-6CED-4AD7-BD09-87C973524481" name="isPOSProcessingTarget" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_378AB617-3B95-4A88-87EE-C0A8C675B98C" name="isRateChangeRestricted" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_18DD253E-04E6-4C04-9CFE-ED14F9F069A8" name="isWiBroRateApplicable" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_D79AAAEE-F883-4D95-B10B-77749CE4306E" name="onlineBatchCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_40C74FF5-D412-4443-BA61-AC64C24D17CA" name="requestTimestamp" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date and time</typeRef>
+    </itemComponent>
+    <itemComponent id="_3DCFC2FC-6095-45AF-8CD6-DE12F541C876" name="serviceChangeCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_ACBE7231-8096-405E-BB8B-45FDE80833B8" name="targetProductId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_6FBE4BAF-0797-4A45-A28E-86C16232EB12" name="transactionId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_8A9E7867-37EF-42CC-A135-8089C2604FA8" name="userRole" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_33D55476-FB2A-46F0-A769-6E86E507E524" name="ContractInfo" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_6635A0A6-F345-4AE4-9969-68B7FC7381E2" name="companyClassCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_FC29EF5F-50F1-4757-9D3E-3E2E4FAB6E4C" name="contractClassCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_1F104F8F-FD21-4DE3-9F8F-6CB137702A6F" name="contractDate" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date</typeRef>
+    </itemComponent>
+    <itemComponent id="_415AAE0B-E3AE-4A97-BFDF-4D33C2FBA70B" name="contractManagementNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_CC252FED-429A-4270-8E49-E01A2658A513" name="contractStatusCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_DC671851-02D1-4587-9AE3-8C1BD4B40DAD" name="subscriptionCancelCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_637CFD4A-1187-416E-86F7-E3FEA8747F3B" name="taxBillIssueYn" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_11B1D352-0A18-4CA5-B43D-A0D8BCC327EA" name="CustomerInfo" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_1279B2FD-5772-44D1-8085-75CEF2D45A98" name="accountNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_66DC5D66-37CC-403D-8A3B-1FADD378CB1B" name="accountTypeCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_1D685840-B93C-4EE5-B883-3B38BE3D9C96" name="age" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>number</typeRef>
+    </itemComponent>
+    <itemComponent id="_EF90C179-6916-4884-829E-53041FC6B9A3" name="citizenCorpBizNumberPartialInfo" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_A6AE970B-623E-4815-9381-0700084CA1A4" name="citizenCorpBizSerialNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_66DA4C93-69A6-403D-AE92-EC951B8C5B3D" name="customerDetailTypeCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_5DEB41C6-7BCA-46C9-A3DF-501B5E61ABFA" name="customerNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_E7F47003-E177-415A-8A79-9FC42D619D84" name="customerTypeCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_FA8E87AC-4DF7-413C-8ECE-741A6A9F35AF" name="EquipmentInfo" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_511293E2-EEA1-4BA5-B961-C45B1D4D02FE" name="equipmentManagementStatusCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_DDCE514E-EA7D-456A-88CC-038F38DDC265" name="equipmentMethodCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_9F86C256-FB39-4FDD-AEB8-2CE5E472FBC1" name="equipmentModelCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_EF7AF2B2-5731-4178-AFF4-C0A7C00FF522" name="equipmentSerialNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_C69B81C3-440A-48E9-BD55-E597DCEA718D" name="equipmentUsageCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_1AE20DED-D07E-44D5-B37A-11981B2A3733" name="equipmentVersionNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_345FB0C6-5B5C-4642-AF0A-022D53DD91A5" name="kitModelCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_FB88F645-9175-40C6-91B4-5058B899BA91" name="kitSerialNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_06CCFE7A-05D6-4CBD-9A5C-9FD6409887FC" name="marketingDate" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date</typeRef>
+    </itemComponent>
+    <itemComponent id="_1A79AE72-8E2A-40CC-9536-D514086765C8" name="nateClassCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_B249575C-DBE2-40B8-BDA4-ABD311750BEE" name="networkMethodCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_EDF431A7-8FEC-4C1C-9FCB-0A27A768BCDF" name="simSerialNumber" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_7E24E81A-7740-4533-A191-5F67C598EDCC" name="ProductInfo" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_428F7977-C941-49C8-B0EC-350E9B4182C9" name="feeProductId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_52EB6DC5-1855-4A7E-A0EF-43F8549CDDE0" name="paymentMethodCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_6165AB0C-7F34-455F-93D2-5322FEE47A09" name="productId" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_CFF2BE64-B335-41D4-9E9A-CDD7843C1670" name="productTerminationReasonCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_2BBF2E40-9F5B-4FDE-9911-71C0E8271118" name="productUsageFlag" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_2250782E-D41C-47F2-894C-6C932976B4F7" name="subscribeDate" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>date</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <itemDefinition id="_63531C4C-A841-442A-A9E9-422D8DF2BA9D" name="ServiceInfo" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+    <itemComponent id="_D3FD87E1-1A72-4200-A170-F56FADCB9D8B" name="hasRoamingForceProcessAuthority" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>boolean</typeRef>
+    </itemComponent>
+    <itemComponent id="_1AFCF8D7-081F-4CB7-8215-DC46387C81F8" name="ibRentRoamingProductUsedYn" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_A972A438-9E1E-4C85-868A-9D9C9971B501" name="ibRoamingProductUsedYn" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_BE0A7C6D-46B0-4656-8BB8-26CCF122E611" name="serviceTypeCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_9FB1E28B-53D2-4E63-A422-6DB6FD9D0E65" name="subscriptionCancelCode" isCollection="false" typeLanguage="https://www.omg.org/spec/DMN/20240513/FEEL/">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+  <decision name="_D000000295_EntryCOND" id="_0811812E-C4C4-4423-8B90-22E0527960A2">
+    <description>PGM_ID_100
+D000000295
+entry condition (진입조건)</description>
+    <variable id="_36AF70A8-1FE2-42D5-8F44-B40814B7C333" typeRef="ValidationError" name="_D000000295_EntryCOND" />
+    <informationRequirement id="_6DFD79F9-623E-4A8A-ADDB-760E12CAD0DE">
+      <requiredInput href="#_65A07129-8C40-4B61-8F1C-C4DED0F51624" />
+    </informationRequirement>
+    <decisionTable id="_DB1D247F-47E6-4A7F-A9E4-1D229EC046F1" typeRef="ValidationError" hitPolicy="UNIQUE" label="_D000000295_EntryCOND">
+      <input id="_94448B95-E6F8-4472-B16A-BA0893B156D3">
+        <inputExpression id="_BD5D5720-21EE-4EAB-B633-4C0E1C868A87" typeRef="string">
+          <text>input.service.serviceTypeCode</text>
+        </inputExpression>
+      </input>
+      <input id="_DA9E684F-64EB-49A6-9668-37CBDBA17988">
+        <inputExpression id="_D5EAB8D6-1B9F-4BF7-91E6-224685776E5F" typeRef="boolean">
+          <text>input.service.hasRoamingForceProcessAuthority</text>
+        </inputExpression>
+      </input>
+      <input id="_72B01797-27C3-45C9-8D8A-9B3953A11B6C">
+        <inputExpression id="_03F59363-CDF4-4168-9C03-B1CB4955DAF5" typeRef="string">
+          <text>input.transaction.serviceChangeCode</text>
+        </inputExpression>
+      </input>
+      <input id="_F7055A2D-B319-4E81-BAFD-3114D0FF2E58">
+        <inputExpression id="_64643585-0FEE-4FB7-9DA5-54B965DA6F27" typeRef="string">
+          <text>input.service.ibRoamingProductUsedYn</text>
+        </inputExpression>
+      </input>
+      <input id="_C3FF31E0-473A-476A-A4C0-76093850B03D">
+        <inputExpression id="_55AF0D03-79BA-4379-840D-8FD32D7701C1" typeRef="string">
+          <text>input.service.ibRentRoamingProductUsedYn</text>
+        </inputExpression>
+      </input>
+      <input id="_A46A5AA3-B3EB-406C-83C5-13886B9E3748">
+        <inputExpression id="_DF537F66-590D-4603-8ED7-EA4E7FB045AB" typeRef="string">
+          <text>input.service.subscriptionCancelCode</text>
+        </inputExpression>
+      </input>
+      <output id="_6012C4BC-1F31-4E9D-AD5D-7FB3486D3EC7" name="condDtlTypId" typeRef="string" />
+      <output id="_8B34701B-71E8-4406-8063-B35F8C0CCCB7" name="ruleName" typeRef="string" />
+      <output id="_30CDFC85-DDC5-47E7-8458-6862B9D0A78F" name="severity" typeRef="string" />
+      <output id="_CADAA6FA-586F-41B3-9F88-89E9AB45ACDF" name="errorMessage" typeRef="string" />
+      <annotation name="Annotations" />
+      <rule id="_78BC21E5-83C5-445F-9025-D1C83EB5591F">
+        <inputEntry id="_7AEE653D-507E-4B16-BD3B-EC7879AFCB54">
+          <text>not(&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;)</text>
+        </inputEntry>
+        <inputEntry id="_C9C53872-0D72-434C-82C1-DDF98EBE3D24">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_93F9B861-DE50-400F-B031-57746AB304AF">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_E630340E-CCFF-4691-897F-82DD329E2A38">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_4BE5D095-36FC-415D-8FC0-04E1D1879AE6">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_27BCCAE9-EEE9-4852-832D-E2EF6CDCCA43">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_D92A8E9B-6F41-47C5-97FB-5DAA14E5639D">
+          <text>&quot;D000000295&quot;</text>
+        </outputEntry>
+        <outputEntry id="_CB1457FB-B44C-4BE9-A5F5-73FAF4A861B7">
+          <text>&quot;처리불가이용종류체크_부가상품&quot;</text>
+        </outputEntry>
+        <outputEntry id="_35291C69-12DF-4E3F-8D01-27DF0E366E82">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <outputEntry id="_3D024093-9474-4CFA-A8D4-81B1F1CEECB0">
+          <text>&quot;오류 | 진입조건 미충족&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+      <rule id="_83339D61-F526-4455-9DBC-6C201111A2A1">
+        <inputEntry id="_96B4E5DD-75F3-4B25-B380-060CB4650099">
+          <text>&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;</text>
+        </inputEntry>
+        <inputEntry id="_D911CD62-4D22-4318-A774-C24DFAB5E63D">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="_8C61D25B-E433-4AE1-A093-876A34D63770">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_7403BE0A-3087-4BCF-90E7-9039C381B54C">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_C4E491D1-7B89-4B7A-B6C4-44E22D62D7D1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_00E32DEC-531B-41F8-8816-9E41039FCDFB">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_19595318-A844-4F7E-8DD2-382C154F73E5">
+          <text>&quot;D000000295&quot;</text>
+        </outputEntry>
+        <outputEntry id="_8EF78C42-3C9A-4A73-B15F-1C3F7023CFDD">
+          <text>&quot;처리불가이용종류체크_부가상품&quot;</text>
+        </outputEntry>
+        <outputEntry id="_AFD65653-ADA8-4136-B27D-BCE78397C065">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <outputEntry id="_3B21068C-8D16-4086-B508-3D15B5C86B3B">
+          <text>&quot;오류 | 진입조건 미충족&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+      <rule id="_1A43C353-A0E6-4CA1-A455-24A0C5721798">
+        <inputEntry id="_84CD6585-8D3F-4D26-A70C-CA63CDF3FA0A">
+          <text>&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;</text>
+        </inputEntry>
+        <inputEntry id="_59C5D3BC-259B-4E27-A6B9-03A305B06A58">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="_41ABD64B-96EE-46E2-976C-54D43A95EC61">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_5F580033-2104-4604-8B6F-34479CCBB554">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_065AC99C-372D-426F-9AEB-7B3B9DA16E43">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_7273661E-78AB-4B3E-94AB-8C153A3DB67D">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_A51525DF-6742-468F-B511-DDAAF9626CD5">
+          <text>&quot;D000000295&quot;</text>
+        </outputEntry>
+        <outputEntry id="_C13272DF-AD82-4561-B0AE-740DEA5E69EB">
+          <text>&quot;처리불가이용종류체크_부가상품&quot;</text>
+        </outputEntry>
+        <outputEntry id="_F02A444E-BCD0-4A3B-B1FC-255792F312AD">
+          <text>&quot;INFO&quot;</text>
+        </outputEntry>
+        <outputEntry id="_A49CCB59-8314-45D8-9ED3-64C7E8439B5B">
+          <text>&quot;진입조건 충족&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision name="_D000000295" id="_861C3F54-83A9-40A1-8802-20B0C2284388">
+    <description>PGM_ID_100
+D000000295
+</description>
+    <variable id="_5FF47402-9745-46CF-9FD8-4371C3501C9F" typeRef="ValidationError" name="_D000000295" />
+    <informationRequirement id="_22B0DB0C-CBEF-44EE-B312-6BEBD841B212">
+      <requiredDecision href="#_0811812E-C4C4-4423-8B90-22E0527960A2" />
+    </informationRequirement>
+    <informationRequirement id="_FE3210B5-8B64-47BE-885F-D73D627F16E3">
+      <requiredInput href="#_65A07129-8C40-4B61-8F1C-C4DED0F51624" />
+    </informationRequirement>
+    <decisionTable id="_42E2AA4D-E007-4399-92E6-8A6117AED367" typeRef="ValidationError" hitPolicy="FIRST" label="_D000000295">
+      <input id="_A7FB4B55-58FB-46B4-944B-BE02295B6DB9">
+        <inputExpression id="_1BE2E0C7-59DA-40A2-87AB-6B36A685B035" typeRef="string">
+          <text>_D000000295_EntryCOND.severity</text>
+        </inputExpression>
+      </input>
+      <input id="_E3BFF279-B0CD-404E-90D8-157D9FE42949">
+        <inputExpression id="_F446B5D5-D237-48C9-8F6F-BEC7C97571B7" typeRef="string">
+          <text>input.service.serviceTypeCode</text>
+        </inputExpression>
+      </input>
+      <input id="_8118F87F-64AC-40BD-85FB-3081C89D9B1F">
+        <inputExpression id="_2666EEA5-FEAC-4A10-8EDE-AF251B03FE57" typeRef="string">
+          <text>input.service.hasRoamingForceProcessAuthority</text>
+        </inputExpression>
+      </input>
+      <input id="_966069D8-AFC4-4D0E-AFE5-5EA8EFC6C5EF">
+        <inputExpression id="_0B337602-8695-441B-AFA2-BA81D45EE87D" typeRef="string">
+          <text>input.transaction.serviceChangeCode</text>
+        </inputExpression>
+      </input>
+      <input id="_F508819C-96FC-42B1-9A79-468895A4BB8E">
+        <inputExpression id="_5C453DC7-EC6D-46DB-B68B-2ED4F1B54A82" typeRef="string">
+          <text>input.service.ibRoamingProductUsedYn</text>
+        </inputExpression>
+      </input>
+      <input id="_7D8A192B-4987-4332-8354-D4142E207117">
+        <inputExpression id="_303074E7-62A5-401B-8DDA-278A33315BDE" typeRef="string">
+          <text>input.service.ibRentRoamingProductUsedYn</text>
+        </inputExpression>
+      </input>
+      <input id="_576C832A-6A38-45C6-B8EF-5F3D10859128">
+        <inputExpression id="_BC4A6D30-C46B-4E17-869D-8522F7341D1F" typeRef="string">
+          <text>input.service.ibRentRoamingProductUsedYn</text>
+        </inputExpression>
+      </input>
+      <output id="_FFC8896B-8FB0-412E-B59D-121EA8F21260" name="condDtlTypId" typeRef="string" />
+      <output id="_EB0B8599-F301-41FF-9AAB-524F54D6C867" name="ruleName" typeRef="string" />
+      <output id="_DC5FFB26-36A9-4A88-89F0-45776E8D8543" name="severity" typeRef="string" />
+      <output id="_3C97BD4C-B0F4-4BF5-B766-26B3D428836F" name="errorMessage" typeRef="string" />
+      <annotation name="Annotations" />
+      <rule id="_54797A34-FB46-40A7-A832-1D61DB74AF9D">
+        <inputEntry id="_9DC7682D-56EF-4E49-A89C-807BF43BAFFB">
+          <text>&quot;STOP&quot;</text>
+        </inputEntry>
+        <inputEntry id="_CA4D4D43-EC47-426C-A699-0AFBC02BDCC4">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_1DE6DF54-8BC0-4D65-B3BC-33567D32E629">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_1D73B285-5BF3-469E-A32D-8ED5286B6763">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_283C2179-D02B-40E0-A012-055D7191590D">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_11D1A8ED-5AFA-4024-95B2-0AFC1DE1C967">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_817B3A72-A59A-4DCE-AAE7-D8435123507C">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_F45B42A2-83F4-48A8-81BA-720A57B72556">
+          <text>&quot;D000000295&quot;</text>
+        </outputEntry>
+        <outputEntry id="_235635CF-9915-40A3-BD44-993F37594C41">
+          <text>&quot;처리불가이용종류체크_부가상품&quot;</text>
+        </outputEntry>
+        <outputEntry id="_7D0DFEDA-5488-406E-9B28-32B87B2EF3BC">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <outputEntry id="_5C662610-19BC-4707-B3AB-B26AB1F97955">
+          <text>&quot;오류 | 진입조건 미충족&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text>진입조건 미충족으로 오류 발생</text>
+        </annotationEntry>
+      </rule>
+      <rule id="_728EB912-4C9A-4578-8439-B550331E0E4B">
+        <inputEntry id="_9F96F214-99B8-4625-8C3E-3C235404FE17">
+          <text>&quot;INFO&quot;</text>
+        </inputEntry>
+        <inputEntry id="_D2F2BECF-6F2A-4664-B2FB-1A4CEE901470">
+          <text>&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;</text>
+        </inputEntry>
+        <inputEntry id="_703D1FD1-F951-4745-89F7-4642D9C48959">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_3EB1C256-9049-4FC2-8394-0FE291DFAC81">
+          <text>&quot;G1&quot;,&quot;D4&quot;,&quot;D5&quot;</text>
+        </inputEntry>
+        <inputEntry id="_0485DA3B-83F1-4FD5-A38F-9827E8181E4F">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_6B3A2213-92CD-4BBE-A166-BA40DFBC256B">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_A1F0B2D0-11A8-4580-9348-3D0A8F40E724">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_76B9DEE8-384C-4290-80D1-939A28C671FF">
+          <text>&quot;D000000295&quot;</text>
+        </outputEntry>
+        <outputEntry id="_71ADB07E-B516-47AA-80CD-E35015A55BD9">
+          <text>&quot;처리불가이용종류체크_부가상품&quot;</text>
+        </outputEntry>
+        <outputEntry id="_4C2B1AE5-80B8-416C-96D0-F2962C7EB334">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <outputEntry id="_C165D2BE-5355-42C7-AD82-D4A416FF46A0">
+          <text>&quot;오류 | 체크조건 미충족&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+      <rule id="_258E9CAC-2AF0-4194-A96C-3F9359E1C6B5">
+        <inputEntry id="_231DEBE8-FB13-488E-8094-82DAB15C3C13">
+          <text>&quot;INFO&quot;</text>
+        </inputEntry>
+        <inputEntry id="_6513A8AF-29C2-4902-8BBB-63987C290AC6">
+          <text>&quot;22&quot;,&quot;23&quot;</text>
+        </inputEntry>
+        <inputEntry id="_1969947A-5B1A-46F9-B608-64FCD5DD3CA0">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_6707E5C3-EA7E-4246-B95C-67C165BF08EA">
+          <text>&quot;I1&quot;,&quot;I2&quot;</text>
+        </inputEntry>
+        <inputEntry id="_83B34E17-32E3-4EF5-80F4-11F3AA44B884">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_13E8734E-9C7A-4682-8EB7-F091ACFC9A86">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_050BF73D-4BF8-4968-94FF-EFBA6B950728">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_E2074B85-480E-47FB-AA93-772F175311F1">
+          <text>&quot;D000000295&quot;</text>
+        </outputEntry>
+        <outputEntry id="_71AB64D0-B348-4D79-9C6D-3791ED56004C">
+          <text>&quot;처리불가이용종류체크_부가상품&quot;</text>
+        </outputEntry>
+        <outputEntry id="_534D3CDC-8B8F-4E08-8251-D1B4E654F110">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <outputEntry id="_ED4425ED-E87C-4317-817E-16A8E6158A0E">
+          <text>&quot;오류 | 체크조건 미충족&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+      <rule id="_FC80CD70-8503-4847-A66F-3EB116B22AD0">
+        <inputEntry id="_D47FAAE6-2EEC-444F-8139-CDBD43B1F145">
+          <text>&quot;INFO&quot;</text>
+        </inputEntry>
+        <inputEntry id="_4C05157C-85D5-491B-A5C5-2899F0DCAA51">
+          <text>&quot;20&quot;</text>
+        </inputEntry>
+        <inputEntry id="_B24CCA12-DD17-4C21-890B-F38349DD2DE8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_CECA7F34-21A6-4758-886E-85777900C5D0">
+          <text>&quot;I1&quot;,&quot;I2&quot;</text>
+        </inputEntry>
+        <inputEntry id="_110CD172-83D6-47D1-B10C-B4B90D93DC14">
+          <text>not(&quot;Y&quot;)</text>
+        </inputEntry>
+        <inputEntry id="_BB9DB377-B862-46C7-A8A7-68DADDF34F34">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_E23ECD27-C274-4766-AB6C-53997DAB80D8">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_ED385375-A4C5-4020-A9E8-D66C6EC190D6">
+          <text>&quot;D000000295&quot;</text>
+        </outputEntry>
+        <outputEntry id="_9E1CE381-E939-4387-B705-1A1A38A1ED20">
+          <text>&quot;처리불가이용종류체크_부가상품&quot;</text>
+        </outputEntry>
+        <outputEntry id="_A5C57AB5-1384-4EE8-B9D6-E132551DADD2">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <outputEntry id="_8EFF3390-A96B-4C02-BB6C-1E673A2AA93C">
+          <text>&quot;오류 | 체크조건 미충족&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+      <rule id="_A9A71DBD-0E90-4C60-83B9-350D60493081">
+        <inputEntry id="_E23BCC10-9BDE-46F0-81E5-BC0A6096A2A7">
+          <text>&quot;INFO&quot;</text>
+        </inputEntry>
+        <inputEntry id="_F4E9BFA6-00F1-4593-8E6F-E286E559DF00">
+          <text>&quot;21&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;</text>
+        </inputEntry>
+        <inputEntry id="_ECF1E164-4ABD-47A4-8EAD-FBC208F089EF">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_1E5544D6-FD28-486B-A4B6-37ECF23E4AF1">
+          <text>&quot;I1&quot;,&quot;I2&quot;</text>
+        </inputEntry>
+        <inputEntry id="_3E9A9765-C664-44AC-B629-5DAA7065AF26">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_95D1AA19-A74D-4861-9024-BC69F99406C2">
+          <text>not(&quot;N&quot;)</text>
+        </inputEntry>
+        <inputEntry id="_184113CD-E7E9-4C3D-9B5B-846311BC4A7C">
+          <text>&quot;01&quot;</text>
+        </inputEntry>
+        <outputEntry id="_9B0D07F3-B77D-4C4A-AA12-89DC81DAB024">
+          <text>&quot;D000000295&quot;</text>
+        </outputEntry>
+        <outputEntry id="_8E9C929A-8149-4D0C-8A2B-24BE18081E2C">
+          <text>&quot;처리불가이용종류체크_부가상품&quot;</text>
+        </outputEntry>
+        <outputEntry id="_540E6E24-6E8C-4DD5-A14F-0EBB2B8B2244">
+          <text>&quot;STOP&quot;</text>
+        </outputEntry>
+        <outputEntry id="_BA0D28C7-7F46-4A46-8741-DF2B79F9C5B1">
+          <text>&quot;오류 | 체크조건 미충족&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+      <rule id="_A7D78B72-43D6-4946-8818-7104AD72E6E1">
+        <inputEntry id="_9CD07574-6ED4-48CC-97B1-CD5BE61D6088">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_FDDD1C1A-8AD8-45B7-991E-0C61827722A6">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_FFA1C899-A6FF-4C01-9709-531202483F51">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_9F0B1D41-C9A5-4366-BB3D-3B4B67A52491">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_80DEDF08-F515-430B-AA90-9C8A771F726F">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_8F67519F-EEB5-45BC-B816-A42C74798D00">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="_A2DE391C-ADB1-497D-8A0A-FC7A537C00FF">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="_18253D15-9748-416D-9AD3-C423826DDE0F">
+          <text>&quot;D000000295&quot;</text>
+        </outputEntry>
+        <outputEntry id="_7A06FA6E-F723-4AE9-8512-5F3391F0B189">
+          <text>&quot;처리불가이용종류체크_부가상품&quot;</text>
+        </outputEntry>
+        <outputEntry id="_E7694DB6-7135-4F5C-B2D9-04A8F06EDCD2">
+          <text>&quot;INFO&quot;</text>
+        </outputEntry>
+        <outputEntry id="_6C68A132-3FCF-43BA-A779-D3E59335FE0C">
+          <text>&quot;체크조건 충족&quot;</text>
+        </outputEntry>
+        <annotationEntry>
+          <text></text>
+        </annotationEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData name="input" id="_65A07129-8C40-4B61-8F1C-C4DED0F51624">
+    <variable name="input" id="_CAE2C7D4-D6D7-4D55-AC43-64F3CA3B9A75" typeRef="CustomerServiceContext" />
+  </inputData>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="_D7B9781F-4521-437C-93D8-93E8F78C6DB3" name="Default DRD" useAlternativeInputDataShape="false">
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="_DB1D247F-47E6-4A7F-A9E4-1D229EC046F1">
+            <kie:width>60</kie:width>
+            <kie:width>222</kie:width>
+            <kie:width>123</kie:width>
+            <kie:width>151</kie:width>
+            <kie:width>104</kie:width>
+            <kie:width>129</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>112</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>240</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_42E2AA4D-E007-4399-92E6-8A6117AED367">
+            <kie:width>60</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>233</kie:width>
+            <kie:width>279</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>121</kie:width>
+            <kie:width>118</kie:width>
+            <kie:width>240</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape id="_3CC40077-81AD-4EAD-9DF0-44FE740C7631" dmnElementRef="_65A07129-8C40-4B61-8F1C-C4DED0F51624" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="-280" y="-680" width="160" height="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="_BA029BFA-2A52-461B-8CE4-6C9813A67CFA" dmnElementRef="_0811812E-C4C4-4423-8B90-22E0527960A2" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="-500" y="-420" width="220" height="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="_DB4C4B87-364C-437C-AF1B-C1853D9A14A9" dmnElementRef="_861C3F54-83A9-40A1-8802-20B0C2284388" isCollapsed="false" isListedInputData="false">
+        <dc:Bounds x="-120" y="-420" width="200" height="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="_2A40426D-7F8D-40B1-83A0-40A8CB8D29CB-AUTO-TARGET" dmnElementRef="_22B0DB0C-CBEF-44EE-B312-6BEBD841B212" sourceElement="_BA029BFA-2A52-461B-8CE4-6C9813A67CFA" targetElement="_DB4C4B87-364C-437C-AF1B-C1853D9A14A9">
+        <di:waypoint x="-390" y="-380" />
+        <di:waypoint x="-20" y="-380" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="_7E913D8A-D9B6-4A8D-B454-9245130E47D4" dmnElementRef="_FE3210B5-8B64-47BE-885F-D73D627F16E3" sourceElement="_3CC40077-81AD-4EAD-9DF0-44FE740C7631" targetElement="_DB4C4B87-364C-437C-AF1B-C1853D9A14A9">
+        <di:waypoint x="-200" y="-640" />
+        <di:waypoint x="-20" y="-420" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="_2BCA2B27-066C-4735-AE2C-6C7A79ACEA7A" dmnElementRef="_6DFD79F9-623E-4A8A-ADDB-760E12CAD0DE" sourceElement="_3CC40077-81AD-4EAD-9DF0-44FE740C7631" targetElement="_BA029BFA-2A52-461B-8CE4-6C9813A67CFA">
+        <di:waypoint x="-200" y="-640" />
+        <di:waypoint x="-390" y="-420" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
