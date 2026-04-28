@@ -1,0 +1,21 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: skt-bamoe-business-service
+  labels:
+    app.kubernetes.io/name: skt-bamoe-business-service
+    app.kubernetes.io/instance: skt-bamoe-business-service
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: skt-bamoe-poc
+spec:
+  to:
+    kind: Service
+    name: skt-bamoe-business-service
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+
+# Made with Bob

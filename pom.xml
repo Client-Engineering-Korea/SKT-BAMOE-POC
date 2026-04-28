@@ -24,18 +24,6 @@
 
   <dependencyManagement>
     <dependencies>
-       <!--
-         The BAMOE BOM manages all dependencies required to create
-         Business Services — including Apache KIE, Drools, jBPM, and Kogito
-       -->
-      <dependency>
-        <groupId>com.ibm.bamoe</groupId>
-        <artifactId>bamoe-bom</artifactId>
-        <version>${version.bamoe}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
       <!-- Spring Boot BOMs -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -54,30 +42,11 @@
   </dependencyManagement>
 
   <dependencies>
-    <!-- BAMOE ILMT -->
-    <!-- Uncomment for non-containerized deployments only -->
-    <!--
-    <dependency>
-      <groupId>com.ibm.bamoe</groupId>
-      <artifactId>bamoe-ilmt-compliance-spring-boot-dmoe</artifactId>
-    </dependency>
-    -->
-
-    <!-- Kogito Core -->
-    <dependency>
-      <groupId>org.drools</groupId>
-      <artifactId>drools-decisions-spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.drools</groupId>
-      <artifactId>drools-decisiontables</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-spring-boot-starter</artifactId>
-    </dependency>
-
     <!-- Spring Boot -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
@@ -121,11 +90,16 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Kogito Testing -->
+    <!-- Apache POI for Excel processing -->
     <dependency>
-      <groupId>org.kie.kogito</groupId>
-      <artifactId>kogito-scenario-simulation</artifactId>
-      <scope>test</scope>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>5.2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>5.2.3</version>
     </dependency>
 
     <!-- Lombok -->
@@ -143,47 +117,9 @@
     </dependency>
   </dependencies>
 
-  <repositories>
-    <repository>
-      <id>bamoe-maven-repo</id>
-      <url>https://bamoe-maven-repo-bamoe.apps.itz-bg86ev.infra01-lb.syd05.techzone.ibm.com/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>bamoe-maven-repo</id>
-      <url>https://bamoe-maven-repo-bamoe.apps.itz-bg86ev.infra01-lb.syd05.techzone.ibm.com/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </pluginRepository>
-  </pluginRepositories>
-
   <build>
     <finalName>${project.artifactId}</finalName>
     <plugins>
-      <plugin>
-        <groupId>org.kie.kogito</groupId>
-        <artifactId>kogito-maven-plugin</artifactId>
-        <version>${version.bamoe.plugins}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generateModel</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>

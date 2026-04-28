@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -102,6 +103,11 @@ public class FactDataController {
             return ResponseEntity.ok(info.eqpMdlLnupMap().get(lnupItmCd));
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/mock")
+    public boolean mock(@RequestParam(value = "result", required = false) String result) {
+        return !"false".equals(result);
     }
 
 }

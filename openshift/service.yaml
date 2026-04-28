@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: skt-bamoe-business-service
+  labels:
+    app.kubernetes.io/name: skt-bamoe-business-service
+    app.kubernetes.io/instance: skt-bamoe-business-service
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: skt-bamoe-poc
+spec:
+  selector:
+    app.kubernetes.io/name: skt-bamoe-business-service
+    app.kubernetes.io/instance: skt-bamoe-business-service
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP
+  type: ClusterIP
+
+# Made with Bob
