@@ -23,8 +23,8 @@ public class FactDataService {
     @Value("${fact.excelFilename}")
     private String factDataExcelFilename;
 
-    private Map<String, CustService> custServiceMap = new HashMap<>();
-    private Map<String, EquipmentModel> equipmentModelMap = new HashMap<>();
+    private Map<String, CustService> custServiceMap = new HashMap<>();      // Map<SVC_MGMT_NUM, CustService>
+    private Map<String, EquipmentModel> equipmentModelMap = new HashMap<>();    // Map<EQP_MDL_CD, EquipmentModel>
 
     /**
      * 초기화
@@ -175,6 +175,7 @@ public class FactDataService {
                     df.formatCellValue(row.getCell(colMap.get("PROD_ID"))),              // 서비스별상품id
                     df.formatCellValue(row.getCell(colMap.get("KIT_MDL_CD"))),           // 킷모델코드
                     df.formatCellValue(row.getCell(colMap.get("KIT_SER_NUM"))),          // 킷일련번호
+                    df.formatCellValue(row.getCell(colMap.get("BEF_FEE_PROD_ID"))),      // 변경전요금상품id
                     prodList
             );
             tempMap.put(svcMgmtNum, info);
@@ -196,10 +197,8 @@ public class FactDataService {
      * @return
      */
     private Map<String, EquipmentModel> loadEquipmentModel(Sheet sheet) {
-        // 1. 임시 그룹화 맵 (Key: eqpMdlCd, Value: 해당 모델의 상세 정보들)
-        // 나중에 레코드 생성을 위해 임시로 데이터를 모읍니다.
         Map<String, Map<String, EquipmentModel.EquipmentModelLineup>> groupMap = new HashMap<>();
-        Map<String, String[]> modelBasicInfo = new HashMap<>(); // 모델명, 버전 저장용
+        Map<String, String[]> modelBasicInfo = new HashMap<>();
 
         DataFormatter df = new DataFormatter();
 
@@ -225,11 +224,9 @@ public class FactDataService {
                     df.formatCellValue(row.getCell(colMap.get("LNUP_DTL_ITM_NM")))
             );
 
-            // [핵심] 모델별 Map에 itmCd를 키로 담기
             groupMap.computeIfAbsent(mdlCd, k -> new HashMap<>()).put(itmCd, lnup);
         }
 
-        // 2. 최종 EquipmentModel 레코드 생성
         Map<String, EquipmentModel> finalMap = new HashMap<>();
         groupMap.forEach((mdlCd, dtlMap) -> {
             String[] basic = modelBasicInfo.get(mdlCd);
@@ -237,7 +234,7 @@ public class FactDataService {
                     mdlCd,
                     basic[0], // eqpMdlNm
                     basic[1], // verNum
-                    Collections.unmodifiableMap(dtlMap) // 불변 맵으로 주입
+                    Collections.unmodifiableMap(dtlMap)
             ));
         });
 

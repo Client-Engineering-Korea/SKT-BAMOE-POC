@@ -58,6 +58,7 @@ public record CustService (
     String prodId,              // 서비스별상품id
     String kitMdlCd,            // 킷모델코드
     String kitSerNum,           // 킷일련번호
+    String befFeeProdId,        // 변경전요금상품id
     List<CustProd> prodLst      // 상품목록
 ) {
     // 고객상품 정보 Record
