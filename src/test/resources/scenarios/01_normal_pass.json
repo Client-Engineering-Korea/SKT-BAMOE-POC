@@ -1,0 +1,47 @@
+{
+  "svcMgmtNum": "7308834145",
+  "userInfo": {
+    "ngmsUserId": "USER001",
+    "ngmsLoginId": "user001",
+    "ngmsBrTypCd": "01",
+    "ngmsAuthId": "AUTH001",
+    "ngmsConnSaleOrgId": "SALE_ORG_01",
+    "ngmsPostSaleOrgId": "POST_ORG_01",
+    "opDtm": "2026-04-28T10:00:00"
+  },
+  "commInfo": {
+    "chgCd": "G1",
+    "chgRsnCd": "00",
+    "canYn": "N",
+    "chnlClCd": "NGM",
+    "onlineBatchCode": "0",
+    "opCtt1": "", "opCtt2": "", "opCtt3": "", "opCtt4": "", "opCtt5": "",
+    "opCtt6": "", "opCtt7": "", "opCtt8": "", "opCtt9": "", "opCtt10": ""
+  },
+  "g1Info": {
+    "befFeeProdId": "NA00006405",
+    "aftFeeProdId": "NA00008154"
+  },
+  "prodList": [],
+  "externals": {
+    "isPOSProcessingTargetExt": "Y",
+    "hasTerminalFunctionYnExt": "Y",
+    "hasProductGroupExistYnExt": "Y",
+    "hasOmdChannelPlanJoinAuthorityYnExt": "Y",
+    "hasExclusivePriceModelDefinitionYnExt": "N",
+    "hasM2mExclusiveProductGroupYnExt": "Y",
+    "hasM2mPlanChangeAuthorityYnExt": "N",
+    "isAppleWatchActivationInProgressExt": "N",
+    "hasRoamingForceProcessAuthorityYnExt": "N",
+    "ibRoamingProductUsedYnExt": "N",
+    "ibRentRoamingProductUsedYnExt": "N",
+    "businessProcessServiceTransactionId": "ZORDSS0400380_TR01",
+    "isWiBroRateApplicableYnExt": "N",
+    "isRateChangeRestrictedYnExt": "N"
+  },
+  "_expected": {
+    "processable": "Y",
+    "stopRule": null,
+    "description": "모든 단계 통과 (D295 SKIP, D296 INFO, D298 INFO, D299 INFO, D525 INFO)"
+  }
+}

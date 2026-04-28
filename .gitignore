@@ -28,3 +28,8 @@ logs/
 # Env
 .env
 .env.local
+
+.claude/
+CLAUDE.md
+docs/
+tools/

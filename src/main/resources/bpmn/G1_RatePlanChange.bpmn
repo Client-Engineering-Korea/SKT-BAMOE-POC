@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:drools="http://www.jboss.org/drools" id="_g1_definitions" targetNamespace="http://www.omg.org/bpmn20" exporter="jBPM Process Modeler" exporterVersion="2.0">
+  <bpmn2:itemDefinition id="_g1_ctxItem" isCollection="false" structureRef="org.acme.runtime.ProcessingContext" />
+  <bpmn2:itemDefinition id="_g1_resultMapItem" isCollection="false" structureRef="java.util.Map" />
+  <bpmn2:interface id="_if_FactPrefetch" name="org.acme.rule.service.FactPrefetchService">
+    <bpmn2:operation id="_op_populate" name="populate" />
+  </bpmn2:interface>
+  <bpmn2:process id="G1_RatePlanChange" name="G1 요금제 변경 자격 체크" isExecutable="true" processType="Public">
+    <bpmn2:extensionElements>
+      <drools:import name="org.acme.runtime.ProcessingContext" />
+      <drools:import name="org.acme.runtime.ValidationError" />
+      <drools:import name="org.acme.runtime.Severity" />
+    </bpmn2:extensionElements>
+    <bpmn2:property id="ctx" name="ctx" itemSubjectRef="_g1_ctxItem" />
+    <bpmn2:property id="result295" name="result295" itemSubjectRef="_g1_resultMapItem" />
+    <bpmn2:property id="result296" name="result296" itemSubjectRef="_g1_resultMapItem" />
+    <bpmn2:property id="result298" name="result298" itemSubjectRef="_g1_resultMapItem" />
+    <bpmn2:property id="result299" name="result299" itemSubjectRef="_g1_resultMapItem" />
+    <bpmn2:property id="result525" name="result525" itemSubjectRef="_g1_resultMapItem" />
+    <bpmn2:startEvent id="G1_Start" name="시작">
+      <bpmn2:outgoing>SF_G1_Start_Fetch</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:serviceTask id="G1_Task_FetchFact" name="고객 Fact 조회" implementation="Java" drools:serviceimplementation="Java" drools:serviceinterface="org.acme.rule.service.FactPrefetchService" operationRef="_op_populate" drools:serviceoperation="populate">
+      <bpmn2:incoming>SF_G1_Start_Fetch</bpmn2:incoming>
+      <bpmn2:outgoing>SF_G1_Fetch_Call100</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_FF_IO">
+        <bpmn2:dataInput id="_FF_DI_arg0" name="arg0" drools:dtype="org.acme.runtime.ProcessingContext" itemSubjectRef="_g1_ctxItem" />
+        <bpmn2:dataOutput id="_FF_DO_result" name="Result" drools:dtype="org.acme.runtime.ProcessingContext" itemSubjectRef="_g1_ctxItem" />
+        <bpmn2:inputSet id="_FF_IS"><bpmn2:dataInputRefs>_FF_DI_arg0</bpmn2:dataInputRefs></bpmn2:inputSet>
+        <bpmn2:outputSet id="_FF_OS"><bpmn2:dataOutputRefs>_FF_DO_result</bpmn2:dataOutputRefs></bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_FF_DIA">
+        <bpmn2:sourceRef>ctx</bpmn2:sourceRef>
+        <bpmn2:targetRef>_FF_DI_arg0</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="_FF_DOA">
+        <bpmn2:sourceRef>_FF_DO_result</bpmn2:sourceRef>
+        <bpmn2:targetRef>ctx</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:serviceTask>
+    <bpmn2:callActivity id="G1_Task_CallModule100" name="Module 100 호출" calledElement="PGM_ID_100_validation">
+      <bpmn2:incoming>SF_G1_Fetch_Call100</bpmn2:incoming>
+      <bpmn2:outgoing>SF_G1_Call100_End</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_M100_IO">
+        <bpmn2:dataInput id="_M100_DI_ctx" name="ctx" drools:dtype="org.acme.runtime.ProcessingContext" itemSubjectRef="_g1_ctxItem" />
+        <bpmn2:dataOutput id="_M100_DO_ctx" name="ctx" drools:dtype="org.acme.runtime.ProcessingContext" itemSubjectRef="_g1_ctxItem" />
+        <bpmn2:dataOutput id="_M100_DO_r295" name="result295" drools:dtype="java.util.Map" itemSubjectRef="_g1_resultMapItem" />
+        <bpmn2:dataOutput id="_M100_DO_r296" name="result296" drools:dtype="java.util.Map" itemSubjectRef="_g1_resultMapItem" />
+        <bpmn2:dataOutput id="_M100_DO_r298" name="result298" drools:dtype="java.util.Map" itemSubjectRef="_g1_resultMapItem" />
+        <bpmn2:dataOutput id="_M100_DO_r299" name="result299" drools:dtype="java.util.Map" itemSubjectRef="_g1_resultMapItem" />
+        <bpmn2:dataOutput id="_M100_DO_r525" name="result525" drools:dtype="java.util.Map" itemSubjectRef="_g1_resultMapItem" />
+        <bpmn2:inputSet id="_M100_IS"><bpmn2:dataInputRefs>_M100_DI_ctx</bpmn2:dataInputRefs></bpmn2:inputSet>
+        <bpmn2:outputSet id="_M100_OS">
+          <bpmn2:dataOutputRefs>_M100_DO_ctx</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_M100_DO_r295</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_M100_DO_r296</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_M100_DO_r298</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_M100_DO_r299</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_M100_DO_r525</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_M100_DIA_ctx">
+        <bpmn2:sourceRef>ctx</bpmn2:sourceRef>
+        <bpmn2:targetRef>_M100_DI_ctx</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="_M100_DOA_ctx">
+        <bpmn2:sourceRef>_M100_DO_ctx</bpmn2:sourceRef>
+        <bpmn2:targetRef>ctx</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="_M100_DOA_r295">
+        <bpmn2:sourceRef>_M100_DO_r295</bpmn2:sourceRef>
+        <bpmn2:targetRef>result295</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="_M100_DOA_r296">
+        <bpmn2:sourceRef>_M100_DO_r296</bpmn2:sourceRef>
+        <bpmn2:targetRef>result296</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="_M100_DOA_r298">
+        <bpmn2:sourceRef>_M100_DO_r298</bpmn2:sourceRef>
+        <bpmn2:targetRef>result298</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="_M100_DOA_r299">
+        <bpmn2:sourceRef>_M100_DO_r299</bpmn2:sourceRef>
+        <bpmn2:targetRef>result299</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="_M100_DOA_r525">
+        <bpmn2:sourceRef>_M100_DO_r525</bpmn2:sourceRef>
+        <bpmn2:targetRef>result525</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:callActivity>
+    <bpmn2:endEvent id="G1_End" name="검증 완료">
+      <bpmn2:incoming>SF_G1_Call100_End</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SF_G1_Start_Fetch" sourceRef="G1_Start" targetRef="G1_Task_FetchFact" />
+    <bpmn2:sequenceFlow id="SF_G1_Fetch_Call100" sourceRef="G1_Task_FetchFact" targetRef="G1_Task_CallModule100" />
+    <bpmn2:sequenceFlow id="SF_G1_Call100_End" sourceRef="G1_Task_CallModule100" targetRef="G1_End" />
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="G1_BPMNDiagram">
+    <bpmndi:BPMNPlane id="G1_BPMNPlane" bpmnElement="G1_RatePlanChange">
+      <bpmndi:BPMNShape id="G1_Start_di" bpmnElement="G1_Start"><dc:Bounds x="60" y="180" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G1_Task_FetchFact_di" bpmnElement="G1_Task_FetchFact"><dc:Bounds x="160" y="160" width="180" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G1_Task_CallModule100_di" bpmnElement="G1_Task_CallModule100"><dc:Bounds x="400" y="160" width="200" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G1_End_di" bpmnElement="G1_End"><dc:Bounds x="660" y="180" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SF_G1_Start_Fetch_di" bpmnElement="SF_G1_Start_Fetch" sourceElement="G1_Start_di" targetElement="G1_Task_FetchFact_di">
+        <di:waypoint x="96" y="198" /><di:waypoint x="160" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_G1_Fetch_Call100_di" bpmnElement="SF_G1_Fetch_Call100" sourceElement="G1_Task_FetchFact_di" targetElement="G1_Task_CallModule100_di">
+        <di:waypoint x="340" y="200" /><di:waypoint x="400" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_G1_Call100_End_di" bpmnElement="SF_G1_Call100_End" sourceElement="G1_Task_CallModule100_di" targetElement="G1_End_di">
+        <di:waypoint x="600" y="200" /><di:waypoint x="660" y="198" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

@@ -7,6 +7,7 @@ import org.acme.fact.domain.*;
 import org.acme.fact.domain.CustService.CustProd;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Profile("!rule-server")
 public class FactDataService {
 
     @Value("${fact.excelFilename}")
