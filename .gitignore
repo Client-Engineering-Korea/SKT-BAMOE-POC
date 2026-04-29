@@ -1,0 +1,30 @@
+target/
+*.swidtag
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Maven
+*.jar
+*.war
+*.ear
+*.class
+
+# Logs
+*.log
+logs/
+
+# Env
+.env
+.env.local
