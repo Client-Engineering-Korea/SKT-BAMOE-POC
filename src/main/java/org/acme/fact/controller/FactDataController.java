@@ -36,7 +36,7 @@ public class FactDataController {
             content = @Content(array = @ArraySchema(schema = @Schema(implementation = CustServiceSummary.class))))
     @GetMapping("/cust/listCustService")
     public ListResDto<CustServiceSummary> listCustService() {
-        return factDataService.getCustSummaryList();
+        return factDataService.getCustServiceSummaryList();
     }
 
     /**
@@ -103,6 +103,34 @@ public class FactDataController {
             return ResponseEntity.ok(info.eqpMdlLnupMap().get(lnupItmCd));
         }
         return ResponseEntity.notFound().build();
+    }
+
+    /**
+     * 전체 구성항목값 정보 목록 조회
+     * @return
+     */
+    @Operation(summary = "구성항목값 목록 조회", description = "구성항목값 전체 건수와 목록 조회")
+    @ApiResponse(responseCode = "200", description = "성공",
+            content = @Content(array = @ArraySchema(schema = @Schema(implementation = ConsItemValueSummary.class))))
+    @GetMapping("/consItem/listConsItemValue")
+    public ListResDto<ConsItemValueSummary> listConsItemValue() {
+        return factDataService.getConsItemValueSummaryList();
+    }
+
+    /**
+     * 구성항목값 정보 조회
+     * @param consItmId
+     * @return
+     */
+    @Operation(summary = "구성항목값 정보 조회", description = "구성항목ID로 구성항목값 정보 조회")
+    @ApiResponse(responseCode = "200", description = "조회 성공",
+            content = @Content(schema = @Schema(implementation = ConsItemValue.class)))
+    @GetMapping("/consItem/getConsItemValue/{consItmId}")
+    public ResponseEntity<ConsItemValue> getConsItemValue(
+            @Parameter(description = "구성항목ID", example = "ITM0000022") @PathVariable String consItmId) {
+
+        ConsItemValue info = factDataService.getConsItemValue(consItmId);
+        return info != null ? ResponseEntity.ok(info) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/mock")
