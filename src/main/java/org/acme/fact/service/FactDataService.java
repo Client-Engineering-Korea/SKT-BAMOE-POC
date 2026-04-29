@@ -23,8 +23,9 @@ public class FactDataService {
     @Value("${fact.excelFilename}")
     private String factDataExcelFilename;
 
-    private Map<String, CustService> custServiceMap = new HashMap<>();      // Map<SVC_MGMT_NUM, CustService>
+    private Map<String, CustService> custServiceMap = new HashMap<>();          // Map<SVC_MGMT_NUM, CustService>
     private Map<String, EquipmentModel> equipmentModelMap = new HashMap<>();    // Map<EQP_MDL_CD, EquipmentModel>
+    private Map<String, ConsItemValue> consItemValueMap = new HashMap<>();      // Map<CONS_ITM_NM, ConsItemValue>
 
     /**
      * 초기화
@@ -57,11 +58,15 @@ public class FactDataService {
 
             // 고객가입 시트
             Sheet custServiceSheet = workbook.getSheet("cust_svc");
-            this.custServiceMap = loadCustService(custServiceSheet, custProdData);
+            loadCustService(custServiceSheet, custProdData);
 
             // 단말모델 시트
             Sheet equipmentModelSheet = workbook.getSheet("eqp_mdl");
-            this.equipmentModelMap = loadEquipmentModel(equipmentModelSheet);
+            loadEquipmentModel(equipmentModelSheet);
+
+            // 구성항목값 시트
+            Sheet consItemValueSheet = workbook.getSheet("cons_itm_val");
+            loadConsItemValue(consItemValueSheet);
         }
     }
 
@@ -96,7 +101,6 @@ public class FactDataService {
         dataMap.forEach((key, value) -> {
             log.info("KEY[{}] : VALUE({})[{}]", key, value.size(), value);
         });
-        log.debug("==========");
 
         return dataMap;
     }
@@ -107,7 +111,7 @@ public class FactDataService {
      * @param custProdMap
      * @return
      */
-    private Map<String, CustService> loadCustService(Sheet sheet, Map<String, List<CustProd>> custProdMap) {
+    private void loadCustService(Sheet sheet, Map<String, List<CustProd>> custProdMap) {
         Map<String, CustService> tempMap = new HashMap<>();
         DataFormatter df = new DataFormatter();
 
@@ -178,17 +182,14 @@ public class FactDataService {
                     df.formatCellValue(row.getCell(colMap.get("BEF_FEE_PROD_ID"))),      // 변경전요금상품id
                     prodList
             );
-            tempMap.put(svcMgmtNum, info);
+            custServiceMap.put(svcMgmtNum, info);
         }
 
         // 메모리 내용 출력
-        log.info("===== custServiceMap({}) =====", tempMap.size());
-        tempMap.forEach((key, value) -> {
+        log.info("===== custServiceMap({}) =====", custServiceMap.size());
+        custServiceMap.forEach((key, value) -> {
             log.info("KEY[{}] : VALUE[{}]", key, value);
         });
-        log.debug("==========");
-
-        return tempMap;
     }
 
     /**
@@ -196,7 +197,7 @@ public class FactDataService {
      * @param sheet
      * @return
      */
-    private Map<String, EquipmentModel> loadEquipmentModel(Sheet sheet) {
+    private void loadEquipmentModel(Sheet sheet) {
         Map<String, Map<String, EquipmentModel.EquipmentModelLineup>> groupMap = new HashMap<>();
         Map<String, String[]> modelBasicInfo = new HashMap<>();
 
@@ -227,10 +228,9 @@ public class FactDataService {
             groupMap.computeIfAbsent(mdlCd, k -> new HashMap<>()).put(itmCd, lnup);
         }
 
-        Map<String, EquipmentModel> finalMap = new HashMap<>();
         groupMap.forEach((mdlCd, dtlMap) -> {
             String[] basic = modelBasicInfo.get(mdlCd);
-            finalMap.put(mdlCd, new EquipmentModel(
+            equipmentModelMap.put(mdlCd, new EquipmentModel(
                     mdlCd,
                     basic[0], // eqpMdlNm
                     basic[1], // verNum
@@ -239,13 +239,41 @@ public class FactDataService {
         });
 
         // 메모리 내용 출력
-        log.info("===== finalMap({}) =====", finalMap.size());
-        finalMap.forEach((key, value) -> {
+        log.info("===== equipmentModelMap({}) =====", equipmentModelMap.size());
+        equipmentModelMap.forEach((key, value) -> {
             log.info("KEY[{}] : VALUE({})[{}]", key, value.eqpMdlLnupMap().size(), value);
         });
-        log.debug("==========");
+    }
 
-        return finalMap;
+    /**
+     * 구성항목값 정보 load
+     * @param sheet
+     * @return
+     */
+    private void loadConsItemValue(Sheet sheet) {
+        DataFormatter df = new DataFormatter();
+
+        Map<String, Integer> colMap = getColIndex(sheet);
+
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            Row row = sheet.getRow(i);
+            if (row == null) continue;
+
+            String consItmId = df.formatCellValue(row.getCell(colMap.get("CONS_ITM_ID")));
+            ConsItemValue info = new ConsItemValue(
+                    consItmId,
+                    df.formatCellValue(row.getCell(colMap.get("CONS_ITM_NM"))),
+                    df.formatCellValue(row.getCell(colMap.get("CONS_ITM_VAL")))
+            );
+
+            consItemValueMap.put(consItmId, info);
+        }
+
+        // 메모리 내용 출력
+        log.info("===== consItemValueMap({}) =====", consItemValueMap.size());
+        consItemValueMap.forEach((key, value) -> {
+            log.info("KEY[{}] : VALUE[{}]", key, value);
+        });
     }
 
     /**
@@ -259,8 +287,7 @@ public class FactDataService {
         for (Cell cell : headerRow) {
             colMap.put(cell.getStringCellValue(), cell.getColumnIndex());
         }
-        log.info("=== colMap:{}", colMap);
-        log.info("=== getLastRowNum:{}", sheet.getLastRowNum());
+        log.info("--- colMap:{}", colMap);
         return colMap;
     }
 
@@ -268,7 +295,7 @@ public class FactDataService {
      * 고객 서비스 요약 정보 목록 및 건수 조회
      * @return
      */
-    public ListResDto<CustServiceSummary> getCustSummaryList() {
+    public ListResDto<CustServiceSummary> getCustServiceSummaryList() {
         List<CustServiceSummary> list = custServiceMap.values().stream()
                 .map(c -> new CustServiceSummary(c.svcMgmtNum(), c.svcNum()))
                 .toList();
@@ -303,5 +330,26 @@ public class FactDataService {
      */
     public EquipmentModel getEquipmentModel(String eqpMdlCd) {
         return equipmentModelMap.get(eqpMdlCd);
+    }
+
+    /**
+     * 구성항목값 요약 정보 목록 및 건수 조회
+     * @return
+     */
+    public ListResDto<ConsItemValueSummary> getConsItemValueSummaryList() {
+        List<ConsItemValueSummary> list = consItemValueMap.values().stream()
+                .map(e -> new ConsItemValueSummary(e.consItmId(), e.consItmNm(), e.consItmVal()))
+                .toList();
+
+        return new ListResDto<>(list.size(), list);
+    }
+
+    /**
+     * 구성항목값 정보 조회
+     * @param consItmId
+     * @return
+     */
+    public ConsItemValue getConsItemValue(String consItmId) {
+        return consItemValueMap.get(consItmId);
     }
 }
