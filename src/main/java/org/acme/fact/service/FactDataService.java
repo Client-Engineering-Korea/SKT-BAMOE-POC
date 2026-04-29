@@ -101,7 +101,6 @@ public class FactDataService {
         dataMap.forEach((key, value) -> {
             log.info("KEY[{}] : VALUE({})[{}]", key, value.size(), value);
         });
-        log.debug("==========");
 
         return dataMap;
     }
@@ -191,7 +190,6 @@ public class FactDataService {
         custServiceMap.forEach((key, value) -> {
             log.info("KEY[{}] : VALUE[{}]", key, value);
         });
-        log.debug("==========");
     }
 
     /**
@@ -245,7 +243,6 @@ public class FactDataService {
         equipmentModelMap.forEach((key, value) -> {
             log.info("KEY[{}] : VALUE({})[{}]", key, value.eqpMdlLnupMap().size(), value);
         });
-        log.debug("==========");
     }
 
     /**
@@ -277,7 +274,6 @@ public class FactDataService {
         consItemValueMap.forEach((key, value) -> {
             log.info("KEY[{}] : VALUE[{}]", key, value);
         });
-        log.debug("==========");
     }
 
     /**
@@ -291,8 +287,7 @@ public class FactDataService {
         for (Cell cell : headerRow) {
             colMap.put(cell.getStringCellValue(), cell.getColumnIndex());
         }
-        log.info("=== colMap:{}", colMap);
-        log.info("=== getLastRowNum:{}", sheet.getLastRowNum());
+        log.info("--- colMap:{}", colMap);
         return colMap;
     }
 
