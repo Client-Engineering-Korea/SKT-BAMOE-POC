@@ -89,7 +89,9 @@ public class FactDataService {
             CustProd prod = new CustProd(
                     df.formatCellValue(row.getCell(colMap.get("PROD_TYP_CD"))),
                     df.formatCellValue(row.getCell(colMap.get("PROD_ID"))),
-                    df.formatCellValue(row.getCell(colMap.get("PROD_NM")))
+                    df.formatCellValue(row.getCell(colMap.get("PROD_NM"))),
+                    df.formatCellValue(row.getCell(colMap.get("SCRB_TERM_CL_CD"))),
+                    df.formatCellValue(row.getCell(colMap.get("AUTO_OP_CL_CD")))
             );
 
             // 동일한 svcMgmtNum 별로 리스트에 추가
