@@ -49,7 +49,7 @@ public class FactDataController {
             content = @Content(schema = @Schema(implementation = CustService.class)))
     @GetMapping("/cust/getCustService/{svcMgmtNum}")
     public ResponseEntity<CustService> getCustService(
-            @Parameter(description = "서비스관리번호", example = "7000000001") @PathVariable String svcMgmtNum) {
+            @Parameter(description = "서비스관리번호", example = "7308834145") @PathVariable String svcMgmtNum) {
 
         // 서비스에서 Map.get(svcMgmtNum) 호출
         CustService info = factDataService.getCustService(svcMgmtNum);
