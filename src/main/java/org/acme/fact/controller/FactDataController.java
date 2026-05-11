@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/fact")
 @Profile("!rule-server")
@@ -131,6 +134,13 @@ public class FactDataController {
 
         ConsItemValue info = factDataService.getConsItemValue(consItmId);
         return info != null ? ResponseEntity.ok(info) : ResponseEntity.notFound().build();
+    }
+
+    @Operation(summary = "구성항목값 일괄 조회", description = "구성항목ID 목록으로 구성항목값 일괄 조회")
+    @GetMapping("/consItem/getBatchConsItemValues")
+    public Map<String, ConsItemValue> getBatchConsItemValues(
+            @Parameter(description = "구성항목ID 목록") @RequestParam List<String> ids) {
+        return factDataService.getConsItemValues(ids);
     }
 
     @GetMapping("/mock")

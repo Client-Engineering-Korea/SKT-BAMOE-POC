@@ -354,4 +354,13 @@ public class FactDataService {
     public ConsItemValue getConsItemValue(String consItmId) {
         return consItemValueMap.get(consItmId);
     }
+
+    public Map<String, ConsItemValue> getConsItemValues(List<String> ids) {
+        Map<String, ConsItemValue> result = new HashMap<>();
+        for (String id : ids) {
+            ConsItemValue value = consItemValueMap.get(id);
+            if (value != null) result.put(id, value);
+        }
+        return result;
+    }
 }
