@@ -26,6 +26,7 @@ public class FactDataService {
     private Map<String, CustService> custServiceMap = new HashMap<>();          // Map<SVC_MGMT_NUM, CustService>
     private Map<String, EquipmentModel> equipmentModelMap = new HashMap<>();    // Map<EQP_MDL_CD, EquipmentModel>
     private Map<String, ConsItemValue> consItemValueMap = new HashMap<>();      // Map<CONS_ITM_NM, ConsItemValue>
+    private Map<String, ErrorMsg> errorMsgMap = new HashMap<>();                // Map<COND_CONS_ID, ErrorMsg>
 
     /**
      * 초기화
@@ -67,6 +68,10 @@ public class FactDataService {
             // 구성항목값 시트
             Sheet consItemValueSheet = workbook.getSheet("cons_itm_val");
             loadConsItemValue(consItemValueSheet);
+
+            // 에러메시지 시트
+            Sheet errorMsgSheet = workbook.getSheet("error_msg");
+            loadErrorMsg(errorMsgSheet);
         }
     }
 
@@ -279,6 +284,38 @@ public class FactDataService {
     }
 
     /**
+     * 에러메시지 정보 load
+     * @param sheet
+     * @return
+     */
+    private void loadErrorMsg(Sheet sheet) {
+        DataFormatter df = new DataFormatter();
+
+        Map<String, Integer> colMap = getColIndex(sheet);
+
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            Row row = sheet.getRow(i);
+            if (row == null) continue;
+
+            String condConsId = df.formatCellValue(row.getCell(colMap.get("COND_CONS_ID")));
+            ErrorMsg info = new ErrorMsg(
+                    condConsId,
+                    df.formatCellValue(row.getCell(colMap.get("MSG_ID"))),
+                    df.formatCellValue(row.getCell(colMap.get("MSG_CTT"))),
+                    df.formatCellValue(row.getCell(colMap.get("MSG_INFO")))
+            );
+
+            errorMsgMap.put(condConsId, info);
+        }
+
+        // 메모리 내용 출력
+        log.info("===== errorMsgMap({}) =====", errorMsgMap.size());
+        errorMsgMap.forEach((key, value) -> {
+            log.info("KEY[{}] : VALUE[{}]", key, value);
+        });
+    }
+
+    /**
      * 엑셀 컬럼 index 생성 반환
      * @param sheet   엑셀시트
      * @return 컬럼MAP
@@ -362,5 +399,26 @@ public class FactDataService {
             if (value != null) result.put(id, value);
         }
         return result;
+    }
+
+    /**
+     * 에러메시지 요약 정보 목록 및 건수 조회
+     * @return
+     */
+    public ListResDto<ErrorMsgSummary> getErrorMsgSummaryList() {
+        List<ErrorMsgSummary> list = errorMsgMap.values().stream()
+                .map(e -> new ErrorMsgSummary(e.condConsId(), e.msgId(), e.msgCtt()))
+                .toList();
+
+        return new ListResDto<>(list.size(), list);
+    }
+
+    /**
+     * 에러메시지 정보 조회
+     * @param condConsId
+     * @return
+     */
+    public ErrorMsg getErrorMsg(String condConsId) {
+        return errorMsgMap.get(condConsId);
     }
 }
