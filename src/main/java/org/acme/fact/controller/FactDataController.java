@@ -148,4 +148,33 @@ public class FactDataController {
         return !"false".equals(result);
     }
 
+    /**
+     * 전체 에러메시지 정보 목록 조회
+     * @return
+     */
+    @Operation(summary = "에러메시지 목록 조회", description = "에러메시지 전체 건수와 목록 조회")
+    @ApiResponse(responseCode = "200", description = "성공",
+            content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorMsgSummary.class))))
+    @GetMapping("/errorMsg/listErrorMsg")
+    public ListResDto<ErrorMsgSummary> listErrorMsg() {
+        return factDataService.getErrorMsgSummaryList();
+    }
+
+    /**
+     * 에러메시지 정보 조회
+     * @param condConsId
+     * @return
+     */
+    @Operation(summary = "에러메시지 정보 조회", description = "조건구성ID로 에러메시지 정보 조회")
+    @ApiResponse(responseCode = "200", description = "조회 성공",
+            content = @Content(schema = @Schema(implementation = ErrorMsg.class)))
+    @GetMapping("/errorMsg/getErrorMsg/{condConsId}")
+    public ResponseEntity<ErrorMsg> getErrorMsg(
+            @Parameter(description = "조건구성ID", example = "CONDCP000000003") @PathVariable String condConsId) {
+
+        // 서비스에서 Map.get(svcMgmtNum) 호출
+        ErrorMsg info = factDataService.getErrorMsg(condConsId);
+        return info != null ? ResponseEntity.ok(info) : ResponseEntity.notFound().build();
+    }
+
 }
