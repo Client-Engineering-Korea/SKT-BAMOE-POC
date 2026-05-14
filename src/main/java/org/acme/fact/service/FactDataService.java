@@ -83,6 +83,8 @@ public class FactDataService {
     private Map<String, List<CustProd>> loadCustProd(Sheet sheet) {
         Map<String, List<CustProd>> dataMap = new HashMap<>();
         DataFormatter df = new DataFormatter();
+        FormulaEvaluator evaluator = sheet.getWorkbook().getCreationHelper().createFormulaEvaluator();
+        evaluator.setIgnoreMissingWorkbooks(true);
 
         Map<String, Integer> colMap = getColIndex(sheet);
 
@@ -90,13 +92,13 @@ public class FactDataService {
             Row row = sheet.getRow(i);
             if (row == null) continue;
 
-            String svcMgmtNum = df.formatCellValue(row.getCell(colMap.get("SVC_MGMT_NUM")));
+            String svcMgmtNum = getCellValueSafely(df, evaluator, row.getCell(colMap.get("SVC_MGMT_NUM")));
             CustProd prod = new CustProd(
-                    df.formatCellValue(row.getCell(colMap.get("PROD_TYP_CD"))),
-                    df.formatCellValue(row.getCell(colMap.get("PROD_ID"))),
-                    df.formatCellValue(row.getCell(colMap.get("PROD_NM"))),
-                    df.formatCellValue(row.getCell(colMap.get("SCRB_TERM_CL_CD"))),
-                    df.formatCellValue(row.getCell(colMap.get("AUTO_OP_CL_CD")))
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("PROD_TYP_CD"))),
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("PROD_ID"))),
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("PROD_NM"))),
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SCRB_TERM_CL_CD"))),
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("AUTO_OP_CL_CD")))
             );
 
             // 동일한 svcMgmtNum 별로 리스트에 추가
