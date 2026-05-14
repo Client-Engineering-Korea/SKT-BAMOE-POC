@@ -1,0 +1,65 @@
+name: Build and Deploy to OpenShift
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE_NAME: quay.io/seokbin/bamoe-external-api:1.0
+  OPENSHIFT_SERVER: https://api.itz-bg86ev.infra01-lb.syd05.techzone.ibm.com:6443
+  OPENSHIFT_NAMESPACE: bamoe
+  OPENSHIFT_DEPLOYMENT: skt-bamoe-external-api
+
+jobs:
+  build-push-and-restart:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install Podman
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y podman
+
+      - name: Validate required secrets
+        run: |
+          test -n "${{ secrets.QUAY_USERNAME }}" || (echo "Missing secret: QUAY_USERNAME" && exit 1)
+          test -n "${{ secrets.QUAY_PASSWORD }}" || (echo "Missing secret: QUAY_PASSWORD" && exit 1)
+          test -n "${{ secrets.OPENSHIFT_USERNAME }}" || (echo "Missing secret: OPENSHIFT_USERNAME" && exit 1)
+          test -n "${{ secrets.OPENSHIFT_PASSWORD }}" || (echo "Missing secret: OPENSHIFT_PASSWORD" && exit 1)
+
+      - name: Login to Quay
+        run: |
+          echo "${{ secrets.QUAY_PASSWORD }}" | podman login quay.io -u "${{ secrets.QUAY_USERNAME }}" --password-stdin
+
+      - name: Build image
+        run: |
+          podman build --platform linux/amd64 --format docker -t ${IMAGE_NAME} .
+
+      - name: Push image
+        run: |
+          podman push ${IMAGE_NAME}
+
+      - name: Install oc CLI
+        run: |
+          curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz
+          tar -xzf openshift-client-linux.tar.gz
+          sudo mv oc /usr/local/bin/oc
+          oc version --client
+
+      - name: Login to OpenShift
+        run: |
+          oc login --server=${OPENSHIFT_SERVER} --username="${{ secrets.OPENSHIFT_USERNAME }}" --password="${{ secrets.OPENSHIFT_PASSWORD }}" --insecure-skip-tls-verify=true
+
+      - name: Restart deployment
+        run: |
+          oc rollout restart deploy -n ${OPENSHIFT_NAMESPACE} ${OPENSHIFT_DEPLOYMENT}
+
+      - name: Wait for rollout
+        run: |
+          oc rollout status deploy/${OPENSHIFT_DEPLOYMENT} -n ${OPENSHIFT_NAMESPACE} --timeout=300s
+
+# Made with Bob
