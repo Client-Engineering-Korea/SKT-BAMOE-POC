@@ -121,72 +121,74 @@ public class FactDataService {
     private void loadCustService(Sheet sheet, Map<String, List<CustProd>> custProdMap) {
         Map<String, CustService> tempMap = new HashMap<>();
         DataFormatter df = new DataFormatter();
+        FormulaEvaluator evaluator = sheet.getWorkbook().getCreationHelper().createFormulaEvaluator();
+        evaluator.setIgnoreMissingWorkbooks(true);
 
         Map<String, Integer> colMap = getColIndex(sheet);
 
         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
             Row row = sheet.getRow(i);
-            String svcMgmtNum = df.formatCellValue(row.getCell(colMap.get("SVC_MGMT_NUM"))); // 서비스관리번호
+            String svcMgmtNum = getCellValueSafely(df, evaluator, row.getCell(colMap.get("SVC_MGMT_NUM"))); // 서비스관리번호
 
             // 해당 고객의 상품 리스트를 가져옴 (없으면 빈 리스트)
             List<CustProd> prodList = custProdMap.getOrDefault(svcMgmtNum, Collections.emptyList());
 
             CustService info = new CustService(
-                    df.formatCellValue(row.getCell(colMap.get("CNTRCT_MGMT_NUM"))),      // 계약관리번호
-                    df.formatCellValue(row.getCell(colMap.get("USE_CNTRCT_CL_CD"))),     // 이용계약구분코드
-                    df.formatCellValue(row.getCell(colMap.get("USE_CNTRCT_ST_CD"))),     // 이용계약상태코드
-                    df.formatCellValue(row.getCell(colMap.get("CNTRCT_DT"))),            // 계약일자
-                    df.formatCellValue(row.getCell(colMap.get("CO_CL_CD"))),             // 회사구분코드
-                    df.formatCellValue(row.getCell(colMap.get("TAX_BILL_ISUE_YN"))),     // 세금계산서발행여부
-                    df.formatCellValue(row.getCell(colMap.get("NM_CUST_NUM"))),          // 명의고객번호
-                    df.formatCellValue(row.getCell(colMap.get("ACNT_NUM"))),             // 계정번호
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("CNTRCT_MGMT_NUM"))),      // 계약관리번호
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("USE_CNTRCT_CL_CD"))),     // 이용계약구분코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("USE_CNTRCT_ST_CD"))),     // 이용계약상태코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("CNTRCT_DT"))),            // 계약일자
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("CO_CL_CD"))),             // 회사구분코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("TAX_BILL_ISUE_YN"))),     // 세금계산서발행여부
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("NM_CUST_NUM"))),          // 명의고객번호
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("ACNT_NUM"))),             // 계정번호
                     svcMgmtNum,
-                    df.formatCellValue(row.getCell(colMap.get("SVC_CD"))),               // 서비스구분코드
-                    df.formatCellValue(row.getCell(colMap.get("SVC_NUM"))),              // 서비스번호
-                    df.formatCellValue(row.getCell(colMap.get("SVC_ST_CD"))),            // 서비스상태코드
-                    df.formatCellValue(row.getCell(colMap.get("SVC_ST_CHG_CD"))),        // 서비스상태변경코드
-                    df.formatCellValue(row.getCell(colMap.get("SVC_CHG_RSN_CD"))),       // 서비스변경사유코드
-                    df.formatCellValue(row.getCell(colMap.get("SVC_TYP_CD"))),           // 서비스이용종류코드
-                    df.formatCellValue(row.getCell(colMap.get("SVC_TYP_NM"))),           // 서비스이용종류명
-                    df.formatCellValue(row.getCell(colMap.get("SVC_SCRB_DT"))),          // 서비스가입일자
-                    df.formatCellValue(row.getCell(colMap.get("SCRB_REQ_RSN_CD"))),      // 가입신청사유코드
-                    df.formatCellValue(row.getCell(colMap.get("SVC_TERM_DT"))),          // 서비스해지일자
-                    df.formatCellValue(row.getCell(colMap.get("FEE_PROD_ID"))),          // 요금상품id
-                    df.formatCellValue(row.getCell(colMap.get("IDNT_NUM_CD"))),          // 식별번호구분코드
-                    df.formatCellValue(row.getCell(colMap.get("GRTM_CL_CD"))),           // 보증금구분코드
-                    df.formatCellValue(row.getCell(colMap.get("WLF_DC_CD"))),            // 복지할인유형코드
-                    df.formatCellValue(row.getCell(colMap.get("WLF_DC_NM"))),            // 복지할인유형명
-                    df.formatCellValue(row.getCell(colMap.get("WEB_MBR_SCRB_CL_CD"))),   // 웹회원가입구분코드(TWORLD가입여부)
-                    df.formatCellValue(row.getCell(colMap.get("WEB_MBR_REQ_AGREE_YN"))), // 웹회원신청동의여부(TWORLD동의여부)
-                    df.formatCellValue(row.getCell(colMap.get("EQP_MDL_CD"))),           // 단말기모델코드
-                    df.formatCellValue(row.getCell(colMap.get("EQP_SER_NUM"))),          // 단말기일련번호
-                    df.formatCellValue(row.getCell(colMap.get("SIM_SER_NUM"))),          // sim일련번호
-                    df.formatCellValue(row.getCell(colMap.get("EQP_USG_CD"))),           // 단말기용도코드
-                    df.formatCellValue(row.getCell(colMap.get("EQP_MTHD_CD"))),          // 단말기방식코드
-                    df.formatCellValue(row.getCell(colMap.get("REL_SVC_MGMT_NUM"))),     // 관계서비스관리번호
-                    df.formatCellValue(row.getCell(colMap.get("REL_FEE_PROD_ID"))),      // 관계서비스요금제
-                    df.formatCellValue(row.getCell(colMap.get("CTZ_CORP_BIZ_SER_NUM"))), // 주민법인사업자등록일련번호
-                    df.formatCellValue(row.getCell(colMap.get("CTZ_CORP_BIZ_NUM_PINF"))),// 주민법인사업자등록번호부분정보
-                    Integer.parseInt(df.formatCellValue(row.getCell(colMap.get("AGE")))),// 나이
-                    df.formatCellValue(row.getCell(colMap.get("CUST_TYP_CD"))),          // 고객유형코드
-                    df.formatCellValue(row.getCell(colMap.get("CUST_DTL_TYP_CD"))),      // 고객세부유형코드
-                    df.formatCellValue(row.getCell(colMap.get("ACNT_TYP_CD"))),          // 계정유형코드
-                    df.formatCellValue(row.getCell(colMap.get("PAY_MTHD_CD"))),          // 납부방법코드
-                    df.formatCellValue(row.getCell(colMap.get("SCRB_DT"))),              // 상품가입일자
-                    df.formatCellValue(row.getCell(colMap.get("PROD_TERM_RSN_CD"))),     // 상품해지사유코드
-                    df.formatCellValue(row.getCell(colMap.get("SVC_DTL_CL_CD"))),        // 서비스세부구분코드
-                    df.formatCellValue(row.getCell(colMap.get("EQP_VER_NUM"))),          // eqp_ver_num
-                    df.formatCellValue(row.getCell(colMap.get("EQP_MGMT_ST_CD"))),       // 단말기관리상태코드
-                    df.formatCellValue(row.getCell(colMap.get("MKTG_DT"))),              // 단말기출시일자
-                    df.formatCellValue(row.getCell(colMap.get("NW_MTHD_CD"))),           // network방식코드
-                    df.formatCellValue(row.getCell(colMap.get("NATE_CL_CD"))),           // NATE구분코드
-                    df.formatCellValue(row.getCell(colMap.get("AUTH_KEY_NUM"))),         // 인증키번호
-                    df.formatCellValue(row.getCell(colMap.get("TRK_IDX_NUM"))),          // trkindex번호
-                    df.formatCellValue(row.getCell(colMap.get("INT_PHON_STA_CL_CD"))),   // 국제전화발신금지여부
-                    df.formatCellValue(row.getCell(colMap.get("PROD_ID"))),              // 서비스별상품id
-                    df.formatCellValue(row.getCell(colMap.get("KIT_MDL_CD"))),           // 킷모델코드
-                    df.formatCellValue(row.getCell(colMap.get("KIT_SER_NUM"))),          // 킷일련번호
-                    df.formatCellValue(row.getCell(colMap.get("BEF_FEE_PROD_ID"))),      // 변경전요금상품id
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SVC_CD"))),               // 서비스구분코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SVC_NUM"))),              // 서비스번호
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SVC_ST_CD"))),            // 서비스상태코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SVC_ST_CHG_CD"))),        // 서비스상태변경코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SVC_CHG_RSN_CD"))),       // 서비스변경사유코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SVC_TYP_CD"))),           // 서비스이용종류코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SVC_TYP_NM"))),           // 서비스이용종류명
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SVC_SCRB_DT"))),          // 서비스가입일자
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SCRB_REQ_RSN_CD"))),      // 가입신청사유코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SVC_TERM_DT"))),          // 서비스해지일자
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("FEE_PROD_ID"))),          // 요금상품id
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("IDNT_NUM_CD"))),          // 식별번호구분코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("GRTM_CL_CD"))),           // 보증금구분코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("WLF_DC_CD"))),            // 복지할인유형코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("WLF_DC_NM"))),            // 복지할인유형명
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("WEB_MBR_SCRB_CL_CD"))),   // 웹회원가입구분코드(TWORLD가입여부)
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("WEB_MBR_REQ_AGREE_YN"))), // 웹회원신청동의여부(TWORLD동의여부)
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("EQP_MDL_CD"))),           // 단말기모델코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("EQP_SER_NUM"))),          // 단말기일련번호
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SIM_SER_NUM"))),          // sim일련번호
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("EQP_USG_CD"))),           // 단말기용도코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("EQP_MTHD_CD"))),          // 단말기방식코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("REL_SVC_MGMT_NUM"))),     // 관계서비스관리번호
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("REL_FEE_PROD_ID"))),      // 관계서비스요금제
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("CTZ_CORP_BIZ_SER_NUM"))), // 주민법인사업자등록일련번호
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("CTZ_CORP_BIZ_NUM_PINF"))),// 주민법인사업자등록번호부분정보
+                    parseIntSafely(getCellValueSafely(df, evaluator, row.getCell(colMap.get("AGE")))),  // 나이
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("CUST_TYP_CD"))),          // 고객유형코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("CUST_DTL_TYP_CD"))),      // 고객세부유형코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("ACNT_TYP_CD"))),          // 계정유형코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("PAY_MTHD_CD"))),          // 납부방법코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SCRB_DT"))),              // 상품가입일자
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("PROD_TERM_RSN_CD"))),     // 상품해지사유코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("SVC_DTL_CL_CD"))),        // 서비스세부구분코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("EQP_VER_NUM"))),          // eqp_ver_num
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("EQP_MGMT_ST_CD"))),       // 단말기관리상태코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("MKTG_DT"))),              // 단말기출시일자
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("NW_MTHD_CD"))),           // network방식코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("NATE_CL_CD"))),           // NATE구분코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("AUTH_KEY_NUM"))),         // 인증키번호
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("TRK_IDX_NUM"))),          // trkindex번호
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("INT_PHON_STA_CL_CD"))),   // 국제전화발신금지여부
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("PROD_ID"))),              // 서비스별상품id
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("KIT_MDL_CD"))),           // 킷모델코드
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("KIT_SER_NUM"))),          // 킷일련번호
+                    getCellValueSafely(df, evaluator, row.getCell(colMap.get("BEF_FEE_PROD_ID"))),      // 변경전요금상품id
                     prodList
             );
             custServiceMap.put(svcMgmtNum, info);
@@ -420,5 +422,62 @@ public class FactDataService {
      */
     public ErrorMsg getErrorMsg(String condConsId) {
         return errorMsgMap.get(condConsId);
+    }
+
+    /**
+     * Safely get cell value, handling formula evaluation errors
+     * @param df DataFormatter
+     * @param evaluator FormulaEvaluator
+     * @param cell Cell to read
+     * @return Cell value as string, or empty string if error occurs
+     */
+    private String getCellValueSafely(DataFormatter df, FormulaEvaluator evaluator, Cell cell) {
+        if (cell == null) {
+            return "";
+        }
+        try {
+            return df.formatCellValue(cell, evaluator);
+        } catch (Exception e) {
+            // If formula evaluation fails (e.g., external workbook reference),
+            // try to get the cached value or raw value
+            try {
+                if (cell.getCellType() == CellType.FORMULA) {
+                    // Try to get cached formula result
+                    CellType cachedType = cell.getCachedFormulaResultType();
+                    switch (cachedType) {
+                        case NUMERIC:
+                            return String.valueOf(cell.getNumericCellValue());
+                        case STRING:
+                            return cell.getStringCellValue();
+                        case BOOLEAN:
+                            return String.valueOf(cell.getBooleanCellValue());
+                        default:
+                            return "";
+                    }
+                } else {
+                    return df.formatCellValue(cell);
+                }
+            } catch (Exception ex) {
+                log.warn("Failed to read cell value, returning empty string. Error: {}", ex.getMessage());
+                return "";
+            }
+        }
+    }
+
+    /**
+     * Safely parse string to integer, returning 0 if parsing fails
+     * @param value String value to parse
+     * @return Parsed integer or 0 if parsing fails
+     */
+    private int parseIntSafely(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return 0;
+        }
+        try {
+            return Integer.parseInt(value.trim());
+        } catch (NumberFormatException e) {
+            log.warn("Failed to parse integer value: '{}', returning 0", value);
+            return 0;
+        }
     }
 }
